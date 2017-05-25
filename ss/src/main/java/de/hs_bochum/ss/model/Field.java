@@ -14,8 +14,6 @@ public class Field extends Observable {
 
 	private FieldValue[][] field;
 
-	private Set<Byte> valueSet = new HashSet<Byte>();
-
 	public Field() {
 		this.field = new FieldValue[9][9];
 		for (int j = 0; j < field.length; j++) {
@@ -24,7 +22,7 @@ public class Field extends Observable {
 			}
 		}
 	}
-	
+
 	public void init() {
 		this.field = new FieldValue[9][9];
 		for (int j = 0; j < field.length; j++) {
@@ -33,8 +31,9 @@ public class Field extends Observable {
 			}
 		}
 	}
-	
-	public void setFieldValueLocked(byte value, int x, int y) throws IsOutOfRangeException, CoordinateOutOfBoundsException {
+
+	public void setFieldValueLocked(byte value, int x, int y)
+			throws IsOutOfRangeException, CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		field[x][y].setValue(value);
 		field[x][y].lock();
@@ -44,22 +43,22 @@ public class Field extends Observable {
 
 	public void setFieldValue(byte value, int x, int y)
 			throws IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
-		
+
 		checkCoordinate(x, y);
-		
+
 		if (value < 1 || value > 9) {
 			throw new IsOutOfRangeException("Value is out of range!");
 		}
-		
+
 		if (field[x][y].isLocked()) {
 			throw new IsLockedException("This field is locked!");
 		}
-		
+
 		field[x][y].setValue(value);
 		setChanged();
 		notifyObservers(new Point(x, y));
 	}
-	
+
 	public void resetFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		field[x][y].setValue(0);
@@ -93,38 +92,6 @@ public class Field extends Observable {
 		setFieldValue((byte) (getFieldValue(x, y) + 1), x, y);
 	}
 
-	public boolean isValid() throws CoordinateOutOfBoundsException {
-		// check if rows are valid
-		valueSet.clear();
-		for (byte x = 0; x < 9; x++) {
-			for (byte y = 0; y < 0; y++) {
-				if (!isValueUnique(getFieldValue(x, y))) {
-					return false;
-				}
-			}
-		}
-
-		// check if colums are valid
-		for (byte col = 0; col < 9; col++) {
-
-		}
-
-		// check if squares are valid
-		// for (byte )
-
-		return true;
-	}
-
-	private boolean isValueUnique(byte value) {
-		if (valueSet.contains(value)) {
-			return false;
-		} else {
-			valueSet.add(value);
-		}
-
-		return true;
-	}
-
 	public boolean isFieldValid(int x, int y) {
 
 		// check columns
@@ -146,12 +113,84 @@ public class Field extends Observable {
 		int y1 = (y / 3) * 3;
 		for (int xx = x1; xx < x1 + 3; xx++) {
 			for (int yy = y1; yy < y1 + 3; yy++) {
-				if ((xx != x || yy != y) && field[xx][yy].getValue() == field[x][y].getValue()) {
+				if ((xx != x || yy != y) && (field[xx][yy].getValue() == field[x][y].getValue())) {
 					return false;
 				}
 			}
 		}
-		
+
+		return true;
+	}
+
+	public boolean isValid() throws CoordinateOutOfBoundsException {
+		// check columns
+		if (!checkColumns()) {
+			return false;
+		}
+
+		// check rows
+		if (!checkRows()) {
+			return false;
+		}
+
+		// check squares
+		for (int x1 = 0; x1 < 9; x1 += 3) {
+			for (int y1 = 0; y1 < 9; y1 += 3) {
+				if (!checkSquare(x1, y1)) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private boolean checkColumns() {
+		Set<Byte> valueSet = new HashSet<Byte>();
+
+		for (int x = 0; x < 9; x++) {
+			for (int y = 0; y < 9; y++) {
+				if (valueSet.contains(field[x][y].getValue())) {
+					return false;
+				} else {
+					valueSet.add(field[x][y].getValue());
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private boolean checkRows() {
+		Set<Byte> valueSet = new HashSet<Byte>();
+
+		// check if colums are valid
+		for (int y = 0; y < 9; y++) {
+			for (int x = 0; x < 9; x++) {
+				if (valueSet.contains(field[x][y].getValue())) {
+					return false;
+				} else {
+					valueSet.add(field[x][y].getValue());
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private boolean checkSquare(int x1, int y1) {
+		Set<Byte> valueSet = new HashSet<Byte>();
+
+		for (int xx = x1; xx < x1 + 3; xx++) {
+			for (int yy = y1; yy < y1 + 3; yy++) {
+				if (valueSet.contains(field[xx][yy].getValue())) {
+					return false;
+				} else {
+					valueSet.add(field[xx][yy].getValue());
+				}
+			}
+		}
+
 		return true;
 	}
 }
