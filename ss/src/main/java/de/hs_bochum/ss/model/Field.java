@@ -22,5 +22,11 @@ public class Field extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+	
+	public void setField(FieldValue[][] field){
+		this.field = field;
+		setChanged();
+		notifyObservers();
+	}
 
 }

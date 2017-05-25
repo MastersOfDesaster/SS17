@@ -5,5 +5,6 @@ public interface ISodokuSolver {
 	
 	public void solve();
 
+	public void nextStep();
 	
 }

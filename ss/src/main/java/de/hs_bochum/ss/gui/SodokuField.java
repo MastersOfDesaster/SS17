@@ -1,5 +1,7 @@
 package de.hs_bochum.ss.gui;
 
-public class SodokuField {
+import javax.swing.JFrame;
+
+public class SodokuField extends JFrame{
 
 }
