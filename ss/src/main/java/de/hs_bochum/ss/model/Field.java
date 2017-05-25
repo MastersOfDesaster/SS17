@@ -27,6 +27,12 @@ public class Field extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+	
+	public void setField(FieldValue[][] field){
+		this.field = field;
+		setChanged();
+		notifyObservers();
+	}
 
 	public byte getFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
