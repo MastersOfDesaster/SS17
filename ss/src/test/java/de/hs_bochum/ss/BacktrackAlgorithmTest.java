@@ -64,7 +64,9 @@ public class BacktrackAlgorithmTest {
 	@Test
 	public void testSolveFieldIntInt(){
 		try {
-			new BacktrackAlgorithm().solve(sudoku);
+			BacktrackAlgorithm algo = new BacktrackAlgorithm();
+			algo.solve(sudoku);
+			System.out.println("Steps: " + algo.getSteps());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

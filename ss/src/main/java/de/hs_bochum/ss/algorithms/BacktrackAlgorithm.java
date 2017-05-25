@@ -28,6 +28,7 @@ public class BacktrackAlgorithm extends ISudokuSolver {
 			for (byte i = 1; i < 10; i++) {
 				sudoku.setFieldValue(i, x, y);
 				Thread.sleep(waitMillis);
+				steps++;
 				if (!sudoku.isFieldValid(x, y)) {
 					continue;
 				}
@@ -37,6 +38,7 @@ public class BacktrackAlgorithm extends ISudokuSolver {
 			}
 			sudoku.resetFieldValue(x, y);
 			Thread.sleep(waitMillis);
+			steps++;
 			return false;
 		}
 	}
