@@ -7,5 +7,6 @@ public interface ISodokuSolver {
 	
 	public void solve(Field sudoku);
 
+	public void nextStep();
 	
 }

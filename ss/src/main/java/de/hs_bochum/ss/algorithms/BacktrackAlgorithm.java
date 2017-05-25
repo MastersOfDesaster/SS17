@@ -22,4 +22,10 @@ public class BacktrackAlgorithm implements ISodokuSolver{
 		return false;
 	}
 
+	@Override
+	public void nextStep() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
