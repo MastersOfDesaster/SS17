@@ -1,49 +1,50 @@
 package de.hs_bochum.ss.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import de.hs_bochum.ss.exception.IsLockedException;
+import de.hs_bochum.ss.exception.IsOutOfRangeException;
 
 public class FieldValue {
 
 	private byte value;
-	
+
 	private boolean lock;
-	
-	public FieldValue(boolean lock) {
-		if(lock)
-			this.value = -1;
-		this.lock = lock;
-	}
-	
-	public FieldValue(boolean lock, byte value){
-		this.lock = lock;
-		this.value = value;
-	}
-	
-	public FieldValue(byte value){
+
+	private Set<Byte> usedValueSet = new HashSet<Byte>();
+
+	public FieldValue(byte value) throws IsLockedException, IsOutOfRangeException {
 		this.lock = true;
-		this.value = value;
+		setValue(value);
 	}
-	
-	public FieldValue(){
+
+	public FieldValue() {
 		this.lock = false;
 		this.value = 0;
 	}
-	
-	public void setValue(byte value) throws IsLockedException{
-		if(!this.lock || this.value == -1){
-			this.value = value;
+
+	public void setValue(byte value) throws IsLockedException, IsOutOfRangeException {
+		if (this.lock) {
+			throw new IsLockedException("This field is locked!");
 		}
-		else{
-			throw new IsLockedException("This field is locked");
+
+		if (value < 1 || value > 9) {
+			throw new IsOutOfRangeException("Value is out of range!");
 		}
+
+		this.value = value;
 	}
-	
-	public byte getValue(){
+
+	public byte getValue() {
 		return this.value;
 	}
 	
-	public void lockValue(){
-		this.lock = true;
+	public boolean isLocked() {
+		return lock;
 	}
 	
+	public Set<Byte> usedValueSet() {
+		return usedValueSet;
+	}
 }
