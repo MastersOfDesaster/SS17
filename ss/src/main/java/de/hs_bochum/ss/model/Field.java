@@ -2,6 +2,8 @@ package de.hs_bochum.ss.model;
 
 import java.util.Observable;
 
+import de.hs_bochum.ss.exception.IsLockedException;
+
 public class Field extends Observable {
 	
 	private FieldValue[][] field;
@@ -15,8 +17,10 @@ public class Field extends Observable {
 		}
 	}
 	
-	public void setSingleField(byte value, int x, int y){
-		
+	public void setSingleField(byte value, int x, int y) throws IsLockedException{
+		field[x][y].setValue(value);
+		setChanged();
+		notifyObservers();
 	}
 
 }
