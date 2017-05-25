@@ -10,5 +10,16 @@ public class BacktrackAlgorithm implements ISodokuSolver{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public boolean solve(Field sudoku, int x, int y){
+		if (y == 9){
+			return true;
+		}
+		if(x == 9){
+			x = 0;
+			y++;
+		}
+		return false;
+	}
 
 }
