@@ -38,16 +38,10 @@ public class Window extends JFrame {
 			solver.nextStep();
 		});
 		this.btnRun.addActionListener(al -> {
-			solver.solve();
+			solver.solve(guiField.getField());
 		});
 		this.cbAlgorithm.addActionListener(al -> {
-			switch (cbAlgorithm.getSelectedItem().toString()) {
-			case "":
-				
-				break;
-			default:
-				break;
-			}
+			//TODO Algorithmus über Enum wechseln
 		});
 	}
 

@@ -5,7 +5,14 @@ import de.hs_bochum.ss.model.Field;
 
 public class DancingLinksAlgorithm implements ISodokuSolver{
 
+	@Override
 	public void solve(Field sudoku) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nextStep() {
 		// TODO Auto-generated method stub
 		
 	}
