@@ -1,10 +1,10 @@
 package de.hs_bochum.ss.algorithms;
 
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.interfaces.ISodokuSolver;
+import de.hs_bochum.ss.interfaces.ISudokuSolver;
 import de.hs_bochum.ss.model.Field;
 
-public class BacktrackAlgorithm implements ISodokuSolver {
+public class BacktrackAlgorithm extends ISudokuSolver {
 
 	public void solve(Field sudoku) throws Exception {
 		// TODO Auto-generated method stub
@@ -27,6 +27,7 @@ public class BacktrackAlgorithm implements ISodokuSolver {
 		} else {
 			for (byte i = 1; i < 10; i++) {
 				sudoku.setFieldValue(i, x, y);
+				Thread.sleep(waitMillis);
 				if (!sudoku.isFieldValid(x, y)) {
 					continue;
 				}
@@ -35,6 +36,7 @@ public class BacktrackAlgorithm implements ISodokuSolver {
 				};
 			}
 			sudoku.resetFieldValue(x, y);
+			Thread.sleep(waitMillis);
 			return false;
 		}
 	}
@@ -50,8 +52,12 @@ public class BacktrackAlgorithm implements ISodokuSolver {
 		}
 	}
 
-	public void nextStep() {
 
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
 	}
+
 
 }

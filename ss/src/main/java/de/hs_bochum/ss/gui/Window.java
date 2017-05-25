@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 
 import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
 import de.hs_bochum.ss.algorithms.ThousandMonkeyAlgorithm;
-import de.hs_bochum.ss.interfaces.ISodokuSolver;
+import de.hs_bochum.ss.interfaces.ISudokuSolver;
 
 public class Window extends JFrame {
 
@@ -25,7 +25,7 @@ public class Window extends JFrame {
 	private SodokuField guiField;
 	private JPanel southGrid;
 	
-	private ISodokuSolver solver;
+	private ISudokuSolver solver;
 	
 	private ExecutorService executor;
 	
@@ -41,7 +41,7 @@ public class Window extends JFrame {
 
 	private void addActionListener() {
 		this.btnSingle.addActionListener(al -> {
-			solver.nextStep();
+		//	solver.nextStep();
 		});
 		this.btnRun.addActionListener(al -> {
 			executor.execute(new Runnable() {
