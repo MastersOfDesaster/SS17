@@ -1,20 +1,20 @@
 package de.hs_bochum.ss.control;
 
 import de.hs_bochum.ss.gui.Window;
-import de.hs_bochum.ss.interfaces.ISodokuSolver;
+import de.hs_bochum.ss.interfaces.ISudokuSolver;
 import de.hs_bochum.ss.model.Field;
 
 public class SudokuSolverControl {
 	
-	private ISodokuSolver solver;
+	private ISudokuSolver solver;
 	private Window view;
 	private Field model;
 	
 	
-	public ISodokuSolver getSolver() {
+	public ISudokuSolver getSolver() {
 		return solver;
 	}
-	public void setSolver(ISodokuSolver solver) {
+	public void setSolver(ISudokuSolver solver) {
 		this.solver = solver;
 	}
 	public Window getView() {

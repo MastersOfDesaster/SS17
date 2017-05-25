@@ -2,6 +2,8 @@ package de.hs_bochum.ss.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,7 +13,7 @@ import javax.swing.JScrollPane;
 
 import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
 import de.hs_bochum.ss.algorithms.ThousandMonkeyAlgorithm;
-import de.hs_bochum.ss.interfaces.ISodokuSolver;
+import de.hs_bochum.ss.interfaces.ISudokuSolver;
 
 public class Window extends JFrame {
 
@@ -23,7 +25,9 @@ public class Window extends JFrame {
 	private SodokuField guiField;
 	private JPanel southGrid;
 	
-	private ISodokuSolver solver;
+	private ISudokuSolver solver;
+	
+	private ExecutorService executor;
 	
 	public Window() {
 		this.solver = new BacktrackAlgorithm();
@@ -32,15 +36,25 @@ public class Window extends JFrame {
 		addGUIObjects();
 		addActionListener();
 		this.repaint();
-		
+		executor = Executors.newCachedThreadPool();
 	}
 
 	private void addActionListener() {
 		this.btnSingle.addActionListener(al -> {
-			solver.nextStep();
+		//	solver.nextStep();
 		});
 		this.btnRun.addActionListener(al -> {
-			solver.solve(guiField.getField());
+			executor.execute(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						solver.solve(guiField.getField());
+					}catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
 		});
 		this.cbAlgorithm.addActionListener(al -> {
 			//TODO Algorithmus über Enum wechseln
