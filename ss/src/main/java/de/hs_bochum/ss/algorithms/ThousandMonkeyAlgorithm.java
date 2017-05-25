@@ -5,14 +5,14 @@ import java.util.Random;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
-import de.hs_bochum.ss.interfaces.ISodokuSolver;
+import de.hs_bochum.ss.interfaces.ISudokuSolver;
 import de.hs_bochum.ss.model.Field;
 
-public class ThousandMonkeyAlgorithm implements ISodokuSolver{
+public class ThousandMonkeyAlgorithm extends ISudokuSolver{
 
 	@Override
 	public void solve(Field sudoku) throws CoordinateOutOfBoundsException, IsLockedException, IsOutOfRangeException {
-		Random rand = new Random();	
+		Random rand = new Random();
 		do{
 		for(int y = 0; y < 9; y++){
 			for(int x = 0; x < 9; x++){
@@ -23,14 +23,8 @@ public class ThousandMonkeyAlgorithm implements ISodokuSolver{
 		}
 		print(sudoku);
 		}while(!sudoku.isValid());
-		
 	}
 
-	@Override
-	public void nextStep() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	private void print(Field sudoku) throws CoordinateOutOfBoundsException{
 		for(int y = 0; y < 9; y++){
@@ -39,6 +33,13 @@ public class ThousandMonkeyAlgorithm implements ISodokuSolver{
 			}
 			System.out.println();
 		}
+	}
+
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
