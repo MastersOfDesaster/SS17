@@ -144,7 +144,7 @@ public class Field extends Observable {
 		int y1 = (y / 3) * 3;
 		for (int xx = x1; xx < x1 + 3; xx++) {
 			for (int yy = y1; yy < y1 + 3; yy++) {
-				if ((xx != x || yy != y) && (field[xx][yy].getValue() == field[x][y].getValue())) {
+				if ((xx != x || yy != y) && field[xx][yy].getValue() == field[x][y].getValue()) {
 					return false;
 				}
 			}

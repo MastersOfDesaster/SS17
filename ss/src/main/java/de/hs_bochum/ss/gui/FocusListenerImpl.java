@@ -6,12 +6,10 @@ import java.awt.event.FocusListener;
 public class FocusListenerImpl implements FocusListener {
 
 	public void focusGained(FocusEvent e) {
-		// TODO Auto-generated method stub
-
+		//#DoNothing
 	}
 
 	public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -7,7 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
+import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
 import de.hs_bochum.ss.algorithms.ThousandMonkeyAlgorithm;
 import de.hs_bochum.ss.interfaces.ISodokuSolver;
 
@@ -24,7 +26,7 @@ public class Window extends JFrame {
 	private ISodokuSolver solver;
 	
 	public Window() {
-		this.solver = new ThousandMonkeyAlgorithm();
+		this.solver = new BacktrackAlgorithm();
 		setGUIParams();
 		initGUIObjects();
 		addGUIObjects();
@@ -49,8 +51,8 @@ public class Window extends JFrame {
 		this.southGrid.add(btnRun);
 		this.southGrid.add(btnSingle);
 		this.southGrid.add(cbAlgorithm);
-		this.add(guiField, BorderLayout.CENTER);
-		this.add(southGrid, BorderLayout.NORTH);
+		this.add(new JScrollPane(guiField), BorderLayout.CENTER);
+		this.add(southGrid, BorderLayout.SOUTH);
 	}
 
 	private void initGUIObjects() {
