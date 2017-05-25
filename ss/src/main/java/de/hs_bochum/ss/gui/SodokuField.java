@@ -19,6 +19,8 @@ public class SodokuField extends JPanel implements Observer{
 
 	private Field field;
 	
+	private FocusListenerImpl focusListener;
+	
 	private Point lastChange;
 	
 	private JTextField[][] txtFields;
@@ -27,6 +29,7 @@ public class SodokuField extends JPanel implements Observer{
 	public SodokuField() {
 		this.setLayout(new GridLayout(3, 3));
 		this.field = new Field();
+		this.focusListener = new FocusListenerImpl(field);
 		initTextFields();
 		this.setVisible(true);
 		this.repaint();
@@ -50,9 +53,11 @@ public class SodokuField extends JPanel implements Observer{
 		for (int i=0; i<9; i++){
 			for (int j=0; j<9; j++){
 				this.txtFields[i][j] = new JTextField();
+				this.txtFields[i][j].setName(i + "." + j);
 				this.txtFields[i][j].setDocument(new JTextFieldLimit(1));
 				this.txtFields[i][j].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 				this.txtFields[i][j].setHorizontalAlignment(this.txtFields[i][j].getWidth()/2);
+				this.txtFields[i][j].addFocusListener(focusListener);
 				this.subFields[i/3][j/3].add(this.txtFields[i][j]);
 			}
 		}
@@ -65,12 +70,12 @@ public class SodokuField extends JPanel implements Observer{
 				int x = (int) ((Point)arg).getX();
 				int y = (int) ((Point)arg).getY();
 				try {
-					this.txtFields[x][y].setText(field.getFieldValue(x, y) + "");
-					this.txtFields[x][y].setBackground(Color.PINK);
+					this.txtFields[y][x].setText(field.getFieldValue(x, y) + "");
 					if (lastChange != null){
 						this.txtFields[(int) lastChange.getX()][(int) lastChange.getY()].setBackground(Color.WHITE);
 					}
-					lastChange = new Point(x, y);
+					this.txtFields[y][x].setBackground(Color.GREEN);
+					lastChange = new Point(y, x);
 				} catch (CoordinateOutOfBoundsException e) {
 					e.printStackTrace();
 				}
