@@ -43,7 +43,7 @@ public class Field extends Observable {
 
 	public void setFieldValue(int value, int x, int y)
 			throws IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
-		
+
 		setFieldValue(value, x, y, true);
 	}
 
@@ -61,8 +61,11 @@ public class Field extends Observable {
 		}
 
 		field[x][y].setValue(value);
-		setChanged();
-		notifyObservers(new Point(x, y));
+
+		if (notify) {
+			setChanged();
+			notifyObservers(new Point(x, y));
+		}
 	}
 
 	public void resetFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
