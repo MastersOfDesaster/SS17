@@ -1,0 +1,26 @@
+25.05.2017
+software:
+- write sudoku parser file format: http://norvig.com/sudoku.html
+- add locked fields after parsing that can't be edited
+- add live result-page / statistic
+	- Steps
+	- O(n)
+	- Pass/Fail
+	- Corrections-count
+- variable pause between steps
+- enum for algorithms
+- pause button for algorithms
+- implement more algorithms
+- logging
+
+optional:
+- save sudoku
+
+presentation:
+- explain sudoku
+- algorithms
+	- advantages / disadvantages
+	- O(n)
+	- graphical view / steps
+	- worst / best case
+- something out of the script
