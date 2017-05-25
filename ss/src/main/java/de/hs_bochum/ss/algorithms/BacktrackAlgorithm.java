@@ -23,16 +23,19 @@ public class BacktrackAlgorithm implements ISodokuSolver {
 			return true;
 		}
 
-		if (sudoku.isFieldLocked(x, y)) {
-			return solve(sudoku, x++, y);
+		if (sudoku.getFieldValue(x, y) != 0) {
+			return solve(sudoku, x+1, y);
 		} else {
-			for (byte i = 1; i < 9; i++) {
+			for (byte i = 1; i < 10; i++) {
 				sudoku.setFieldValue(i, x, y);
 				if (!sudoku.isFieldValid(x, y)) {
 					continue;
 				}
-				return solve(sudoku, x++, y);
+				if(solve(sudoku, x+1, y)){
+					return true;
+				};
 			}
+			sudoku.resetFieldValue(x, y);
 			return false;
 		}
 	}
