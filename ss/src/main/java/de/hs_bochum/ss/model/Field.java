@@ -42,7 +42,12 @@ public class Field extends Observable {
 
 	public void setFieldValue(byte value, int x, int y)
 			throws IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
+		
 		checkCoordinate(x, y);
+		
+		if (value < 1 || value > 9) {
+			throw new IsOutOfRangeException("Value is out of range!");
+		}
 		
 		if (field[x][y].isLocked()) {
 			throw new IsLockedException("This field is locked!");
@@ -51,6 +56,11 @@ public class Field extends Observable {
 		field[x][y].setValue(value);
 		setChanged();
 		notifyObservers();
+	}
+	
+	public void resetFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
+		checkCoordinate(x, y);
+		field[x][y].setValue(0);
 	}
 
 	public void setField(FieldValue[][] field) {
@@ -82,12 +92,12 @@ public class Field extends Observable {
 	}
 
 	public boolean isValid() throws CoordinateOutOfBoundsException {
-		Set<Byte> valueSet = new HashSet<Byte>();
-
 		// check if rows are valid
-		for (byte row = 0; row < 9; row++) {
-			for (byte col = 0; col < 0; col++) {
-				if (!valueSet.contains(getFieldValue(row, col))) {
+		valueSet.clear();
+		for (byte x = 0; x < 9; x++) {
+			for (byte y = 0; y < 0; y++) {
+				if (!isValueUnique(getFieldValue(x, y))) {
+					return false;
 				}
 			}
 		}
@@ -103,15 +113,15 @@ public class Field extends Observable {
 		return true;
 	}
 
-//	private boolean storeValue(byte value) {
-//		if (valueSet.contains(value)) {
-//			return false;
-//		} else {
-//			valueSet.add(value);
-//		}
-//
-//		return true;
-//	}
+	private boolean isValueUnique(byte value) {
+		if (valueSet.contains(value)) {
+			return false;
+		} else {
+			valueSet.add(value);
+		}
+
+		return true;
+	}
 
 	public boolean isFieldValid(int x, int y) {
 

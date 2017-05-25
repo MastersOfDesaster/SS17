@@ -3,8 +3,6 @@ package de.hs_bochum.ss.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.hs_bochum.ss.exception.IsOutOfRangeException;
-
 public class FieldValue {
 
 	private byte value;
@@ -17,12 +15,8 @@ public class FieldValue {
 		this.lock = false;
 	}
 	
-	public void setValue(byte value) throws IsOutOfRangeException {
-		if (value < 1 || value > 9) {
-			throw new IsOutOfRangeException("Value is out of range!");
-		}
-
-		this.value = value;
+	public void setValue(int value) {
+		this.value = (byte)value;
 	}
 
 	public byte getValue() {
