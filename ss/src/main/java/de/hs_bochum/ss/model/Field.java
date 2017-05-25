@@ -14,7 +14,7 @@ public class Field extends Observable {
 
 	private Set<Byte> valueSet = new HashSet<Byte>();
 
-	public Field(FieldValue[][] field) {
+	public Field() {
 		this.field = new FieldValue[9][9];
 		for (int j = 0; j < field.length; j++) {
 			for (int i = 0; i < field[j].length; i++) {
