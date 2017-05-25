@@ -2,6 +2,8 @@ package de.hs_bochum.ss.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,6 +27,8 @@ public class Window extends JFrame {
 	
 	private ISodokuSolver solver;
 	
+	private ExecutorService executor;
+	
 	public Window() {
 		this.solver = new BacktrackAlgorithm();
 		setGUIParams();
@@ -32,7 +36,7 @@ public class Window extends JFrame {
 		addGUIObjects();
 		addActionListener();
 		this.repaint();
-		
+		executor = Executors.newCachedThreadPool();
 	}
 
 	private void addActionListener() {
@@ -40,7 +44,17 @@ public class Window extends JFrame {
 			solver.nextStep();
 		});
 		this.btnRun.addActionListener(al -> {
-			solver.solve(guiField.getField());
+			executor.execute(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						solver.solve(guiField.getField());
+					}catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
 		});
 		this.cbAlgorithm.addActionListener(al -> {
 			//TODO Algorithmus über Enum wechseln

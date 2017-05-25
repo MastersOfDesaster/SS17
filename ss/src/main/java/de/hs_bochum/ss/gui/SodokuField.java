@@ -2,18 +2,24 @@ package de.hs_bochum.ss.gui;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.model.Field;
 
-public class SodokuField extends JPanel{
+public class SodokuField extends JPanel implements Observer{
 	
 	private static final long serialVersionUID = 1L;
 
 	private Field field;
+	
+	private Point lastChange;
 	
 	private JTextField[][] txtFields;
 	private JPanel[][] subFields;
@@ -24,6 +30,7 @@ public class SodokuField extends JPanel{
 		initTextFields();
 		this.setVisible(true);
 		this.repaint();
+		field.addObserver(this);
 	}
 	
 	public Field getField(){
@@ -37,7 +44,6 @@ public class SodokuField extends JPanel{
 			for (int j=0; j<3; j++){
 				this.subFields[i][j] = new JPanel(new GridLayout(3, 3));
 				this.subFields[i][j].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
-//				this.subFields[i][j].setBackground(Color.GREEN);
 				this.add(this.subFields[i][j]);
 			}
 		}
@@ -51,6 +57,35 @@ public class SodokuField extends JPanel{
 			}
 		}
 	}
-	
-	
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (o instanceof Field){
+			if (arg instanceof Point){
+				int x = (int) ((Point)arg).getX();
+				int y = (int) ((Point)arg).getY();
+				try {
+					this.txtFields[x][y].setText(field.getFieldValue(x, y) + "");
+					this.txtFields[x][y].setBackground(Color.PINK);
+					if (lastChange != null){
+						this.txtFields[(int) lastChange.getX()][(int) lastChange.getY()].setBackground(Color.WHITE);
+					}
+					lastChange = new Point(x, y);
+				} catch (CoordinateOutOfBoundsException e) {
+					e.printStackTrace();
+				}
+			}
+			else{
+				for (int i=0; i<9; i++){
+					for (int j=0; j<9; j++){
+						try {
+							this.txtFields[j][i].setText(field.getFieldValue(i, j) + "");
+						} catch (CoordinateOutOfBoundsException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+	}
 }

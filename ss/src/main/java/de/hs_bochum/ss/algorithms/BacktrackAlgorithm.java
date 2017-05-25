@@ -9,7 +9,6 @@ public class BacktrackAlgorithm implements ISodokuSolver {
 	public void solve(Field sudoku) throws Exception {
 		// TODO Auto-generated method stub
 		solve(sudoku, 0, 0);
-
 	}
 
 	public boolean solve(Field sudoku, int x, int y) throws Exception {

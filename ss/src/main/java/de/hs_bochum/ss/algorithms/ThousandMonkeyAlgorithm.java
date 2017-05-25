@@ -12,7 +12,7 @@ public class ThousandMonkeyAlgorithm implements ISodokuSolver{
 
 	@Override
 	public void solve(Field sudoku) throws CoordinateOutOfBoundsException, IsLockedException, IsOutOfRangeException {
-		Random rand = new Random();	
+		Random rand = new Random();
 		do{
 		for(int y = 0; y < 9; y++){
 			for(int x = 0; x < 9; x++){
@@ -23,7 +23,6 @@ public class ThousandMonkeyAlgorithm implements ISodokuSolver{
 		}
 		print(sudoku);
 		}while(!sudoku.isValid());
-		
 	}
 
 	@Override
