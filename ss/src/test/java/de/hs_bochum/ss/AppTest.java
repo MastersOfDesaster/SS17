@@ -1,4 +1,4 @@
-package de.hs_bochum.sodoku.solver;
+package de.hs_bochum.ss;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
