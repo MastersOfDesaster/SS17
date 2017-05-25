@@ -4,7 +4,7 @@ import de.hs_bochum.ss.model.Field;
 
 public abstract class ISudokuSolver {
 	
-	protected long waitMillis = 1000;
+	protected long waitMillis = 100;
 		
 	public abstract void solve(Field sudoku) throws Exception;
 	
