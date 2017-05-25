@@ -6,7 +6,7 @@ public class FieldValue {
 
 	private byte value;
 	
-	private final boolean lock;
+	private boolean lock;
 	
 	public FieldValue(boolean lock) {
 		if(lock)
@@ -40,6 +40,10 @@ public class FieldValue {
 	
 	public byte getValue(){
 		return this.value;
+	}
+	
+	public void lockValue(){
+		this.lock = true;
 	}
 	
 }
