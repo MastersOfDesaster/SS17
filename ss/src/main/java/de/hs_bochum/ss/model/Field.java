@@ -23,7 +23,7 @@ public class Field extends Observable {
 		}
 	}
 	
-	public void clear() {
+	public void init() {
 		this.field = new FieldValue[9][9];
 		for (int j = 0; j < field.length; j++) {
 			for (int i = 0; i < field[j].length; i++) {
@@ -117,14 +117,14 @@ public class Field extends Observable {
 
 		// check columns
 		for (int xx = 0; xx < 9; xx++) {
-			if (field[xx][y].getValue() == field[x][y].getValue()) {
+			if ((xx != x) && (field[xx][y].getValue() == field[x][y].getValue())) {
 				return false;
 			}
 		}
 
 		// check rows
 		for (int yy = 0; yy < 9; yy++) {
-			if (field[x][yy].getValue() == field[x][y].getValue()) {
+			if ((yy != y) && (field[x][yy].getValue() == field[x][y].getValue())) {
 				return false;
 			}
 		}
