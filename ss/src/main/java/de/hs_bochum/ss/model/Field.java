@@ -1,6 +1,5 @@
 package de.hs_bochum.ss.model;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.util.HashSet;
 import java.util.Observable;
@@ -71,6 +70,8 @@ public class Field extends Observable {
 	public void resetFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		field[x][y].setValue(0);
+		setChanged();
+		notifyObservers();
 	}
 
 	public void setField(FieldValue[][] field) {
