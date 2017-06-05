@@ -35,7 +35,8 @@ public class Window extends JFrame {
 		initGUIObjects();
 		addGUIObjects();
 		addActionListener();
-		this.repaint();
+		//this.repaint();
+		this.setVisible(true);
 		executor = Executors.newCachedThreadPool();
 	}
 

@@ -20,7 +20,5 @@ public abstract class ISudokuSolver {
 
 	public int getSteps() {
 		return steps;
-	}
-	
-	
+	}	
 }

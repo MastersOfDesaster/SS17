@@ -7,7 +7,6 @@ import de.hs_bochum.ss.model.Field;
 public class BacktrackAlgorithm extends ISudokuSolver {
 
 	public void solve(Field sudoku) throws Exception {
-		// TODO Auto-generated method stub
 		solve(sudoku, 0, 0);
 	}
 
