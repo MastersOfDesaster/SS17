@@ -14,8 +14,9 @@ import javax.swing.text.StyleConstants;
 
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.model.Field;
+import de.hs_bochum.ss.model.FieldValue;
 
-public class SodokuField extends JPanel implements Observer{
+public class SudokuField extends JPanel implements Observer{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +29,7 @@ public class SodokuField extends JPanel implements Observer{
 	private JTextPane[][] txtFields;
 	private JPanel[][] subFields;
 	
-	public SodokuField() {
+	public SudokuField() {
 		this.setLayout(new GridLayout(3, 3));
 		this.field = new Field();
 		this.focusListener = new FocusListenerImpl(field);
@@ -65,8 +66,8 @@ public class SodokuField extends JPanel implements Observer{
 				txt.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 				txt.addFocusListener(focusListener);
 				
-				txt.setText("1 2 3\n4 5 6\n7 8 9");
-//				txt.setText("1");
+//				txt.setText("1 2 3\n4 5 6\n7 8 9");
+				txt.setText("");
 				
 				this.txtFields[i][j] = txt;
 				this.subFields[i/3][j/3].add(txt);
@@ -77,31 +78,68 @@ public class SodokuField extends JPanel implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		if (o instanceof Field){
+			//update single cell
 			if (arg instanceof Point){
 				int x = (int) ((Point)arg).getX();
 				int y = (int) ((Point)arg).getY();
 				try {
-					this.txtFields[y][x].setText(field.getFieldValue(x, y) + "");
+					updateCell(field.getFieldValue(x,y),x,y);
 					if (lastChange != null){
-						this.txtFields[(int) lastChange.getX()][(int) lastChange.getY()].setBackground(Color.WHITE);
+						this.txtFields[(int) lastChange.getY()][(int) lastChange.getX()].setBackground(Color.WHITE);
 					}
 					this.txtFields[y][x].setBackground(Color.GREEN);
-					lastChange = new Point(y, x);
+					lastChange = new Point(x, y);
 				} catch (CoordinateOutOfBoundsException e) {
 					e.printStackTrace();
 				}
 			}
+			//update whole field
 			else{
-				for (int i=0; i<9; i++){
-					for (int j=0; j<9; j++){
+				for (int y=0; y<9; y++){
+					for (int x=0; x<9; x++){
 						try {
-							this.txtFields[j][i].setText(field.getFieldValue(i, j) + "");
+								updateCell(field.getFieldValue(x,y),x,y);						
 						} catch (CoordinateOutOfBoundsException e) {
 							e.printStackTrace();
 						}
 					}
 				}
 			}
+		}
+	}
+	
+	
+	private void updateCell(FieldValue value, int x, int y){
+		if(value.getValue() == 0){
+			if(value.usedValueSet().isEmpty()){
+				this.txtFields[x][y].setText("");
+			}else{
+				String text = new String();
+				for(Byte i=1;i<=9;i++){
+					if(value.usedValueSet().contains(i)){
+						if(i % 3 == 0){
+							text = text + i;
+							if(i != 9){
+								text = text + "\n";	
+							}
+						}else{
+							text = text + i +" ";
+						}
+					}else{
+						if(i % 3 == 0){
+							text = text + " ";
+							if(i != 9){
+								text = text + "\n";	
+							}
+						}else{
+							text = text + "  ";
+						}
+					}
+				}
+				this.txtFields[x][y].setText(text);
+			}
+		}else{
+			this.txtFields[x][y].setText(String.valueOf(value.getValue()));
 		}
 	}
 }

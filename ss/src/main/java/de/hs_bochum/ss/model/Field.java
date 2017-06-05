@@ -80,11 +80,18 @@ public class Field extends Observable {
 		notifyObservers();
 	}
 
-	public byte getFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
+	public byte getFieldByte(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		return field[x][y].getValue();
 
 	}
+	
+	public FieldValue getFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
+		checkCoordinate(x, y);
+		return field[x][y];
+
+	}
+
 
 	public boolean isFieldLocked(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
@@ -96,6 +103,8 @@ public class Field extends Observable {
 			checkCoordinate(x, y);
 			checkValue(value);
 			field[x][y].usedValueSet().add((byte) value);
+			setChanged();
+			notifyObservers(new Point(x, y));
 		} catch (CoordinateOutOfBoundsException e) {
 			e.printStackTrace();
 		} catch (IsOutOfRangeException e) {
@@ -130,7 +139,7 @@ public class Field extends Observable {
 
 	public void incrementSingleField(int x, int y)
 			throws IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
-		setFieldValue((byte) (getFieldValue(x, y) + 1), x, y);
+		setFieldValue((byte) (getFieldByte(x, y) + 1), x, y);
 	}
 
 	public boolean isValueValid(int x, int y, int value) {

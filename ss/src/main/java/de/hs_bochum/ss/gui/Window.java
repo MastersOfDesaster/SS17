@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
+import de.hs_bochum.ss.algorithms.CrookAlgorithm;
 import de.hs_bochum.ss.interfaces.ISudokuSolver;
 
 public class Window extends JFrame {
@@ -21,7 +22,7 @@ public class Window extends JFrame {
 	private JComboBox<String> cbAlgorithm;
 	private JButton btnSingle;
 	private JButton btnRun;
-	private SodokuField guiField;
+	private SudokuField guiField;
 	private JPanel southGrid;
 	
 	private ISudokuSolver solver;
@@ -29,7 +30,7 @@ public class Window extends JFrame {
 	private ExecutorService executor;
 	
 	public Window() {
-		this.solver = new BacktrackAlgorithm();
+		this.solver = new CrookAlgorithm();
 		setGUIParams();
 		initGUIObjects();
 		addGUIObjects();
@@ -71,7 +72,7 @@ public class Window extends JFrame {
 
 	private void initGUIObjects() {
 		this.southGrid = new JPanel(new GridLayout(1, 3, 25, 25));
-		this.guiField = new SodokuField();
+		this.guiField = new SudokuField();
 		this.btnRun = new JButton("Run");
 		this.btnSingle = new JButton("Single Step");
 		this.cbAlgorithm = new JComboBox<String>(new String[]{"Thousand Monkeys", "Brute Force", "Dancing Links", "Pencil and Paper"});

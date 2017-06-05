@@ -21,7 +21,7 @@ public class BacktrackAlgorithm extends ISudokuSolver {
 			return true;
 		}
 
-		if (sudoku.getFieldValue(x, y) != 0) {
+		if (sudoku.getFieldByte(x, y) != 0) {
 			return solve(sudoku, x+1, y);
 		} else {
 			for (byte i = 1; i < 10; i++) {
@@ -47,7 +47,7 @@ public class BacktrackAlgorithm extends ISudokuSolver {
 		System.out.println();
 		for(int y = 0; y < 9; y++){
 			for(int x = 0; x < 9; x++){
-				System.out.print(sudoku.getFieldValue(x, y) + " ");
+				System.out.print(sudoku.getFieldByte(x, y) + " ");
 			}
 			System.out.println();
 		}

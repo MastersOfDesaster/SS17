@@ -5,6 +5,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
@@ -25,7 +26,7 @@ public class FocusListenerImpl implements FocusListener {
 	}
 
 	public void focusLost(FocusEvent e) {
-		JTextField txt = (JTextField)e.getComponent();
+		JTextPane txt = (JTextPane)e.getComponent();
 		int x = Integer.parseInt((txt.getName().split("\\."))[0]);
 		int y = Integer.parseInt((txt.getName().split("\\."))[1]);
 		try {
