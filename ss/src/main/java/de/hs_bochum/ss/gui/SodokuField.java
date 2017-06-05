@@ -24,6 +24,7 @@ public class SodokuField extends JPanel implements Observer{
 	private Point lastChange;
 	
 	private JTextField[][] txtFields;
+	private JTextField[][] usedValueFields;
 	private JPanel[][] subFields;
 	
 	public SodokuField() {
@@ -59,6 +60,11 @@ public class SodokuField extends JPanel implements Observer{
 				this.txtFields[i][j].setHorizontalAlignment(this.txtFields[i][j].getWidth()/2);
 				this.txtFields[i][j].addFocusListener(focusListener);
 				this.subFields[i/3][j/3].add(this.txtFields[i][j]);
+				
+//				JTextField usedValueField = new JTextField();
+////				usedVal
+//				
+//				this.usedValueFields[i][j] = usedValueField;
 			}
 		}
 	}

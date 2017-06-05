@@ -14,23 +14,23 @@ public class FieldValue {
 	public FieldValue() {
 		this.lock = false;
 	}
-	
+
 	public void setValue(int value) {
-		this.value = (byte)value;
+		this.value = (byte) value;
 	}
 
 	public byte getValue() {
 		return this.value;
 	}
-	
+
 	public void lock() {
 		this.lock = true;
 	}
-	
+
 	public boolean isLocked() {
 		return lock;
 	}
-	
+
 	public Set<Byte> usedValueSet() {
 		return usedValueSet;
 	}

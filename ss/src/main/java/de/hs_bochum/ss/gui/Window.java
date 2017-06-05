@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
-import de.hs_bochum.ss.algorithms.ThousandMonkeyAlgorithm;
 import de.hs_bochum.ss.interfaces.ISudokuSolver;
 
 public class Window extends JFrame {

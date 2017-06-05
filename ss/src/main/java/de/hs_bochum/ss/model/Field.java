@@ -91,9 +91,40 @@ public class Field extends Observable {
 		return field[x][y].isLocked();
 	}
 
+	public void addUsedValue(int x, int y, byte value) {
+		try {
+			checkCoordinate(x, y);
+			checkValue(value);
+			field[x][y].usedValueSet().add((byte) value);
+		} catch (CoordinateOutOfBoundsException e) {
+			e.printStackTrace();
+		} catch (IsOutOfRangeException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void removeUsedValue(int x, int y, byte value) {
+		try {
+			checkCoordinate(x, y);
+			checkValue(value);
+			field[x][y].usedValueSet().remove(value);
+		} catch (CoordinateOutOfBoundsException e) {
+			e.printStackTrace();
+		} catch (IsOutOfRangeException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void checkCoordinate(int x, int y) throws CoordinateOutOfBoundsException {
 		if (x < 0 || x > 8 || y < 0 || y > 8) {
-			throw new CoordinateOutOfBoundsException("Invalid Index!");
+			throw new CoordinateOutOfBoundsException("Coordinate is out of Bounds!");
+		}
+	}
+	
+	private void checkValue(int value) throws IsOutOfRangeException
+	{
+		if (value < 1 || value > 9) {
+			throw new IsOutOfRangeException("Value is out of Range!");
 		}
 	}
 

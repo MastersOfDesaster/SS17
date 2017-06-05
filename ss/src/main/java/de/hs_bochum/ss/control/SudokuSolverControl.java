@@ -10,7 +10,6 @@ public class SudokuSolverControl {
 	private Window view;
 	private Field model;
 	
-	
 	public ISudokuSolver getSolver() {
 		return solver;
 	}
