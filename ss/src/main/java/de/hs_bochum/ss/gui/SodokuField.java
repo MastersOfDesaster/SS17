@@ -8,7 +8,9 @@ import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.model.Field;
@@ -23,8 +25,7 @@ public class SodokuField extends JPanel implements Observer{
 	
 	private Point lastChange;
 	
-	private JTextField[][] txtFields;
-	private JTextField[][] usedValueFields;
+	private JTextPane[][] txtFields;
 	private JPanel[][] subFields;
 	
 	public SodokuField() {
@@ -43,8 +44,7 @@ public class SodokuField extends JPanel implements Observer{
 	
 	public void initTextFields(){
 		this.subFields = new JPanel[3][3];
-		this.txtFields = new JTextField[9][9];
-		this.usedValueFields = new JTextField[9][9];
+		this.txtFields = new JTextPane[9][9];
 		for (int i=0; i<3; i++){
 			for (int j=0; j<3; j++){
 				this.subFields[i][j] = new JPanel(new GridLayout(3, 3));
@@ -54,17 +54,22 @@ public class SodokuField extends JPanel implements Observer{
 		}
 		for (int i=0; i<9; i++){
 			for (int j=0; j<9; j++){
-				this.txtFields[i][j] = new JTextField();
-				this.txtFields[i][j].setName(i + "." + j);
-				this.txtFields[i][j].setDocument(new JTextFieldLimit(1));
-				this.txtFields[i][j].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-				this.txtFields[i][j].setHorizontalAlignment(this.txtFields[i][j].getWidth()/2);
-				this.txtFields[i][j].addFocusListener(focusListener);
-				this.subFields[i/3][j/3].add(this.txtFields[i][j]);
+				// center text
+				SimpleAttributeSet attribs = new SimpleAttributeSet();
+				StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_CENTER);
+				StyleConstants.setFontSize(attribs, 30);
 				
-				JTextField usedValueField = new JTextField();
-				usedValueField.setText("123456789");
-				this.usedValueFields[i][j] = usedValueField;
+				JTextPane txt = new JTextPane();
+				txt.setParagraphAttributes(attribs, true);	
+				txt.setName(i + "." + j);
+				txt.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+				txt.addFocusListener(focusListener);
+				
+				txt.setText("1 2 3\n4 5 6\n7 8 9");
+//				txt.setText("1");
+				
+				this.txtFields[i][j] = txt;
+				this.subFields[i/3][j/3].add(txt);
 			}
 		}
 	}
