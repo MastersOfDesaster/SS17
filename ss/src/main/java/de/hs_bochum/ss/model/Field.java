@@ -133,18 +133,17 @@ public class Field extends Observable {
 		setFieldValue((byte) (getFieldValue(x, y) + 1), x, y);
 	}
 
-	public boolean isFieldValid(int x, int y) {
-
+	public boolean isValueValid(int x, int y, int value) {
 		// check columns
 		for (int xx = 0; xx < 9; xx++) {
-			if ((xx != x) && (field[xx][y].getValue() == field[x][y].getValue())) {
+			if ((xx != x) && (field[xx][y].getValue() == value)) {
 				return false;
 			}
 		}
 
 		// check rows
 		for (int yy = 0; yy < 9; yy++) {
-			if ((yy != y) && (field[x][yy].getValue() == field[x][y].getValue())) {
+			if ((yy != y) && (field[x][yy].getValue() == value)) {
 				return false;
 			}
 		}
@@ -154,7 +153,7 @@ public class Field extends Observable {
 		int y1 = (y / 3) * 3;
 		for (int xx = x1; xx < x1 + 3; xx++) {
 			for (int yy = y1; yy < y1 + 3; yy++) {
-				if ((xx != x || yy != y) && (field[xx][yy].getValue() == field[x][y].getValue())) {
+				if ((xx != x || yy != y) && (field[xx][yy].getValue() == value)) {
 					return false;
 				}
 			}

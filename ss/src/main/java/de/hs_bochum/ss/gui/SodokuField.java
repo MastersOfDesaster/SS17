@@ -44,6 +44,7 @@ public class SodokuField extends JPanel implements Observer{
 	public void initTextFields(){
 		this.subFields = new JPanel[3][3];
 		this.txtFields = new JTextField[9][9];
+		this.usedValueFields = new JTextField[9][9];
 		for (int i=0; i<3; i++){
 			for (int j=0; j<3; j++){
 				this.subFields[i][j] = new JPanel(new GridLayout(3, 3));
@@ -61,10 +62,9 @@ public class SodokuField extends JPanel implements Observer{
 				this.txtFields[i][j].addFocusListener(focusListener);
 				this.subFields[i/3][j/3].add(this.txtFields[i][j]);
 				
-//				JTextField usedValueField = new JTextField();
-////				usedVal
-//				
-//				this.usedValueFields[i][j] = usedValueField;
+				JTextField usedValueField = new JTextField();
+				usedValueField.setText("123456789");
+				this.usedValueFields[i][j] = usedValueField;
 			}
 		}
 	}

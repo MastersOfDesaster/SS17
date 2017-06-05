@@ -29,8 +29,11 @@ public class FocusListenerImpl implements FocusListener {
 		int x = Integer.parseInt((txt.getName().split("\\."))[0]);
 		int y = Integer.parseInt((txt.getName().split("\\."))[1]);
 		try {
+			if (txt.getText().isEmpty()) {
+				return;
+			}
 			field.setFieldValue(Byte.parseByte(txt.getText()), x, y, false);
-			if(field.isFieldValid(x, y))
+			if(field.isValueValid(x, y, Integer.parseInt(txt.getText())))
 				txt.setBackground(Color.WHITE);
 			else{
 				txt.setBackground(Color.PINK);
