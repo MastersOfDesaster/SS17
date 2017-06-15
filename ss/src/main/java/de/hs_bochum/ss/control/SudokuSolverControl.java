@@ -149,6 +149,10 @@ public class SudokuSolverControl {
 		view.showError(e);
 		stopAlgo();
 	}
+	
+	public void setWaittime(int millis){
+		algo.setMillisToWait(millis);
+	}
 
 	public boolean isCellLocked(int x, int y) {
 		return model.isCellLocked(x, y);
