@@ -18,35 +18,37 @@ public class SudokuSolverControl {
 	private SudokuView view;
 	private GridModel model;
 	private ReportModel report;
-	
+
 	public SudokuSolverControl(GridModel model, SudokuView view, GridValidator validator) {
 		this.model = model;
 		this.view = view;
 		this.validator = validator;
+
+		report = new ReportModel();
 	}
-	
+
 	public boolean isValid() {
 		return validator.isValid();
 	}
-	
+
 	public boolean isValid(int x, int y) {
 		return validator.isValid(x, y);
 	}
-	
+
 	public boolean isValueValid(int x, int y, int value) {
 		try {
 			return validator.isValueValid(x, y, value);
 		} catch (CoordinateOutOfBoundsException e) {
 			handleError(e);
 		}
-		
+
 		return false;
 	}
-	
+
 	public GridCell getCell(int x, int y) throws CoordinateOutOfBoundsException {
-			return model.getCell(x, y);
+		return model.getCell(x, y);
 	}
-	
+
 	public void resetCell(int x, int y) {
 		try {
 			model.resetCell(x, y);
@@ -54,7 +56,7 @@ public class SudokuSolverControl {
 			handleError(e);
 		}
 	}
-	
+
 	public void setCellValueLocked(int x, int y, int value) {
 		try {
 			model.setCellValueLocked(x, y, value);
@@ -62,31 +64,34 @@ public class SudokuSolverControl {
 			handleError(e);
 		}
 	}
-	
+
 	public void setCellValue(int x, int y, int value) {
 		try {
 			model.setCellValue(x, y, value);
+			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);
 		}
 	}
-	
+
 	public void setCellValue(int x, int y, int value, boolean notify) {
 		try {
 			model.setCellValue(x, y, value);
+			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);
 		}
 	}
-	
+
 	public void incrementCellValue(int x, int y) {
 		try {
 			model.incrementCellValue(x, y);
+			report.increaseWriteCount();
 		} catch (CoordinateOutOfBoundsException e) {
 			handleError(e);
 		}
 	}
-	
+
 	public void setAlgo(Algorithm algo) {
 		try {
 			this.algo = algo.toStrategy(this);
@@ -94,7 +99,7 @@ public class SudokuSolverControl {
 			handleError(e);
 		}
 	}
-	
+
 	public void startAlgo() {
 		if (algo != null) {
 			algo.start();
@@ -102,7 +107,7 @@ public class SudokuSolverControl {
 			view.showError(new NullPointerException("Algo is null!"));
 		}
 	}
-	
+
 	public void stopAlgo() {
 		if (algo != null) {
 			algo.pause();
@@ -110,7 +115,7 @@ public class SudokuSolverControl {
 			view.showError(new NullPointerException("Algo is null!"));
 		}
 	}
-	
+
 	public void nextStepAlgo() {
 		if (algo != null) {
 			algo.pause();
@@ -119,7 +124,7 @@ public class SudokuSolverControl {
 			view.showError(new NullPointerException("Algo is null!"));
 		}
 	}
-	
+
 	public void handleError(Exception e) {
 		view.showError(e);
 		stopAlgo();

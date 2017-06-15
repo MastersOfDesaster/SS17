@@ -176,9 +176,9 @@ public class GridModel extends Observable {
 		}
 		return gridSquare;
 	}
-
+	
 	public boolean isValid() {
-		return true;
+		return (invalidCellCount == 0);
 	}
 
 	private void checkCoordinate(int x, int y) throws CoordinateOutOfBoundsException {
