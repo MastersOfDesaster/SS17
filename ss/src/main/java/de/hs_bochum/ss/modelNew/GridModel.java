@@ -77,7 +77,7 @@ public class GridModel extends Observable {
 		field[x][y].setValue(1 + field[x][y].getValue());
 	}
 
-	public void resetFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
+	public void resetCell(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		field[x][y].setValue(0);
 		setChanged();
