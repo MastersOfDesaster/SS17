@@ -1,15 +1,16 @@
 package de.hs_bochum.ss.interfaces;
 
-import com.sun.javafx.image.impl.ByteIndexed.Getter;
-
 import de.hs_bochum.ss.algorithms.AbstractAlgorithm;
 import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
 import de.hs_bochum.ss.algorithms.CrookAlgorithm;
+import de.hs_bochum.ss.algorithms.ThousandMonkeyAlgorithm;
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.UnknownAlgorithmException;
 
 public enum Algorithm {
-	BACKTRACK("Backtrack Algorithmus"), CROOK("Crook ALgorithmus");
+	BACKTRACK("Backtrack Algorithmus"), 
+	CROOK("Crook Algorithmus"), 
+	THOUSAND_MONKEYS("Thousand Monkey Algorithmus");
 
 	private final String name;
 
@@ -27,6 +28,8 @@ public enum Algorithm {
 			return new BacktrackAlgorithm(control);
 		case CROOK:
 			return new CrookAlgorithm(control);
+		case THOUSAND_MONKEYS:
+			return new ThousandMonkeyAlgorithm(control);
 		default:
 			throw new UnknownAlgorithmException(String.format("%s is unknown", toString()));
 		}
