@@ -60,6 +60,7 @@ public class SudokuSolverControl {
 	public void setCellValueLocked(int x, int y, int value) {
 		try {
 			model.setCellValueLocked(x, y, value);
+			model.setCellValid(x, y, validator.isValid(x, y));
 		} catch (IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);
 		}
@@ -68,6 +69,7 @@ public class SudokuSolverControl {
 	public void setCellValue(int x, int y, int value) {
 		try {
 			model.setCellValue(x, y, value);
+			model.setCellValid(x, y, validator.isValid(x, y));
 			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);
@@ -77,6 +79,7 @@ public class SudokuSolverControl {
 	public void setCellValue(int x, int y, int value, boolean notify) {
 		try {
 			model.setCellValue(x, y, value);
+			model.setCellValid(x, y, validator.isValid(x, y));
 			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);

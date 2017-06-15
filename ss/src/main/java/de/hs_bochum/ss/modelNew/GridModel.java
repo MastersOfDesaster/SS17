@@ -181,7 +181,13 @@ public class GridModel extends Observable {
 		return (invalidCellCount == 0);
 	}
 	
-	public boolean isCellValid(int x, int y) {
+	public void setCellValid(int x, int y, boolean valid) throws CoordinateOutOfBoundsException {
+		checkCoordinate(x, y);
+		grid[x][y].setValid(valid);
+	}
+	
+	public boolean isCellValid(int x, int y) throws CoordinateOutOfBoundsException {
+		checkCoordinate(x, y);
 		return grid[x][y].isValid();
 	}
 
