@@ -2,6 +2,7 @@ package de.hs_bochum.ss.algorithms;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
+import de.hs_bochum.ss.modelNew.GridCell;
 
 public class CrookAlgorithm extends AbstractAlgorithm{
 
@@ -41,9 +42,13 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	
 	private void findForced(){
 		for(int i = 0; i < 9; i++){
-			
+			for(GridCell cell : control.getColumn(i)){
+				
+				for(int v = 1; v < 10; v++){
+					
+				}
+			}			
 		}
-		control.getColumn(0);
 		
 		
 		//look for naked single usw.

@@ -130,7 +130,7 @@ public class SudokuSolverControl {
 
 	public void stopAlgo() {
 		if (algo != null) {
-			algo.pause();
+			algo.stop();
 		} else {
 			view.showError(new NullPointerException("Algo is null!"));
 		}

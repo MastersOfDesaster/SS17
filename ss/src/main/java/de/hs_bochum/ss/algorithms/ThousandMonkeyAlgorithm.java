@@ -30,7 +30,7 @@ public class ThousandMonkeyAlgorithm extends AbstractAlgorithm{
 		}else{
 			wait(waitMillis);
 		}
-		}while(!control.isValid());
+		}while(!control.isValid() && running);
 	}
 
 

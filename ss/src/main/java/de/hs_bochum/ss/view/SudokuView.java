@@ -70,7 +70,7 @@ public class SudokuView extends JFrame{
 			btnStart.setEnabled(true);
 		});
 		this.btnStop.addActionListener(al -> {
-			control.startAlgo();
+			control.stopAlgo();
 			btnStart.setEnabled(true);
 		});
 		this.cbAlgorithm.addActionListener(al -> {
