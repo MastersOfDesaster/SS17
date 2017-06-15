@@ -97,6 +97,7 @@ public class GridModel extends Observable {
 		checkCoordinate(x, y);
 		checkValue(value);
 		grid[x][y].removePossibleValue(value);
+		startNotify(new Point(x, y));
 	}
 
 	public GridCell[][] getField() {

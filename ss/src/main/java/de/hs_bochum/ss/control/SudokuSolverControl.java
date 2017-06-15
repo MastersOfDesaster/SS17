@@ -198,6 +198,11 @@ public class SudokuSolverControl {
 	public long getWaitMillis(){
 		return algo.getWaitMillis();
 	}
+
+	public void removePossibleValue(int x, int y, int value) throws IsOutOfRangeException, CoordinateOutOfBoundsException {
+		model.removePossibleValue(x, y, value);
+		
+	}
 	
 	public void resetSudoku(){
 		model.reset();

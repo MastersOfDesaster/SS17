@@ -1,7 +1,10 @@
 package de.hs_bochum.ss.algorithms;
 
+import java.util.Iterator;
+
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
+import de.hs_bochum.ss.exception.IsOutOfRangeException;
 import de.hs_bochum.ss.modelNew.GridCell;
 
 public class CrookAlgorithm extends AbstractAlgorithm{
@@ -13,9 +16,10 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 
 	public void solve() throws Exception {
 		// TODO Auto-generated method stub
-		findForced();
 		mark();
-		findPreemptives();
+		findSingle();
+		//findForced();
+		//findPreemptives();
 		
 	}
 	
@@ -33,7 +37,9 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 							if(paused){
 								wait();
 							}else{
-								wait(waitMillis);
+								if(waitMillis != 0){
+									wait(waitMillis);		
+								}
 							}
 						}
 					}
@@ -42,6 +48,32 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 		}
 		System.out.println("Finished marking");
 	}
+	
+	private void findSingle() throws CoordinateOutOfBoundsException, IsOutOfRangeException{
+		for(int y = 0; y <= 8; y++){
+			for(int x = 0; x <= 8; x++){
+				if(!running){
+					return;
+				}
+				GridCell cell = control.getCell(x, y);
+				if(!cell.isLocked()){
+					Iterator<Integer> iterator = cell.getPossibleValues().iterator();
+					int value;
+					if(iterator.hasNext()){
+						value = iterator.next();
+					}else{
+						continue;
+					}
+					if(!iterator.hasNext()){
+						control.setCellValue(x, y, value);
+						control.removePossibleValue(x, y, value);
+						cell.removePossibleValue(value);
+					}
+				}
+			}
+		}
+	}
+	
 	
 	private void findForced(){
 		for(int i = 0; i < 9; i++){
