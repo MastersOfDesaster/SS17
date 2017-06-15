@@ -141,11 +141,11 @@ public class GridModel extends Observable {
 		this.solved = true;
 	}
 
-	public GridCell[] getRow(int row) {
+	public GridCell[] getColumn(int row) {
 		return grid[row];
 	}
 
-	public GridCell[] getColumn(int column) {
+	public GridCell[] getRow(int column) {
 		GridCell[] gridColumn = new GridCell[9];
 		for(int i=0; i<grid.length; i++){
 			gridColumn[i] = grid[i][column]; 
@@ -155,9 +155,9 @@ public class GridModel extends Observable {
 
 	public GridCell[][] getSquare(int x, int y) {
 		GridCell[][] gridSquare = new GridCell[3][3];
-		for (int r = 0; r < 3; r++) {
-			for (int c = 0; c < 3; c++) {
-				gridSquare[r][c] = grid[r + x * 3][c + y * 3];
+		for (int ix = 0; ix < 3; ix++) {
+			for (int iy = 0; iy < 3; iy++) {
+				gridSquare[ix][iy] = grid[x * 3 + ix][y * 3 + iy];
 			}
 		}
 		return gridSquare;
