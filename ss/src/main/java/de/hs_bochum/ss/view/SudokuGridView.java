@@ -115,4 +115,8 @@ public class SudokuGridView extends JPanel implements Observer {
 		this.gridViews[x][y].setPossibleValueText(value.getPossibleValues());
 		this.gridViews[x][y].setColor((mainView.isCellValid(x, y) ? Color.WHITE : Color.PINK));
 	}
+	
+	public void resetLastChanged(){
+		this.gridViews[(int) lastChange.getX()][(int) lastChange.getY()].setBackground(Color.WHITE);
+	}
 }
