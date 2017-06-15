@@ -98,10 +98,8 @@ public class GridValidator {
 	public boolean checkRow(int y) {
 		Set<Integer> valueSet = new HashSet<Integer>();
 
-		System.out.println("row: " + y);
 		GridCell row[] = model.getRow(y);
 		for (int x = 0; x < 9; x++) {
-			System.out.print(row[x].getValue());
 			if (row[x].getValue() != 0) {
 				if (valueSet.contains(row[x].getValue())) {
 					return false;
@@ -111,8 +109,6 @@ public class GridValidator {
 			}
 		}
 		
-		System.out.println("");
-
 		return true;
 	}
 

@@ -180,11 +180,11 @@ public class SudokuSolverControl {
 	}
 	
 	public GridCell[] getRow(int row) {
-		return model.getRow(row);
+		return model.getColumn(row);
 	}
 
 	public GridCell[] getColumn(int column) {
-		return model.getColumn(column);
+		return model.getRow(column);
 	}
 
 	public GridCell[][] getSquare(int x, int y) {
