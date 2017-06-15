@@ -15,7 +15,7 @@ public class ThousandMonkeyAlgorithm extends AbstractAlgorithm{
 	}
 
 
-	public void solve() throws CoordinateOutOfBoundsException, IsLockedException, IsOutOfRangeException, InterruptedException {
+	public synchronized void solve() throws CoordinateOutOfBoundsException, IsLockedException, IsOutOfRangeException, InterruptedException {
 		Random rand = new Random();
 		do{
 		for(int y = 0; y < 9; y++){
