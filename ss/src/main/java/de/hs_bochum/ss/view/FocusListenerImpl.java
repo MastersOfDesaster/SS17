@@ -3,6 +3,8 @@ package de.hs_bochum.ss.view;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+import javax.swing.JTextField;
+
 
 
 public class FocusListenerImpl implements FocusListener {
@@ -19,14 +21,15 @@ public class FocusListenerImpl implements FocusListener {
 	}
 
 	public void focusLost(FocusEvent e) {
-		SudokuGridCellView sgcv = (SudokuGridCellView)e.getComponent();
-		int x = Integer.parseInt((sgcv.getName().split("\\."))[0]);
-		int y = Integer.parseInt((sgcv.getName().split("\\."))[1]);
+		JTextField txt = (JTextField)e.getComponent();
+		int x = Integer.parseInt((txt.getName().split("\\."))[0]);
+		int y = Integer.parseInt((txt.getName().split("\\."))[1]);
 		try {
-			if (sgcv.getValue().isEmpty()) {
+			if (txt.getText().isEmpty()) {
 				return;
 			}
-			int value = Integer.parseInt(sgcv.getValue());
+			int value = Integer.parseInt(txt.getText());
+			mainView.setManuel(true);
 			mainView.setValueInModel(x, y, value);
 //			if(control.isValueValid(x, y, Integer.parseInt(sgcv.getText())))
 //				sgcv.setBackground(Color.WHITE);

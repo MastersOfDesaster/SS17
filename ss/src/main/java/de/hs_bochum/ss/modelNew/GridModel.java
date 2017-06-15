@@ -15,7 +15,7 @@ import de.hs_bochum.ss.modelNew.GridCell;
 
 public class GridModel extends Observable {
 
-	private GridCell[][] field;
+	private GridCell[][] grid;
 
 	private GridCell activeCell;
 
@@ -24,19 +24,19 @@ public class GridModel extends Observable {
 	private boolean solved;
 
 	public GridModel() {
-		this.field = new GridCell[9][9];
-		for (int j = 0; j < field.length; j++) {
-			for (int i = 0; i < field[j].length; i++) {
-				field[j][i] = new GridCell();
+		this.grid = new GridCell[9][9];
+		for (int j = 0; j < grid.length; j++) {
+			for (int i = 0; i < grid[j].length; i++) {
+				grid[j][i] = new GridCell();
 			}
 		}
 	}
 
 	public void reset() {
-		this.field = new GridCell[9][9];
-		for (int j = 0; j < field.length; j++) {
-			for (int i = 0; i < field[j].length; i++) {
-				field[j][i] = new GridCell();
+		this.grid = new GridCell[9][9];
+		for (int j = 0; j < grid.length; j++) {
+			for (int i = 0; i < grid[j].length; i++) {
+				grid[j][i] = new GridCell();
 			}
 		}
 		this.solved = false;
@@ -46,8 +46,8 @@ public class GridModel extends Observable {
 	public void setCellValueLocked(int x, int y, int value)
 			throws IsOutOfRangeException, CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
-		field[x][y].setValue(value);
-		field[x][y].lock();
+		grid[x][y].setValue(value);
+		grid[x][y].lock();
 		setChanged();
 		notifyObservers(new Point(x, y));
 	}
@@ -63,10 +63,10 @@ public class GridModel extends Observable {
 		if (value < 1 || value > 9) {
 			throw new IsOutOfRangeException("Value is out of range!");
 		}
-		if (field[x][y].isLocked()) {
+		if (grid[x][y].isLocked()) {
 			throw new IsLockedException("This field is locked!");
 		}
-		field[x][y].setValue(value);
+		grid[x][y].setValue(value);
 		if (notify) {
 			setChanged();
 			notifyObservers(new Point(x, y));
@@ -75,35 +75,35 @@ public class GridModel extends Observable {
 
 	public void incrementCellValue(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
-		field[x][y].setValue(1 + field[x][y].getValue());
+		grid[x][y].setValue(1 + grid[x][y].getValue());
 	}
 
 	public void resetCell(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
-		field[x][y].setValue(0);
+		grid[x][y].setValue(0);
 		setChanged();
 		notifyObservers();
 	}
 
 	public int getCellValue(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
-		return field[x][y].getValue();
+		return grid[x][y].getValue();
 	}
 
 	public Set<Integer> getPossibleCellValues(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
-		return field[x][y].getPossibleValues();
+		return grid[x][y].getPossibleValues();
 	}
 
 	public GridCell getCell(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
-		return field[x][y];
+		return grid[x][y];
 	}
 
 	public void addPossibleValue(int x, int y, int value) throws CoordinateOutOfBoundsException, IsOutOfRangeException {
 		checkCoordinate(x, y);
 		checkValue(value);
-		field[x][y].addPossibleValue(value);
+		grid[x][y].addPossibleValue(value);
 		
 		setChanged();
 		notifyObservers(new Point(x, y));
@@ -112,15 +112,15 @@ public class GridModel extends Observable {
 	public void removePossibleValue(int x, int y, int value) throws IsOutOfRangeException, CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		checkValue(value);
-		field[x][y].removePossibleValue(value);
+		grid[x][y].removePossibleValue(value);
 	}
 
 	public GridCell[][] getField() {
-		return field;
+		return grid;
 	}
 
 	public void setField(GridCell[][] field) {
-		this.field = field;
+		this.grid = field;
 		setChanged();
 		notifyObservers();
 	}
@@ -158,12 +158,12 @@ public class GridModel extends Observable {
 	}
 
 	public GridCell[] getRow(int row) {
-		return field[row];
+		return grid[row];
 	}
 
 	public GridCell[] getColumn(int column) {
 		List<GridCell> gridColumn = new ArrayList<>();
-		Arrays.stream(field).forEach(row -> gridColumn.add(row[column]));
+		Arrays.stream(grid).forEach(row -> gridColumn.add(row[column]));
 		return (GridCell[]) gridColumn.toArray();
 	}
 
@@ -171,7 +171,7 @@ public class GridModel extends Observable {
 		GridCell[][] gridSquare = new GridCell[3][3];
 		for (int r = 0; r < 3; r++) {
 			for (int c = 0; c < 3; c++) {
-				gridSquare[r][c] = field[r + x * 3][c + y * 3];
+				gridSquare[r][c] = grid[r + x * 3][c + y * 3];
 			}
 		}
 		return gridSquare;
@@ -179,6 +179,10 @@ public class GridModel extends Observable {
 
 	public boolean isValid() {
 		return true;
+	}
+	
+	public boolean isCellValid(int x, int y) {
+		return grid[x][y].isValid();
 	}
 
 	private void checkCoordinate(int x, int y) throws CoordinateOutOfBoundsException {
@@ -194,7 +198,7 @@ public class GridModel extends Observable {
 	}
 
 	public boolean isCellLocked(int x, int y) {
-		return field[x][y].isLocked();
+		return grid[x][y].isLocked();
 	}
 
 }

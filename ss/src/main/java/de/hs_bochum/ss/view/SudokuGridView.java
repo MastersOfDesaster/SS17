@@ -23,14 +23,17 @@ public class SudokuGridView extends JPanel implements Observer{
 	
 	private Point lastChange;
 	
+	private SudokuView mainView;
+	
 //	private JTextPane[][] txtFields;
 	private SudokuGridCellView[][] gridViews;
 	private JPanel[][] subFields;
 	
 	public SudokuGridView(GridModel grid, SudokuView mainView) {
+		this.mainView = mainView;
 		this.setLayout(new GridLayout(3, 3));
 		this.grid = grid;
-		this.focusListener = new FocusListenerImpl(mainView);
+		this.focusListener = new FocusListenerImpl(this.mainView);
 		initTextFields();
 		this.setVisible(true);
 		this.repaint();
@@ -63,7 +66,7 @@ public class SudokuGridView extends JPanel implements Observer{
 ////				txt.setText("1 2 3\n4 5 6\n7 8 9");
 //				txt.setText("");
 				
-				this.gridViews[i][j] = new SudokuGridCellView(focusListener);
+				this.gridViews[i][j] = new SudokuGridCellView(focusListener, i, j);
 				this.subFields[i/3][j/3].add(this.gridViews[i][j]);
 			}
 		}
@@ -71,7 +74,6 @@ public class SudokuGridView extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("hier");
 		if (o instanceof GridModel){
 			//update single cell
 			if (arg instanceof Point){
@@ -83,9 +85,9 @@ public class SudokuGridView extends JPanel implements Observer{
 					e.printStackTrace();
 				}
 				if (lastChange != null){
-					this.gridViews[(int) lastChange.getY()][(int) lastChange.getX()].setBackground(Color.WHITE);
+					this.gridViews[(int) lastChange.getX()][(int) lastChange.getY()].setBackground(Color.WHITE);
 				}
-				this.gridViews[y][x].setBackground(Color.GREEN);
+				if (!mainView.getManuel()) this.gridViews[y][x].setBackground(Color.GREEN);
 				lastChange = new Point(x, y);
 			}
 			//update whole field
@@ -101,11 +103,13 @@ public class SudokuGridView extends JPanel implements Observer{
 				}
 			}
 		}
+		mainView.setManuel(false);
 	}
 	
 	
 	private void updateCell(GridCell value, int x, int y){
 		this.gridViews[x][y].setValueText(value.getValue());
 		this.gridViews[x][y].setPossibleValueText(value.getPossibleValues());
+		this.gridViews[x][y].setColor((grid.isCellValid(x, y)?Color.WHITE:Color.PINK));
 	}
 }

@@ -26,7 +26,7 @@ public class SudokuView extends JFrame{
 	private JButton btnRun;
 	private SudokuGridView guiField;
 	private JPanel southGrid;
-
+	private boolean manuel;
 
 	public SudokuView(GridModel model) {
 		this.model = model;
@@ -73,7 +73,7 @@ public class SudokuView extends JFrame{
 	private void setGUIParams() {
 		this.setVisible(true);
 		this.setTitle("SodokuSolver");
-		this.setSize(1000, 1000);
+		this.setSize(750, 750);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 	}
@@ -85,5 +85,13 @@ public class SudokuView extends JFrame{
 	
 	public void setValueInModel(int x, int y, int value){
 		control.setCellValue(x, y, value);
+	}
+	
+	public void setManuel(boolean b){
+		this.manuel = b;
+	}
+	
+	public boolean getManuel(){
+		return this.manuel;
 	}
 }

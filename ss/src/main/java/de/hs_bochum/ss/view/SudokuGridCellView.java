@@ -16,13 +16,15 @@ public class SudokuGridCellView extends JPanel{
 	private JTextField value;
 	private JTextField possibleValues;
 	
-	public SudokuGridCellView(FocusListener listener) {
+	public SudokuGridCellView(FocusListener listener, int x, int y) {
 		this.value = new JTextField("");
 		this.value.setDocument(new JTextFieldLimit(1));
 		this.value.addFocusListener(listener);
+		this.value.setName(x + "." + y);
 		this.possibleValues = new JTextField("123456789");
 		this.possibleValues.setDocument(new JTextFieldLimit(9));
 		this.setLayout(new BorderLayout(0,0));
+		this.setBackground(Color.WHITE);
 		this.setVisible(true);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		this.add(value, BorderLayout.CENTER);
@@ -45,6 +47,11 @@ public class SudokuGridCellView extends JPanel{
 	
 	public String getValue(){
 		return this.value.getText();
+	}
+	
+	public void setColor(Color c){
+		System.out.println("color" + c.toString());
+		this.value.setBackground(c);
 	}
 
 }
