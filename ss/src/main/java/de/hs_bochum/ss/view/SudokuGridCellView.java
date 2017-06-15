@@ -50,7 +50,6 @@ public class SudokuGridCellView extends JPanel{
 	}
 	
 	public void setColor(Color c){
-		System.out.println("color" + c.toString());
 		this.value.setBackground(c);
 	}
 

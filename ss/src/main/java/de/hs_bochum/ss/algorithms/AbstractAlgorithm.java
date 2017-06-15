@@ -30,7 +30,9 @@ public abstract class AbstractAlgorithm implements Runnable{
 	
 	public void resume() {
 		paused = false;
-		notify();
+		synchronized (this) {
+			this.notify();	
+		}
 	}
 	
 	public void stop() {
