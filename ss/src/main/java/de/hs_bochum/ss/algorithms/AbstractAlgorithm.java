@@ -2,58 +2,55 @@ package de.hs_bochum.ss.algorithms;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
 
-public abstract class AbstractAlgorithm implements Runnable{
-	
-	
-	
+public abstract class AbstractAlgorithm implements Runnable {
+
 	protected SudokuSolverControl control;
 	protected volatile boolean paused;
 	protected volatile boolean running;
 	protected volatile long waitMillis = 0;
 
-	
-	public AbstractAlgorithm(SudokuSolverControl control){
+	public AbstractAlgorithm(SudokuSolverControl control) {
 		this.control = control;
 	}
-		
+
 	public void start() {
-		if(!running){
+		if (!running) {
 			running = true;
-			new Thread(this).start();	
+			new Thread(this).start();
 		}
 	}
 
 	public void pause() {
-		paused = true;	
+		paused = true;
 	}
-	
+
 	public void resume() {
 		paused = false;
 		synchronized (this) {
-			this.notify();	
+			this.notify();
 		}
 	}
-	
+
 	public void stop() {
 		running = false;
+		
+		control.onAlgoFinished();
 	}
-	
 
 	public void singleStep() {
-		if(paused){
+		if (paused) {
 			synchronized (this) {
-				this.notify();	
+				this.notify();
 			}
 		}
 	}
-	
 
 	public void setSecondsToWait(int secondsToWait) {
-		waitMillis= secondsToWait * 1000;
+		waitMillis = secondsToWait * 1000;
 	}
 
 	public void setMillisToWait(int millis) {
-		waitMillis = millis;		
+		waitMillis = millis;
 	}
 
 	public long getWaitMillis() {

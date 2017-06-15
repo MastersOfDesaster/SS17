@@ -5,6 +5,11 @@ public class ReportModel {
 	private int writeCount;
 	private int invalidCount;
 	
+	@Override
+	public String toString() {
+		return "DiffCount: " + diffCount + "\nWriteCount: " + writeCount + "\nInvalidCount: " + invalidCount;
+	}
+	
 	public int getDiffCount() {
 		return diffCount;
 	}
