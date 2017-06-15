@@ -162,9 +162,11 @@ public class GridModel extends Observable {
 	}
 
 	public GridCell[] getColumn(int column) {
-		List<GridCell> gridColumn = new ArrayList<>();
-		Arrays.stream(grid).forEach(row -> gridColumn.add(row[column]));
-		return (GridCell[]) gridColumn.toArray();
+		GridCell[] gridColumn = new GridCell[9];
+		for(int i=0; i<grid.length; i++){
+			gridColumn[i] = grid[i][column]; 
+		}
+		return gridColumn;
 	}
 
 	public GridCell[][] getSquare(int x, int y) {

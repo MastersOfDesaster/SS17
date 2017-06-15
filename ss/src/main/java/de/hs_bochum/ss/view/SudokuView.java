@@ -94,4 +94,8 @@ public class SudokuView extends JFrame{
 	public boolean getManuel(){
 		return this.manuel;
 	}
+	
+	public boolean isCellValid(int x, int y){
+		return control.isCellValid(x, y);
+	}
 }

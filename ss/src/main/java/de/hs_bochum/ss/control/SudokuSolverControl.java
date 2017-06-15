@@ -144,4 +144,13 @@ public class SudokuSolverControl {
 			handleError(e);
 		}
 	}
+
+	public boolean isCellValid(int x, int y) {
+		try {
+			return model.isCellValid(x, y);
+		} catch (CoordinateOutOfBoundsException e) {
+			view.showError(e);
+			return false;
+		}
+	}
 }
