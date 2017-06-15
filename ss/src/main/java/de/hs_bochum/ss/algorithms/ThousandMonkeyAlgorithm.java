@@ -2,15 +2,22 @@ package de.hs_bochum.ss.algorithms;
 
 import java.util.Random;
 
+import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
-import de.hs_bochum.ss.interfaces.ISudokuSolver;
+import de.hs_bochum.ss.interfaces.AbstractAlgorithm;
 import de.hs_bochum.ss.model.GridModel;
 
-public class ThousandMonkeyAlgorithm extends ISudokuSolver{
+public class ThousandMonkeyAlgorithm extends AbstractAlgorithm{
 
-	@Override
+
+	public ThousandMonkeyAlgorithm(SudokuSolverControl control) {
+		super(control);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void solve(GridModel sudoku) throws CoordinateOutOfBoundsException, IsLockedException, IsOutOfRangeException {
 		Random rand = new Random();
 		do{
@@ -39,7 +46,21 @@ public class ThousandMonkeyAlgorithm extends ISudokuSolver{
 
 
 	@Override
-	public void pause() {
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void singleStep() {
 		// TODO Auto-generated method stub
 		
 	}

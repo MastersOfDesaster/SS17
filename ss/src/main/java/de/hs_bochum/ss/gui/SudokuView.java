@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 
 import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
 import de.hs_bochum.ss.algorithms.CrookAlgorithm;
-import de.hs_bochum.ss.interfaces.ISudokuSolver;
+import de.hs_bochum.ss.interfaces.AbstractAlgorithm;
 
 public class SudokuView extends JFrame {
 
@@ -25,41 +25,41 @@ public class SudokuView extends JFrame {
 	private SudokuGridView guiField;
 	private JPanel southGrid;
 	
-	private ISudokuSolver solver;
+	private AbstractAlgorithm solver;
 	
 	private ExecutorService executor;
 	
 	public SudokuView() {
-		this.solver = new CrookAlgorithm();
+		//this.solver = new CrookAlgorithm();
 		setGUIParams();
 		initGUIObjects();
 		addGUIObjects();
-		addActionListener();
+		//addActionListener();
 		//this.repaint();
 		this.setVisible(true);
 		executor = Executors.newCachedThreadPool();
 	}
 
-	private void addActionListener() {
-		this.btnSingle.addActionListener(al -> {
-		//	solver.nextStep();
-		});
-		this.btnRun.addActionListener(al -> {
-			executor.execute(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						solver.solve(guiField.getField());
-					}catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		});
-		this.cbAlgorithm.addActionListener(al -> {
-			//TODO Algorithmus über Enum wechseln
-		});
-	}
+//	private void addActionListener() {
+//		this.btnSingle.addActionListener(al -> {
+//		//	solver.nextStep();
+//		});
+//		this.btnRun.addActionListener(al -> {
+//			executor.execute(new Runnable() {
+//				@Override
+//				public void run() {
+//					try {
+//						solver.solve(guiField.getField());
+//					}catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			});
+//		});
+//		this.cbAlgorithm.addActionListener(al -> {
+//			//TODO Algorithmus über Enum wechseln
+//		});
+//	}
 
 	private void addGUIObjects() {
 		this.southGrid.add(btnRun);

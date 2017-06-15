@@ -1,24 +1,22 @@
 package de.hs_bochum.ss.algorithms;
 
+import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.interfaces.ISudokuSolver;
+import de.hs_bochum.ss.interfaces.AbstractAlgorithm;
 import de.hs_bochum.ss.model.GridModel;
-import de.hs_bochum.ss.model.GridCell;
 
-public class CrookAlgorithm extends ISudokuSolver{
+public class CrookAlgorithm extends AbstractAlgorithm{
 
-	@Override
+	public CrookAlgorithm(SudokuSolverControl control) {
+		super(control);
+		// TODO Auto-generated constructor stub
+	}
+
 	public void solve(GridModel sudoku) throws Exception {
 		// TODO Auto-generated method stub
 		findForced();
 		mark(sudoku);
 		findPreemptives();
-		
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -61,5 +59,23 @@ public class CrookAlgorithm extends ISudokuSolver{
 			}
 		}
 
+	}
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void singleStep() {
+		// TODO Auto-generated method stub
+		
 	}
 }

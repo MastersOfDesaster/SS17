@@ -1,20 +1,28 @@
 package de.hs_bochum.ss.control;
 
 import de.hs_bochum.ss.gui.SudokuView;
-import de.hs_bochum.ss.interfaces.ISudokuSolver;
+import de.hs_bochum.ss.interfaces.AbstractAlgorithm;
 import de.hs_bochum.ss.model.GridModel;
+import de.hs_bochum.ss.modelNew.ReportModel;
 
 public class SudokuSolverControl {
 	
-	private ISudokuSolver solver;
+	private GridValidator validator;
+	private AbstractAlgorithm algo;
 	private SudokuView view;
-	private GridModel model;
-	
-	public ISudokuSolver getSolver() {
-		return solver;
+	private GridModel sudoku;
+	private ReportModel report;
+	public GridValidator getValidator() {
+		return validator;
 	}
-	public void setSolver(ISudokuSolver solver) {
-		this.solver = solver;
+	public void setValidator(GridValidator validator) {
+		this.validator = validator;
+	}
+	public AbstractAlgorithm getAlgo() {
+		return algo;
+	}
+	public void setAlgo(AbstractAlgorithm algo) {
+		this.algo = algo;
 	}
 	public SudokuView getView() {
 		return view;
@@ -22,10 +30,20 @@ public class SudokuSolverControl {
 	public void setView(SudokuView view) {
 		this.view = view;
 	}
-	public GridModel getModel() {
-		return model;
+	public GridModel getSudoku() {
+		return sudoku;
 	}
-	public void setModel(GridModel model) {
-		this.model = model;
+	public void setSudoku(GridModel sudoku) {
+		this.sudoku = sudoku;
 	}
+	public ReportModel getReport() {
+		return report;
+	}
+	public void setReport(ReportModel report) {
+		this.report = report;
+	}
+	
+	
+	
+
 }
