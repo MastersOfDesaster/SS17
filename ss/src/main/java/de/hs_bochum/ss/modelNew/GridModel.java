@@ -45,7 +45,7 @@ public class GridModel extends Observable {
 
 	public void setCellValueLocked(int x, int y, int value)
 			throws IsOutOfRangeException, CoordinateOutOfBoundsException {
-		// checkCoordinate(x, y);
+		checkCoordinate(x, y);
 		field[x][y].setValue(value);
 		field[x][y].lock();
 		setChanged();
@@ -59,7 +59,7 @@ public class GridModel extends Observable {
 
 	public void setCellValue(int x, int y, int value, boolean notify)
 			throws IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
-		// checkCoordinate(x, y);
+		checkCoordinate(x, y);
 		if (value < 1 || value > 9) {
 			throw new IsOutOfRangeException("Value is out of range!");
 		}
@@ -72,47 +72,48 @@ public class GridModel extends Observable {
 			notifyObservers(new Point(x, y));
 		}
 	}
-	
-	public void incrementCellValue(int x, int y){
+
+	public void incrementCellValue(int x, int y) {
 		field[x][y].setValue(1 + field[x][y].getValue());
 	}
-	
+
 	public void resetFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
-//		checkCoordinate(x, y);
+		checkCoordinate(x, y);
 		field[x][y].setValue(0);
 		setChanged();
 		notifyObservers();
 	}
-	
-	public int getCellValue(int x, int y){
-//		checkCoordinate(x, y);
+
+	public int getCellValue(int x, int y) throws CoordinateOutOfBoundsException {
+		checkCoordinate(x, y);
 		return field[x][y].getValue();
 	}
 
-	public Set<Integer> getPossibleCellValues(int x, int y){
-//		checkCoordinate(x, y);
+	public Set<Integer> getPossibleCellValues(int x, int y) throws CoordinateOutOfBoundsException {
+		checkCoordinate(x, y);
 		return field[x][y].getPossibleValues();
 	}
-	
-	public GridCell getCell(int x, int y){
-//		checkCoordinate(x, y);
+
+	public GridCell getCell(int x, int y) throws CoordinateOutOfBoundsException {
+		checkCoordinate(x, y);
 		return field[x][y];
 	}
 
-	public void addPossibleValue(int x, int y, int value) {
-//		checkCoordinate(x, y);
-//		checkValue(value);
-		field[x][y].addPossibleValue(value);;
+	public void addPossibleValue(int x, int y, int value) throws CoordinateOutOfBoundsException, IsOutOfRangeException {
+		checkCoordinate(x, y);
+		checkValue(value);
+		field[x][y].addPossibleValue(value);
+		
 		setChanged();
 		notifyObservers(new Point(x, y));
 	}
 
-	public void removePossibleValue(int x, int y, int value) {
-//		checkCoordinate(x, y);
-//		checkValue(value);
+	public void removePossibleValue(int x, int y, int value) throws IsOutOfRangeException, CoordinateOutOfBoundsException {
+		checkCoordinate(x, y);
+		checkValue(value);
 		field[x][y].removePossibleValue(value);
 	}
-	
+
 	public GridCell[][] getField() {
 		return field;
 	}
@@ -138,12 +139,12 @@ public class GridModel extends Observable {
 	public void setInvalidCellCount(int invalidCellCount) {
 		this.invalidCellCount = invalidCellCount;
 	}
-	
-	public void incrementInvalidCellCount(){
+
+	public void incrementInvalidCellCount() {
 		this.invalidCellCount++;
 	}
-	
-	public void decrementInvalidCellCount(){
+
+	public void decrementInvalidCellCount() {
 		this.invalidCellCount--;
 	}
 
@@ -162,14 +163,14 @@ public class GridModel extends Observable {
 	public GridCell[] getColumn(int column) {
 		List<GridCell> gridColumn = new ArrayList<>();
 		Arrays.stream(field).forEach(row -> gridColumn.add(row[column]));
-		return (GridCell[])gridColumn.toArray();
+		return (GridCell[]) gridColumn.toArray();
 	}
 
 	public GridCell[][] getSquare(int x, int y) {
 		GridCell[][] gridSquare = new GridCell[3][3];
-		for (int r=0; r<3; r++){
-			for (int c=0; c<3; c++){
-				gridSquare[r][c] = field[r+x*3][c+y*3]; 
+		for (int r = 0; r < 3; r++) {
+			for (int c = 0; c < 3; c++) {
+				gridSquare[r][c] = field[r + x * 3][c + y * 3];
 			}
 		}
 		return gridSquare;
@@ -177,6 +178,18 @@ public class GridModel extends Observable {
 
 	public boolean isValid() {
 		return true;
+	}
+
+	private void checkCoordinate(int x, int y) throws CoordinateOutOfBoundsException {
+		if (x < 0 || x > 8 || y < 0 || y > 8) {
+			throw new CoordinateOutOfBoundsException("Coordinate is out of Bounds!");
+		}
+	}
+
+	private void checkValue(int value) throws IsOutOfRangeException {
+		if (value < 1 || value > 9) {
+			throw new IsOutOfRangeException("Value is out of Range!");
+		}
 	}
 
 }

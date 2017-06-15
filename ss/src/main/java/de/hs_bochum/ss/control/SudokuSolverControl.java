@@ -1,5 +1,6 @@
 package de.hs_bochum.ss.control;
 
+import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.UnknownAlgorithmException;
 import de.hs_bochum.ss.interfaces.AbstractAlgorithm;
 import de.hs_bochum.ss.interfaces.Algorithm;
@@ -19,6 +20,25 @@ public class SudokuSolverControl {
 		this.model = model;
 		this.view = view;
 		this.validator = validator;
+	}
+	
+	public boolean isValid() {
+		return validator.isValid();
+	}
+	
+	public boolean isValid(int x, int y) {
+		return validator.isValid(x, y);
+	}
+	
+	public boolean isValueValid(int x, int y, int value) {
+		try {
+			return validator.isValueValid(x, y, value);
+		} catch (CoordinateOutOfBoundsException e) {
+			view.showError(e);
+			stopAlgo();
+		}
+		
+		return false;
 	}
 	
 	public void setCellValueLocked(int x, int y, int value) {
