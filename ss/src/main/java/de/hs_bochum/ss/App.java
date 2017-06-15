@@ -21,7 +21,9 @@ public class App {
 		SudokuView view = new SudokuView();
     	GridModel model = new GridModel();
     	GridValidator validator = new GridValidator(model);
-    	SudokuSolverControl control = new SudokuSolverControl();
+    	
+    	@SuppressWarnings("unused")
+		SudokuSolverControl control = new SudokuSolverControl(model, view, validator);
 	}
 	
 	private static void start() {
