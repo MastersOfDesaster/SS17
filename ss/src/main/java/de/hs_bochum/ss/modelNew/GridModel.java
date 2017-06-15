@@ -176,9 +176,9 @@ public class GridModel extends Observable {
 		}
 		return gridSquare;
 	}
-
+	
 	public boolean isValid() {
-		return true;
+		return (invalidCellCount == 0);
 	}
 	
 	public boolean isCellValid(int x, int y) {

@@ -17,7 +17,10 @@ public abstract class AbstractAlgorithm implements Runnable{
 	}
 		
 	public void start() {
-		run();		
+		if(!running){
+			running = true;
+			new Thread(this).start();	
+		}
 	}
 
 	public void pause() {
@@ -37,7 +40,9 @@ public abstract class AbstractAlgorithm implements Runnable{
 
 	public void singleStep() {
 		if(paused){
-			this.notify();
+			synchronized (this) {
+				this.notify();	
+			}
 		}
 	}
 	

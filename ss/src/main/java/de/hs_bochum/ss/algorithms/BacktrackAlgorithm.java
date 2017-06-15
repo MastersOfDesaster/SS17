@@ -8,7 +8,7 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 		super(control);
 	}
 
-	public boolean solve(int x, int y) throws Exception {
+	public synchronized boolean solve(int x, int y) throws Exception {
 		if(!running){
 			return false;
 		}
@@ -55,6 +55,7 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 		try {
 			solve(0, 0);
 		} catch (Exception e) {
+			e.printStackTrace();
 			control.handleError(e);
 		}
 	}
