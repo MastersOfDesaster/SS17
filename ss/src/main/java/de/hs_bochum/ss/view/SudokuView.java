@@ -94,23 +94,22 @@ public class SudokuView extends JFrame{
 		this.southGrid.add(btnSingle);
 		this.southGrid.add(cbAlgorithm);
 		this.borderEast.add(sliderEast, BorderLayout.CENTER);
-		this.borderEast.add(waitTime, BorderLayout.EAST);
+		this.borderEast.add(waitTime, BorderLayout.SOUTH);
 		this.add(new JScrollPane(guiField), BorderLayout.CENTER);
 		this.add(southGrid, BorderLayout.SOUTH);
 		this.add(borderEast, BorderLayout.EAST);
 	}
 
 	private void initGUIObjects() {
-		int waitMillis = (int) control.getWaitMillis(); 
 		this.southGrid = new JPanel(new GridLayout(1, 5, 25, 25));
 		this.guiField = new SudokuGridView(model, this);
 		this.btnStart = new JButton("Start");
 		this.btnPause = new JButton("Pause");
 		this.btnStop = new JButton("Stop");
 		this.btnSingle = new JButton("Single Step");
-		this.sliderEast = new JSlider(JSlider.VERTICAL, 0, 5000, waitMillis);
+		this.sliderEast = new JSlider(JSlider.VERTICAL, 0, 5000, 10);
 		this.borderEast = new JPanel(new BorderLayout());
-		this.waitTime = new JTextField(waitMillis + "");
+		this.waitTime = new JTextField(10 + "");
 		this.cbAlgorithm = new JComboBox<>(Algorithm.values());
 	}
 
