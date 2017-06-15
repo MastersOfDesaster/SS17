@@ -108,7 +108,7 @@ public class GridValidator {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 

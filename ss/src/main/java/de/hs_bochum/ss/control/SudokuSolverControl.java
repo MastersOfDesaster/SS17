@@ -54,6 +54,8 @@ public class SudokuSolverControl {
 	public void resetCell(int x, int y) {
 		try {
 			model.resetCell(x, y);
+			model.setCellValid(x, y, validator.isValid(x, y));
+			model.startNotify(new Point(x, y));
 		} catch (CoordinateOutOfBoundsException e) {
 			handleError(e);
 		}
@@ -73,7 +75,6 @@ public class SudokuSolverControl {
 			model.setCellValue(x, y, value);
 			model.setCellValid(x, y, validator.isValid(x, y));
 			model.startNotify(new Point(x, y));
-			System.out.println(model.getCell(x, y).isValid());
 			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);
