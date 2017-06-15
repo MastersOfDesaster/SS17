@@ -70,6 +70,7 @@ public class SudokuSolverControl {
 		try {
 			model.setCellValue(x, y, value);
 			model.setCellValid(x, y, validator.isValid(x, y));
+			System.out.println(model.getCell(x, y).isValid());
 			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);
@@ -106,6 +107,14 @@ public class SudokuSolverControl {
 	public void startAlgo() {
 		if (algo != null) {
 			algo.start();
+		} else {
+			view.showError(new NullPointerException("Algo is null!"));
+		}
+	}
+	
+	public void pauseAlgo(){
+		if (algo != null){
+			algo.pause();
 		} else {
 			view.showError(new NullPointerException("Algo is null!"));
 		}
