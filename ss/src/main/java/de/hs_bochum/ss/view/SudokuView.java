@@ -80,6 +80,7 @@ public class SudokuView extends JFrame{
 	
 	public void setControl(SudokuSolverControl control){
 		this.control = control;
+		control.setAlgo((Algorithm)cbAlgorithm.getSelectedItem());
 	}
 	
 	public void setValueInModel(int x, int y, int value){

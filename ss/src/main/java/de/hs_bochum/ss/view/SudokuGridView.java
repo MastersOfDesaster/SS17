@@ -71,6 +71,7 @@ public class SudokuGridView extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println("hier");
 		if (o instanceof GridModel){
 			//update single cell
 			if (arg instanceof Point){
