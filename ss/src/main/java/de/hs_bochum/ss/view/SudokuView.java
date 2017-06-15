@@ -23,7 +23,9 @@ public class SudokuView extends JFrame{
 
 	private JComboBox<Algorithm> cbAlgorithm;
 	private JButton btnSingle;
-	private JButton btnRun;
+	private JButton btnStart;
+	private JButton btnPause;
+	private JButton btnStop;
 	private SudokuGridView guiField;
 	private JPanel southGrid;
 	private boolean manuel;
@@ -45,9 +47,23 @@ public class SudokuView extends JFrame{
 	private void addActionListener() {
 		this.btnSingle.addActionListener(al -> {
 			control.nextStepAlgo();
+			btnStart.setEnabled(true);
 		});
-		this.btnRun.addActionListener(al -> {
+		this.btnStart.addActionListener(al -> {
 			control.startAlgo();
+			btnStart.setEnabled(false);
+		});
+		this.btnPause.addActionListener(al -> {
+			control.pauseAlgo();
+			btnStart.setEnabled(true);
+		});
+		this.btnSingle.addActionListener(al -> {
+			control.stopAlgo();
+			btnStart.setEnabled(true);
+		});
+		this.btnStop.addActionListener(al -> {
+			control.startAlgo();
+			btnStart.setEnabled(true);
 		});
 		this.cbAlgorithm.addActionListener(al -> {
 			control.setAlgo((Algorithm)cbAlgorithm.getSelectedItem());
@@ -55,7 +71,9 @@ public class SudokuView extends JFrame{
 	}
 
 	private void addGUIObjects() {
-		this.southGrid.add(btnRun);
+		this.southGrid.add(btnStart);
+		this.southGrid.add(btnPause);
+		this.southGrid.add(btnStop);
 		this.southGrid.add(btnSingle);
 		this.southGrid.add(cbAlgorithm);
 		this.add(new JScrollPane(guiField), BorderLayout.CENTER);
@@ -63,9 +81,11 @@ public class SudokuView extends JFrame{
 	}
 
 	private void initGUIObjects() {
-		this.southGrid = new JPanel(new GridLayout(1, 3, 25, 25));
+		this.southGrid = new JPanel(new GridLayout(1, 5, 25, 25));
 		this.guiField = new SudokuGridView(model, this);
-		this.btnRun = new JButton("Run");
+		this.btnStart = new JButton("Start");
+		this.btnPause = new JButton("Pause");
+		this.btnStop = new JButton("Stop");
 		this.btnSingle = new JButton("Single Step");
 		this.cbAlgorithm = new JComboBox<>(Algorithm.values());
 	}
