@@ -2,6 +2,7 @@ package de.hs_bochum.ss.view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,11 +31,13 @@ public class SudokuView extends JFrame{
 	private JButton btnStop;
 	private JButton btnLock;
 	private JButton btnReset;
+	private JButton btnContinue;
 	private JPanel borderEast;
 	private JSlider sliderEast;
 	private JTextField waitTime;
 	private SudokuGridView guiField;
 	private JPanel southGrid;
+	private SudokuMenu menuBar;
 	private boolean manual;
 
 	public SudokuView(GridModel model) {
@@ -43,6 +46,8 @@ public class SudokuView extends JFrame{
 		initGUIObjects();
 		addGUIObjects();
 		addActionListener();
+		this.menuBar = new SudokuMenu(this);
+		this.setJMenuBar(menuBar);
 		this.setVisible(true);
 	}
 	
@@ -61,16 +66,10 @@ public class SudokuView extends JFrame{
 			btnStart.setEnabled(false);
 		});
 		this.btnPause.addActionListener(al -> {
-			if (btnPause.getText().equals("Pause")){ 
-				control.pauseAlgo();
-				btnPause.setText("Continue");
-				btnStart.setEnabled(true);
-			}
-			else if (btnPause.getText().equals("Continue")){ 
-				control.continueAlgo(); 
-				btnPause.setText("Pause");
-				btnStart.setEnabled(false);
-			}
+			control.pauseAlgo(); 
+		});
+		this.btnContinue.addActionListener(al -> {
+			control.continueAlgo();
 		});
 		this.btnSingle.addActionListener(al -> {
 		control.nextStepAlgo();
@@ -102,10 +101,11 @@ public class SudokuView extends JFrame{
 	private void addGUIObjects() {
 		this.southGrid.add(btnStart);
 		this.southGrid.add(btnPause);
-		this.southGrid.add(btnStop);
 		this.southGrid.add(btnSingle);
-		this.southGrid.add(btnLock);
 		this.southGrid.add(btnReset);
+		this.southGrid.add(btnStop);
+		this.southGrid.add(btnContinue);
+		this.southGrid.add(btnLock);
 		this.southGrid.add(cbAlgorithm);
 		this.borderEast.add(sliderEast, BorderLayout.CENTER);
 		this.borderEast.add(waitTime, BorderLayout.SOUTH);
@@ -115,14 +115,15 @@ public class SudokuView extends JFrame{
 	}
 
 	private void initGUIObjects() {
-		this.southGrid = new JPanel(new GridLayout(2, 4, 25, 5));
+		this.southGrid = new JPanel(new GridLayout(2, 4, 5, 5));
 		this.guiField = new SudokuGridView(model, this);
 		this.btnStart = new JButton("Start");
 		this.btnPause = new JButton("Pause");
-		this.btnStop = new JButton("Stop");
-		this.btnLock = new JButton("Lock");
-		this.btnReset = new JButton("Reset");
 		this.btnSingle = new JButton("Single Step");
+		this.btnReset = new JButton("Reset");
+		this.btnStop = new JButton("Stop");
+		this.btnContinue = new JButton("Continue");
+		this.btnLock = new JButton("Lock");
 		this.sliderEast = new JSlider(JSlider.VERTICAL, 0, 1000, 10);
 		this.borderEast = new JPanel(new BorderLayout());
 		this.waitTime = new JTextField(10 + "    ");
@@ -156,5 +157,9 @@ public class SudokuView extends JFrame{
 	
 	public boolean isCellValid(int x, int y){
 		return control.isCellValid(x, y);
+	}
+
+	public void setSelectedFile(File selectedFile) {
+		control.setSelectedFile(selectedFile);
 	}
 }

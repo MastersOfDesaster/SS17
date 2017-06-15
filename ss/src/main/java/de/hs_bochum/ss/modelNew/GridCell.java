@@ -65,7 +65,7 @@ public class GridCell {
 	}
 
 	public void lockByValue() {
-		if(value>0)
+		if(value>0 && valid)
 			locked = true;
 	}
 

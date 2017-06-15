@@ -40,6 +40,7 @@ public class ThousandMonkeyAlgorithm extends AbstractAlgorithm{
 	public void run() {
 		try {
 			solve();
+			stop();
 		} catch (Exception e) {
 			control.handleError(e);	
 		}		
