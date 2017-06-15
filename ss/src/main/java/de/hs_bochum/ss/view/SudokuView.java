@@ -64,7 +64,7 @@ public class SudokuView extends JFrame{
 
 	private void initGUIObjects() {
 		this.southGrid = new JPanel(new GridLayout(1, 3, 25, 25));
-		this.guiField = new SudokuGridView();
+		this.guiField = new SudokuGridView(model, this);
 		this.btnRun = new JButton("Run");
 		this.btnSingle = new JButton("Single Step");
 		this.cbAlgorithm = new JComboBox<>(Algorithm.values());
@@ -73,12 +73,16 @@ public class SudokuView extends JFrame{
 	private void setGUIParams() {
 		this.setVisible(true);
 		this.setTitle("SodokuSolver");
-		this.setSize(500, 500);
+		this.setSize(1000, 1000);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 	}
 	
 	public void setControl(SudokuSolverControl control){
 		this.control = control;
+	}
+	
+	public void setValueInModel(int x, int y, int value){
+		control.setCellValue(x, y, value);
 	}
 }

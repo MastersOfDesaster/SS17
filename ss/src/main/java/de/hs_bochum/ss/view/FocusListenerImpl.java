@@ -1,24 +1,17 @@
 package de.hs_bochum.ss.view;
 
-import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
-import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.exception.IsLockedException;
-import de.hs_bochum.ss.exception.IsOutOfRangeException;
-import de.hs_bochum.ss.modelNew.GridModel;
 
 public class FocusListenerImpl implements FocusListener {
 	
-	private GridModel field;
+	private SudokuView mainView;
 	private int failure;
 	
-	public FocusListenerImpl(GridModel field){
-		this.field = field;
+	public FocusListenerImpl(SudokuView mainView){
+		this.mainView = mainView;
 	}
 
 	public void focusGained(FocusEvent e) {
@@ -26,22 +19,22 @@ public class FocusListenerImpl implements FocusListener {
 	}
 
 	public void focusLost(FocusEvent e) {
-		JTextPane txt = (JTextPane)e.getComponent();
-		int x = Integer.parseInt((txt.getName().split("\\."))[0]);
-		int y = Integer.parseInt((txt.getName().split("\\."))[1]);
+		SudokuGridCellView sgcv = (SudokuGridCellView)e.getComponent();
+		int x = Integer.parseInt((sgcv.getName().split("\\."))[0]);
+		int y = Integer.parseInt((sgcv.getName().split("\\."))[1]);
 		try {
-			if (txt.getText().isEmpty()) {
+			if (sgcv.getValue().isEmpty()) {
 				return;
 			}
-			field.setFieldValue(Byte.parseByte(txt.getText()), x, y, false);
-			if(field.isValueValid(x, y, Integer.parseInt(txt.getText())))
-				txt.setBackground(Color.WHITE);
-			else{
-				txt.setBackground(Color.PINK);
-				failure++;
-			}
-		} catch (NumberFormatException | IsLockedException | IsOutOfRangeException
-				| CoordinateOutOfBoundsException e1) {
+			int value = Integer.parseInt(sgcv.getValue());
+			mainView.setValueInModel(x, y, value);
+//			if(control.isValueValid(x, y, Integer.parseInt(sgcv.getText())))
+//				sgcv.setBackground(Color.WHITE);
+//			else{
+//				sgcv.setBackground(Color.PINK);
+//				failure++;
+//			}
+		} catch (NumberFormatException  e1) {
 			e1.printStackTrace();
 		}
 	}

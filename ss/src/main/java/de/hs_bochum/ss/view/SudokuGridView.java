@@ -8,44 +8,38 @@ import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 
-import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.modelNew.GridModel;
+import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.modelNew.GridCell;
 
 public class SudokuGridView extends JPanel implements Observer{
 	
 	private static final long serialVersionUID = 1L;
 
-	private GridModel field;
+	private GridModel grid;
 	
 	private FocusListenerImpl focusListener;
 	
 	private Point lastChange;
 	
-	private JTextPane[][] txtFields;
+//	private JTextPane[][] txtFields;
+	private SudokuGridCellView[][] gridViews;
 	private JPanel[][] subFields;
 	
-	public SudokuGridView() {
+	public SudokuGridView(GridModel grid, SudokuView mainView) {
 		this.setLayout(new GridLayout(3, 3));
-		this.field = new GridModel();
-		this.focusListener = new FocusListenerImpl(field);
+		this.grid = grid;
+		this.focusListener = new FocusListenerImpl(mainView);
 		initTextFields();
 		this.setVisible(true);
 		this.repaint();
-		field.addObserver(this);
-	}
-	
-	public GridModel getField(){
-		return this.field;
+		this.grid.addObserver(this);
 	}
 	
 	public void initTextFields(){
 		this.subFields = new JPanel[3][3];
-		this.txtFields = new JTextPane[9][9];
+		this.gridViews = new SudokuGridCellView[9][9];
 		for (int i=0; i<3; i++){
 			for (int j=0; j<3; j++){
 				this.subFields[i][j] = new JPanel(new GridLayout(3, 3));
@@ -56,21 +50,21 @@ public class SudokuGridView extends JPanel implements Observer{
 		for (int i=0; i<9; i++){
 			for (int j=0; j<9; j++){
 				// center text
-				SimpleAttributeSet attribs = new SimpleAttributeSet();
-				StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_CENTER);
-				StyleConstants.setFontSize(attribs, 30);
+//				SimpleAttributeSet attribs = new SimpleAttributeSet();
+//				StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_CENTER);
+//				StyleConstants.setFontSize(attribs, 30);
 				
-				JTextPane txt = new JTextPane();
-				txt.setParagraphAttributes(attribs, true);	
-				txt.setName(i + "." + j);
-				txt.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-				txt.addFocusListener(focusListener);
+//				JTextPane txt = new JTextPane();
+//				txt.setParagraphAttributes(attribs, true);	
+//				txt.setName(i + "." + j);
+//				txt.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+//				txt.addFocusListener(focusListener);
+//				
+////				txt.setText("1 2 3\n4 5 6\n7 8 9");
+//				txt.setText("");
 				
-//				txt.setText("1 2 3\n4 5 6\n7 8 9");
-				txt.setText("");
-				
-				this.txtFields[i][j] = txt;
-				this.subFields[i/3][j/3].add(txt);
+				this.gridViews[i][j] = new SudokuGridCellView(focusListener);
+				this.subFields[i/3][j/3].add(this.gridViews[i][j]);
 			}
 		}
 	}
@@ -83,25 +77,25 @@ public class SudokuGridView extends JPanel implements Observer{
 				int x = (int) ((Point)arg).getX();
 				int y = (int) ((Point)arg).getY();
 				try {
-					updateCell(field.getFieldValue(x,y),x,y);
-					if (lastChange != null){
-						this.txtFields[(int) lastChange.getY()][(int) lastChange.getX()].setBackground(Color.WHITE);
-					}
-					this.txtFields[y][x].setBackground(Color.GREEN);
-					lastChange = new Point(x, y);
+					updateCell(grid.getCell(x,y),x,y);
 				} catch (CoordinateOutOfBoundsException e) {
 					e.printStackTrace();
 				}
+				if (lastChange != null){
+					this.gridViews[(int) lastChange.getY()][(int) lastChange.getX()].setBackground(Color.WHITE);
+				}
+				this.gridViews[y][x].setBackground(Color.GREEN);
+				lastChange = new Point(x, y);
 			}
 			//update whole field
 			else{
 				for (int y=0; y<9; y++){
 					for (int x=0; x<9; x++){
 						try {
-								updateCell(field.getFieldValue(x,y),x,y);						
+							updateCell(grid.getCell(x,y),x,y);
 						} catch (CoordinateOutOfBoundsException e) {
 							e.printStackTrace();
-						}
+						}						
 					}
 				}
 			}
@@ -110,36 +104,7 @@ public class SudokuGridView extends JPanel implements Observer{
 	
 	
 	private void updateCell(GridCell value, int x, int y){
-		if(value.getValue() == 0){
-			if(value.usedValueSet().isEmpty()){
-				this.txtFields[x][y].setText("");
-			}else{
-				String text = new String();
-				for(Byte i=1;i<=9;i++){
-					if(value.usedValueSet().contains(i)){
-						if(i % 3 == 0){
-							text = text + i;
-							if(i != 9){
-								text = text + "\n";	
-							}
-						}else{
-							text = text + i +" ";
-						}
-					}else{
-						if(i % 3 == 0){
-							text = text + " ";
-							if(i != 9){
-								text = text + "\n";	
-							}
-						}else{
-							text = text + "  ";
-						}
-					}
-				}
-				this.txtFields[x][y].setText(text);
-			}
-		}else{
-			this.txtFields[x][y].setText(String.valueOf(value.getValue()));
-		}
+		this.gridViews[x][y].setValueText(value.getValue());
+		this.gridViews[x][y].setPossibleValueText(value.getPossibleValues());
 	}
 }
