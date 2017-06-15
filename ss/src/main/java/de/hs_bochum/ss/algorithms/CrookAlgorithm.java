@@ -2,7 +2,6 @@ package de.hs_bochum.ss.algorithms;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.interfaces.AbstractAlgorithm;
 import de.hs_bochum.ss.model.GridModel;
 
 public class CrookAlgorithm extends AbstractAlgorithm{
@@ -68,7 +67,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	}
 
 	@Override
-	public void stop() {
+	public void pause() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -6,7 +6,6 @@ import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
-import de.hs_bochum.ss.interfaces.AbstractAlgorithm;
 import de.hs_bochum.ss.model.GridModel;
 
 public class ThousandMonkeyAlgorithm extends AbstractAlgorithm{
@@ -53,7 +52,7 @@ public class ThousandMonkeyAlgorithm extends AbstractAlgorithm{
 
 
 	@Override
-	public void stop() {
+	public void pause() {
 		// TODO Auto-generated method stub
 		
 	}

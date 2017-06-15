@@ -1,7 +1,7 @@
 package de.hs_bochum.ss.control;
 
+import de.hs_bochum.ss.algorithms.AbstractAlgorithm;
 import de.hs_bochum.ss.exception.UnknownAlgorithmException;
-import de.hs_bochum.ss.interfaces.AbstractAlgorithm;
 import de.hs_bochum.ss.interfaces.Algorithm;
 import de.hs_bochum.ss.modelNew.GridModel;
 import de.hs_bochum.ss.modelNew.ReportModel;

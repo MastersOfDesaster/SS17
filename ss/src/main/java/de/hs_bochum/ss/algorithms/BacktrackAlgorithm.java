@@ -2,8 +2,7 @@ package de.hs_bochum.ss.algorithms;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.interfaces.AbstractAlgorithm;
-import de.hs_bochum.ss.model.GridModel;
+import de.hs_bochum.ss.modelNew.GridModel;
 
 public class BacktrackAlgorithm extends AbstractAlgorithm {
 
@@ -12,12 +11,11 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void solve(GridModel sudoku) throws Exception {
-		solve(sudoku, 0, 0);
+	public void solve() throws Exception {
+		solve(0, 0);
 	}
 
-	public boolean solve(GridModel sudoku, int x, int y) throws Exception {
-		print(sudoku);
+	public boolean solve(int x, int y) throws Exception {
 		if (x == 9) {
 			x = 0;
 			y++;
@@ -45,36 +43,34 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 			return false;
 		}
 	}
-	
-	private void print(GridModel sudoku) throws CoordinateOutOfBoundsException{
-		System.out.println();
-		System.out.println();
-		for(int y = 0; y < 9; y++){
-			for(int x = 0; x < 9; x++){
-				System.out.print(sudoku.getFieldByte(x, y) + " ");
-			}
-			System.out.println();
-		}
-	}
-
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		run();		
 	}
 
 	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
+	public void pause() {
+		paused = true;
 		
 	}
+	
+	@Override
+	public void resume() {
+		paused = false;
+		
+	}
+	
 
 	@Override
 	public void singleStep() {
-		// TODO Auto-generated method stub
+		if(paused){
+			this.notify();
+		}
 		
 	}
 
-
+	@Override
+	public void run() {	
+	}
 }
