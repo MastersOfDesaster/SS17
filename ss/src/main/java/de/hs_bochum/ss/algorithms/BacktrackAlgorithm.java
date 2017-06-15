@@ -1,21 +1,17 @@
 package de.hs_bochum.ss.algorithms;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
-import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.modelNew.GridModel;
 
 public class BacktrackAlgorithm extends AbstractAlgorithm {
 
 	public BacktrackAlgorithm(SudokuSolverControl control) {
 		super(control);
-		// TODO Auto-generated constructor stub
-	}
-
-	public void solve() throws Exception {
-		solve(0, 0);
 	}
 
 	public boolean solve(int x, int y) throws Exception {
+		if(!running){
+			return false;
+		}
 		if (x == 9) {
 			x = 0;
 			y++;
@@ -25,52 +21,43 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 			return true;
 		}
 
-		if (sudoku.getFieldByte(x, y) != 0) {
-			return solve(sudoku, x+1, y);
+		if (control.getCell(x, y).getValue() != 0) {
+			return solve(x+1, y);
 		} else {
 			for (byte i = 1; i < 10; i++) {
-				sudoku.setFieldValue(i, x, y);
-				Thread.sleep(waitMillis);
-				if (!sudoku.isValueValid(x, y, i)) {
+				control.setCellValue(x, y, i);
+				if(paused){
+					wait();
+				}else{
+					wait(waitMillis);	
+				}
+				if (!control.isValueValid(x, y, i)) {
 					continue;
 				}
-				if(solve(sudoku, x+1, y)){
+				if(solve(x+1, y)){
 					return true;
 				};
 			}
-			sudoku.resetFieldValue(x, y);
-			Thread.sleep(waitMillis);
+			control.resetCell(x, y);
+			if(paused){
+				wait();
+			}else{
+				wait(waitMillis);	
+			}
 			return false;
 		}
 	}
 
-	@Override
-	public void start() {
-		run();		
-	}
+
 
 	@Override
-	public void pause() {
-		paused = true;
-		
-	}
-	
-	@Override
-	public void resume() {
-		paused = false;
-		
-	}
-	
-
-	@Override
-	public void singleStep() {
-		if(paused){
-			this.notify();
+	public void run(){
+		try {
+			solve(0, 0);
+		} catch (Exception e) {
+			control.handleError(e);
 		}
-		
 	}
 
-	@Override
-	public void run() {	
-	}
+
 }

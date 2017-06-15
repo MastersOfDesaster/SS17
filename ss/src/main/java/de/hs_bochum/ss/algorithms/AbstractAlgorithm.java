@@ -8,6 +8,7 @@ public abstract class AbstractAlgorithm implements Runnable{
 	
 	protected SudokuSolverControl control;
 	protected boolean paused;
+	protected volatile boolean running;
 	protected long waitMillis = 100;
 
 	
@@ -15,13 +16,30 @@ public abstract class AbstractAlgorithm implements Runnable{
 		this.control = control;
 	}
 		
-	public abstract void start();
+	public void start() {
+		run();		
+	}
+
+	public void pause() {
+		paused = true;
+		
+	}
 	
-	public abstract void pause();
+	public void resume() {
+		paused = false;
+		notify();
+	}
 	
-	public abstract void resume();
+	public void stop() {
+		running = false;
+	}
 	
-	public abstract void singleStep();
+
+	public void singleStep() {
+		if(paused){
+			this.notify();
+		}
+	}
 	
 
 	public void setSecondsToWait(int secondsToWait) {

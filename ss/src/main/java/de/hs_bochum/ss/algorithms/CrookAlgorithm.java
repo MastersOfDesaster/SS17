@@ -61,20 +61,9 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	}
 
 	@Override
-	public void start() {
+	public void run() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void singleStep() {
-		// TODO Auto-generated method stub
-		
-	}
 }

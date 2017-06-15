@@ -129,4 +129,8 @@ public class SudokuSolverControl {
 		view.showError(e);
 		stopAlgo();
 	}
+
+	public boolean isCellLocked(int x, int y) {
+		return model.isCellLocked(x, y);
+	}
 }

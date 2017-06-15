@@ -193,4 +193,8 @@ public class GridModel extends Observable {
 		}
 	}
 
+	public boolean isCellLocked(int x, int y) {
+		return field[x][y].isLocked();
+	}
+
 }
