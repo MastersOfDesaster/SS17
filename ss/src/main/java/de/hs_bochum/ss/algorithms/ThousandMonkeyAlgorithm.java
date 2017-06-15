@@ -6,12 +6,12 @@ import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
 import de.hs_bochum.ss.interfaces.ISudokuSolver;
-import de.hs_bochum.ss.model.Field;
+import de.hs_bochum.ss.model.GridModel;
 
 public class ThousandMonkeyAlgorithm extends ISudokuSolver{
 
 	@Override
-	public void solve(Field sudoku) throws CoordinateOutOfBoundsException, IsLockedException, IsOutOfRangeException {
+	public void solve(GridModel sudoku) throws CoordinateOutOfBoundsException, IsLockedException, IsOutOfRangeException {
 		Random rand = new Random();
 		do{
 		for(int y = 0; y < 9; y++){
@@ -26,7 +26,7 @@ public class ThousandMonkeyAlgorithm extends ISudokuSolver{
 	}
 
 	
-	private void print(Field sudoku) throws CoordinateOutOfBoundsException{
+	private void print(GridModel sudoku) throws CoordinateOutOfBoundsException{
 		System.out.println();
 		System.out.println();
 		for(int y = 0; y < 9; y++){

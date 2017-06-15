@@ -3,7 +3,7 @@ package de.hs_bochum.ss.model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class FieldValue {
+public class GridCell {
 
 	private byte value;
 
@@ -11,7 +11,7 @@ public class FieldValue {
 
 	private Set<Byte> usedValueSet = new HashSet<Byte>();
 
-	public FieldValue() {
+	public GridCell() {
 		this.lock = false;
 	}
 

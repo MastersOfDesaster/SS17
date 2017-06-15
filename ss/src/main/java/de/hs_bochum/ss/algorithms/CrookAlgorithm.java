@@ -2,13 +2,13 @@ package de.hs_bochum.ss.algorithms;
 
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.interfaces.ISudokuSolver;
-import de.hs_bochum.ss.model.Field;
-import de.hs_bochum.ss.model.FieldValue;
+import de.hs_bochum.ss.model.GridModel;
+import de.hs_bochum.ss.model.GridCell;
 
 public class CrookAlgorithm extends ISudokuSolver{
 
 	@Override
-	public void solve(Field sudoku) throws Exception {
+	public void solve(GridModel sudoku) throws Exception {
 		// TODO Auto-generated method stub
 		findForced();
 		mark(sudoku);
@@ -22,7 +22,7 @@ public class CrookAlgorithm extends ISudokuSolver{
 		
 	}
 	
-	private void mark(Field sudoku) throws CoordinateOutOfBoundsException{
+	private void mark(GridModel sudoku) throws CoordinateOutOfBoundsException{
 		for(int y = 0; y <= 8; y++){
 			for(int x = 0; x <= 8; x++){
 				byte value = sudoku.getFieldByte(x, y);
@@ -54,7 +54,7 @@ public class CrookAlgorithm extends ISudokuSolver{
 		
 	}
 	
-	private void checkRows(Field sudoku){
+	private void checkRows(GridModel sudoku){
 		for(int row =0; row <=8; row ++){
 			for(int i = 8; i > 1 ;i--){
 				

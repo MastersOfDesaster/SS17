@@ -15,21 +15,21 @@ import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
 import de.hs_bochum.ss.algorithms.CrookAlgorithm;
 import de.hs_bochum.ss.interfaces.ISudokuSolver;
 
-public class Window extends JFrame {
+public class SudokuView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	private JComboBox<String> cbAlgorithm;
 	private JButton btnSingle;
 	private JButton btnRun;
-	private SudokuField guiField;
+	private SudokuGridView guiField;
 	private JPanel southGrid;
 	
 	private ISudokuSolver solver;
 	
 	private ExecutorService executor;
 	
-	public Window() {
+	public SudokuView() {
 		this.solver = new CrookAlgorithm();
 		setGUIParams();
 		initGUIObjects();
@@ -51,7 +51,6 @@ public class Window extends JFrame {
 					try {
 						solver.solve(guiField.getField());
 					}catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -72,7 +71,7 @@ public class Window extends JFrame {
 
 	private void initGUIObjects() {
 		this.southGrid = new JPanel(new GridLayout(1, 3, 25, 25));
-		this.guiField = new SudokuField();
+		this.guiField = new SudokuGridView();
 		this.btnRun = new JButton("Run");
 		this.btnSingle = new JButton("Single Step");
 		this.cbAlgorithm = new JComboBox<String>(new String[]{"Thousand Monkeys", "Brute Force", "Dancing Links", "Pencil and Paper"});

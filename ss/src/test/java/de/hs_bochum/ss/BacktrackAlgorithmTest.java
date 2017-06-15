@@ -8,11 +8,11 @@ import org.junit.Test;
 
 import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.model.Field;
+import de.hs_bochum.ss.model.GridModel;
 
 public class BacktrackAlgorithmTest {
 
-	Field sudoku = new Field();
+	GridModel sudoku = new GridModel();
 	
 	
 	@Before

@@ -5,11 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.hs_bochum.ss.algorithms.ThousandMonkeyAlgorithm;
-import de.hs_bochum.ss.model.Field;
+import de.hs_bochum.ss.model.GridModel;
 
 public class Monkeytest {
 	
-	private Field sudoku = new Field();
+	private GridModel sudoku = new GridModel();
 
 	
 	@Before

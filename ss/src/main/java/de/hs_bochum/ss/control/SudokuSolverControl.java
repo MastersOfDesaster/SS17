@@ -1,14 +1,14 @@
 package de.hs_bochum.ss.control;
 
-import de.hs_bochum.ss.gui.Window;
+import de.hs_bochum.ss.gui.SudokuView;
 import de.hs_bochum.ss.interfaces.ISudokuSolver;
-import de.hs_bochum.ss.model.Field;
+import de.hs_bochum.ss.model.GridModel;
 
 public class SudokuSolverControl {
 	
 	private ISudokuSolver solver;
-	private Window view;
-	private Field model;
+	private SudokuView view;
+	private GridModel model;
 	
 	public ISudokuSolver getSolver() {
 		return solver;
@@ -16,16 +16,16 @@ public class SudokuSolverControl {
 	public void setSolver(ISudokuSolver solver) {
 		this.solver = solver;
 	}
-	public Window getView() {
+	public SudokuView getView() {
 		return view;
 	}
-	public void setView(Window view) {
+	public void setView(SudokuView view) {
 		this.view = view;
 	}
-	public Field getModel() {
+	public GridModel getModel() {
 		return model;
 	}
-	public void setModel(Field model) {
+	public void setModel(GridModel model) {
 		this.model = model;
 	}
 }

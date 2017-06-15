@@ -13,14 +13,14 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.model.Field;
-import de.hs_bochum.ss.model.FieldValue;
+import de.hs_bochum.ss.model.GridModel;
+import de.hs_bochum.ss.model.GridCell;
 
-public class SudokuField extends JPanel implements Observer{
+public class SudokuGridView extends JPanel implements Observer{
 	
 	private static final long serialVersionUID = 1L;
 
-	private Field field;
+	private GridModel field;
 	
 	private FocusListenerImpl focusListener;
 	
@@ -29,9 +29,9 @@ public class SudokuField extends JPanel implements Observer{
 	private JTextPane[][] txtFields;
 	private JPanel[][] subFields;
 	
-	public SudokuField() {
+	public SudokuGridView() {
 		this.setLayout(new GridLayout(3, 3));
-		this.field = new Field();
+		this.field = new GridModel();
 		this.focusListener = new FocusListenerImpl(field);
 		initTextFields();
 		this.setVisible(true);
@@ -39,7 +39,7 @@ public class SudokuField extends JPanel implements Observer{
 		field.addObserver(this);
 	}
 	
-	public Field getField(){
+	public GridModel getField(){
 		return this.field;
 	}
 	
@@ -77,7 +77,7 @@ public class SudokuField extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (o instanceof Field){
+		if (o instanceof GridModel){
 			//update single cell
 			if (arg instanceof Point){
 				int x = (int) ((Point)arg).getX();
@@ -109,7 +109,7 @@ public class SudokuField extends JPanel implements Observer{
 	}
 	
 	
-	private void updateCell(FieldValue value, int x, int y){
+	private void updateCell(GridCell value, int x, int y){
 		if(value.getValue() == 0){
 			if(value.usedValueSet().isEmpty()){
 				this.txtFields[x][y].setText("");

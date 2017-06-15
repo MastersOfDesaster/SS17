@@ -1,6 +1,6 @@
 package de.hs_bochum.ss;
 
-import de.hs_bochum.ss.gui.Window;
+import de.hs_bochum.ss.gui.SudokuView;
 
 /**
  * Hello world!
@@ -8,6 +8,6 @@ import de.hs_bochum.ss.gui.Window;
  */
 public class App {
     public static void main( String[] args ) {
-        new Window();
+        new SudokuView();
     }
 }

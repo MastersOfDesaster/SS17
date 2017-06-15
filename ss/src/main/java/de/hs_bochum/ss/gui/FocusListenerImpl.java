@@ -10,14 +10,14 @@ import javax.swing.JTextPane;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
-import de.hs_bochum.ss.model.Field;
+import de.hs_bochum.ss.model.GridModel;
 
 public class FocusListenerImpl implements FocusListener {
 	
-	private Field field;
+	private GridModel field;
 	private int failure;
 	
-	public FocusListenerImpl(Field field){
+	public FocusListenerImpl(GridModel field){
 		this.field = field;
 	}
 

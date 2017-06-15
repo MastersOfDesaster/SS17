@@ -9,24 +9,24 @@ import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
 
-public class Field extends Observable {
+public class GridModel extends Observable {
 
-	private FieldValue[][] field;
+	private GridCell[][] field;
 
-	public Field() {
-		this.field = new FieldValue[9][9];
+	public GridModel() {
+		this.field = new GridCell[9][9];
 		for (int j = 0; j < field.length; j++) {
 			for (int i = 0; i < field[j].length; i++) {
-				field[j][i] = new FieldValue();
+				field[j][i] = new GridCell();
 			}
 		}
 	}
 
 	public void init() {
-		this.field = new FieldValue[9][9];
+		this.field = new GridCell[9][9];
 		for (int j = 0; j < field.length; j++) {
 			for (int i = 0; i < field[j].length; i++) {
-				field[j][i] = new FieldValue();
+				field[j][i] = new GridCell();
 			}
 		}
 	}
@@ -74,7 +74,7 @@ public class Field extends Observable {
 		notifyObservers();
 	}
 
-	public void setField(FieldValue[][] field) {
+	public void setField(GridCell[][] field) {
 		this.field = field;
 		setChanged();
 		notifyObservers();
@@ -86,7 +86,7 @@ public class Field extends Observable {
 
 	}
 	
-	public FieldValue getFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
+	public GridCell getFieldValue(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		return field[x][y];
 

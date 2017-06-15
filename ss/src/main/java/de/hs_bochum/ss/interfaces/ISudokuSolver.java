@@ -1,6 +1,6 @@
 package de.hs_bochum.ss.interfaces;
 
-import de.hs_bochum.ss.model.Field;
+import de.hs_bochum.ss.model.GridModel;
 
 public abstract class ISudokuSolver {
 	
@@ -9,7 +9,7 @@ public abstract class ISudokuSolver {
 	protected int steps;
 
 		
-	public abstract void solve(Field sudoku) throws Exception;
+	public abstract void solve(GridModel sudoku) throws Exception;
 	
 	public abstract void pause();
 	

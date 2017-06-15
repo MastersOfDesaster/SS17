@@ -2,15 +2,15 @@ package de.hs_bochum.ss.algorithms;
 
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.interfaces.ISudokuSolver;
-import de.hs_bochum.ss.model.Field;
+import de.hs_bochum.ss.model.GridModel;
 
 public class BacktrackAlgorithm extends ISudokuSolver {
 
-	public void solve(Field sudoku) throws Exception {
+	public void solve(GridModel sudoku) throws Exception {
 		solve(sudoku, 0, 0);
 	}
 
-	public boolean solve(Field sudoku, int x, int y) throws Exception {
+	public boolean solve(GridModel sudoku, int x, int y) throws Exception {
 		print(sudoku);
 		if (x == 9) {
 			x = 0;
@@ -42,7 +42,7 @@ public class BacktrackAlgorithm extends ISudokuSolver {
 		}
 	}
 	
-	private void print(Field sudoku) throws CoordinateOutOfBoundsException{
+	private void print(GridModel sudoku) throws CoordinateOutOfBoundsException{
 		System.out.println();
 		System.out.println();
 		for(int y = 0; y < 9; y++){
