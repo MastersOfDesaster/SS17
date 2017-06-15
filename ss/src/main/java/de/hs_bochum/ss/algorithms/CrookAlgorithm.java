@@ -40,6 +40,12 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	}
 	
 	private void findForced(){
+		for(int i = 0; i < 9; i++){
+			
+		}
+		control.getColumn(0);
+		
+		
 		//look for naked single usw.
 	}
 	

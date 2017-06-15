@@ -20,9 +20,11 @@ public class GridValidator {
 	}
 
 	public boolean isValid(int x, int y) {
-		return checkColumn(x / 3) && checkRow(y / 3) && checkSquare(x / 3, y / 3);
+		System.out.println(x / 3 + " " + y / 3);
+		System.out.println(checkColumn(x) + " " + checkRow(y) + " " + checkSquare(x / 3, y / 3));
+		return checkColumn(x) && checkRow(y) && checkSquare(x / 3, y / 3);
 	}
-	
+
 	public boolean isValueValid(int x, int y, int value) throws CoordinateOutOfBoundsException {
 		// check columns
 		for (int xx = 0; xx < 9; xx++) {
@@ -70,10 +72,12 @@ public class GridValidator {
 		GridCell square[][] = model.getSquare(x, y);
 		for (int ix = 0; ix < 2; ix++) {
 			for (int iy = 0; iy < 2; iy++) {
-				if (valueSet.contains(square[ix][iy].getValue())) {
-					return false;
-				} else {
-					valueSet.add(square[ix][iy].getValue());
+				if (square[ix][iy].getValue() != 0) {
+					if (valueSet.contains(square[ix][iy].getValue())) {
+						return false;
+					} else {
+						valueSet.add(square[ix][iy].getValue());
+					}
 				}
 			}
 		}
@@ -94,14 +98,20 @@ public class GridValidator {
 	public boolean checkRow(int y) {
 		Set<Integer> valueSet = new HashSet<Integer>();
 
+		System.out.println("row: " + y);
 		GridCell row[] = model.getRow(y);
 		for (int x = 0; x < 9; x++) {
-			if (valueSet.contains(row[x].getValue())) {
-				return false;
-			} else {
-				valueSet.add(row[x].getValue());
+			System.out.print(row[x].getValue());
+			if (row[x].getValue() != 0) {
+				if (valueSet.contains(row[x].getValue())) {
+					return false;
+				} else {
+					valueSet.add(row[x].getValue());
+				}
 			}
 		}
+		
+		System.out.println("");
 
 		return true;
 	}
@@ -112,7 +122,7 @@ public class GridValidator {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -121,10 +131,12 @@ public class GridValidator {
 
 		GridCell col[] = model.getColumn(x);
 		for (int y = 0; y < 9; y++) {
-			if (valueSet.contains(col[y].getValue())) {
-				return false;
-			} else {
-				valueSet.add(col[y].getValue());
+			if (col[y].getValue() != 0) {
+				if (valueSet.contains(col[y].getValue())) {
+					return false;
+				} else {
+					valueSet.add(col[y].getValue());
+				}
 			}
 		}
 
