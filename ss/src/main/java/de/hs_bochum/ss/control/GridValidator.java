@@ -20,8 +20,6 @@ public class GridValidator {
 	}
 
 	public boolean isValid(int x, int y) {
-		System.out.println(x / 3 + " " + y / 3);
-		System.out.println(checkColumn(x) + " " + checkRow(y) + " " + checkSquare(x / 3, y / 3));
 		return checkColumn(x) && checkRow(y) && checkSquare(x / 3, y / 3);
 	}
 
