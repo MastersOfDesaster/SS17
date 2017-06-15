@@ -37,8 +37,7 @@ public class SudokuSolverControl {
 		try {
 			return validator.isValueValid(x, y, value);
 		} catch (CoordinateOutOfBoundsException e) {
-			view.showError(e);
-			stopAlgo();
+			handleError(e);
 		}
 		
 		return false;
@@ -48,8 +47,7 @@ public class SudokuSolverControl {
 		try {
 			model.getCell(x, y);
 		} catch (CoordinateOutOfBoundsException e) {
-			view.showError(e);
-			stopAlgo();
+			handleError(e);
 		}
 		
 		return null;
@@ -59,8 +57,7 @@ public class SudokuSolverControl {
 		try {
 			model.resetCell(x, y);
 		} catch (CoordinateOutOfBoundsException e) {
-			view.showError(e);
-			stopAlgo();
+			handleError(e);
 		}
 	}
 	
@@ -68,8 +65,7 @@ public class SudokuSolverControl {
 		try {
 			model.setCellValueLocked(x, y, value);
 		} catch (IsOutOfRangeException | CoordinateOutOfBoundsException e) {
-			view.showError(e);
-			stopAlgo();
+			handleError(e);
 		}
 	}
 	
@@ -77,8 +73,7 @@ public class SudokuSolverControl {
 		try {
 			model.setCellValue(x, y, value);
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
-			view.showError(e);
-			stopAlgo();
+			handleError(e);
 		}
 	}
 	
@@ -86,36 +81,52 @@ public class SudokuSolverControl {
 		try {
 			model.setCellValue(x, y, value);
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
-			view.showError(e);
-			stopAlgo();
+			handleError(e);
 		}
 	}
 	
 	public void incrementCellValue(int x, int y) {
-		
-	}
-	
-	public void resetFieldValue(int x, int y) {
-		
+		try {
+			model.incrementCellValue(x, y);
+		} catch (CoordinateOutOfBoundsException e) {
+			handleError(e);
+		}
 	}
 	
 	public void setAlgo(Algorithm algo) {
 		try {
 			this.algo = algo.toStrategy(this);
 		} catch (UnknownAlgorithmException e) {
-			view.showError(e);
+			handleError(e);
 		}
 	}
 	
 	public void startAlgo() {
-		//TODO
+		if (algo != null) {
+			algo.start();
+		} else {
+			handleError(new NullPointerException("Algo is null!"));
+		}
 	}
 	
 	public void stopAlgo() {
-		//TODO
+		if (algo != null) {
+			algo.pause();
+		} else {
+			handleError(new NullPointerException("Algo is null!"));
+		}
 	}
 	
 	public void nextStepAlgo() {
-		//TODO
+		if (algo != null) {
+			algo.singleStep();
+		} else {
+			handleError(new NullPointerException("Algo is null!"));
+		}
+	}
+	
+	public void handleError(Exception e) {
+		view.showError(e);
+		stopAlgo();
 	}
 }
