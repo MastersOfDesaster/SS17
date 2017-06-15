@@ -34,10 +34,12 @@ public class SudokuSolverControl {
 	}
 
 	public boolean isValid() {
+		report.increaseDiffCount();
 		return validator.isValid();
 	}
 
 	public boolean isValid(int x, int y) {
+		report.increaseDiffCount();
 		return validator.isValid(x, y);
 	}
 
@@ -60,6 +62,11 @@ public class SudokuSolverControl {
 			model.resetCell(x, y);
 			model.setCellValid(x, y, validator.isValid(x, y));
 			model.startNotify(new Point(x, y));
+			
+			if (model.isCellValid(x, y) == false) {
+				report.increaseInvalidCount();
+			}
+			report.increaseWriteCount();
 		} catch (CoordinateOutOfBoundsException e) {
 			handleError(e);
 		}
@@ -79,6 +86,10 @@ public class SudokuSolverControl {
 			model.setCellValue(x, y, value);
 			model.setCellValid(x, y, validator.isValid(x, y));
 			model.startNotify(new Point(x, y));
+			
+			if (model.isCellValid(x, y) == false) {
+				report.increaseInvalidCount();
+			}
 			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);
@@ -89,7 +100,13 @@ public class SudokuSolverControl {
 		try {
 			model.setCellValue(x, y, value);
 			model.setCellValid(x, y, validator.isValid(x, y));
-			if (notify) model.startNotify(new Point(x, y));
+			if (notify) {
+				model.startNotify(new Point(x, y));
+			}
+			
+			if (model.isCellValid(x, y) == false) {
+				report.increaseInvalidCount();
+			}
 			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);
@@ -99,6 +116,11 @@ public class SudokuSolverControl {
 	public void incrementCellValue(int x, int y) {
 		try {
 			model.incrementCellValue(x, y);
+			model.setCellValid(x, y, validator.isValid(x, y));
+			
+			if (model.isCellValid(x, y) == false) {
+				report.increaseInvalidCount();
+			}
 			report.increaseWriteCount();
 		} catch (CoordinateOutOfBoundsException e) {
 			handleError(e);
@@ -116,6 +138,7 @@ public class SudokuSolverControl {
 	public void startAlgo() {
 		if (algo != null) {
 			algo.start();
+			report.clear();
 		} else {
 			view.showError(new NullPointerException("Algo is null!"));
 		}

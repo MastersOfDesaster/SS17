@@ -10,6 +10,12 @@ public class ReportModel {
 		return "DiffCount: " + diffCount + "\nWriteCount: " + writeCount + "\nInvalidCount: " + invalidCount;
 	}
 	
+	public void clear() {
+		diffCount = 0;
+		writeCount = 0;
+		invalidCount = 0;
+	}
+	
 	public int getDiffCount() {
 		return diffCount;
 	}
