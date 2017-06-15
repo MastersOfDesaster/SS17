@@ -43,7 +43,7 @@ public class GridModel extends Observable {
 		this.invalidCellCount = 0;
 	}
 
-	public void setCellValueLocked(byte value, int x, int y)
+	public void setCellValueLocked(int x, int y, int value)
 			throws IsOutOfRangeException, CoordinateOutOfBoundsException {
 		// checkCoordinate(x, y);
 		field[x][y].setValue(value);
@@ -52,12 +52,12 @@ public class GridModel extends Observable {
 		notifyObservers(new Point(x, y));
 	}
 
-	public void setCellValue(int value, int x, int y)
+	public void setCellValue(int x, int y, int value)
 			throws IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
-		setCellValue(value, x, y, true);
+		setCellValue(x, y, value, true);
 	}
 
-	public void setCellValue(int value, int x, int y, boolean notify)
+	public void setCellValue(int x, int y, int value, boolean notify)
 			throws IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
 		// checkCoordinate(x, y);
 		if (value < 1 || value > 9) {
@@ -107,7 +107,7 @@ public class GridModel extends Observable {
 		notifyObservers(new Point(x, y));
 	}
 
-	public void removePossibleValue(int x, int y, byte value) {
+	public void removePossibleValue(int x, int y, int value) {
 //		checkCoordinate(x, y);
 //		checkValue(value);
 		field[x][y].removePossibleValue(value);
@@ -151,7 +151,6 @@ public class GridModel extends Observable {
 		return solved;
 	}
 
-	//TODO reset auf solved?
 	public void solved() {
 		this.solved = true;
 	}
@@ -166,11 +165,11 @@ public class GridModel extends Observable {
 		return (GridCell[])gridColumn.toArray();
 	}
 
-	public GridCell[][] getSquare(int row, int column) {
+	public GridCell[][] getSquare(int x, int y) {
 		GridCell[][] gridSquare = new GridCell[3][3];
 		for (int r=0; r<3; r++){
 			for (int c=0; c<3; c++){
-				gridSquare[r][c] = field[r+row*3][c+column*3]; 
+				gridSquare[r][c] = field[r+x*3][c+y*3]; 
 			}
 		}
 		return gridSquare;

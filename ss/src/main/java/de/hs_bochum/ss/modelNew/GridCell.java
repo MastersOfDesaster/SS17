@@ -48,9 +48,12 @@ public class GridCell {
 		return locked;
 	}
 
-	//TODO: nur locken oder auch entlocken?
 	public void lock() {
 		this.locked = true;
+	}
+	
+	public void unlock(){
+		this.locked = false;
 	}
 
 	public boolean isValid() {
