@@ -45,16 +45,10 @@ public class GridModel extends Observable {
 		checkCoordinate(x, y);
 		grid[x][y].setValue(value);
 		grid[x][y].lock();
-		setChanged();
-		notifyObservers(new Point(x, y));
+		startNotify(new Point(x, y));
 	}
 
 	public void setCellValue(int x, int y, int value)
-			throws IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
-		setCellValue(x, y, value, true);
-	}
-
-	public void setCellValue(int x, int y, int value, boolean notify)
 			throws IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		if (value < 1 || value > 9) {
@@ -64,10 +58,6 @@ public class GridModel extends Observable {
 			throw new IsLockedException("This field is locked!");
 		}
 		grid[x][y].setValue(value);
-		if (notify) {
-			setChanged();
-			notifyObservers(new Point(x, y));
-		}
 	}
 
 	public void incrementCellValue(int x, int y) throws CoordinateOutOfBoundsException {
@@ -78,8 +68,7 @@ public class GridModel extends Observable {
 	public void resetCell(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		grid[x][y].setValue(0);
-		setChanged();
-		notifyObservers();
+		startNotify();
 	}
 
 	public int getCellValue(int x, int y) throws CoordinateOutOfBoundsException {
@@ -101,9 +90,7 @@ public class GridModel extends Observable {
 		checkCoordinate(x, y);
 		checkValue(value);
 		grid[x][y].addPossibleValue(value);
-		
-		setChanged();
-		notifyObservers(new Point(x, y));
+		startNotify(new Point(x, y));
 	}
 
 	public void removePossibleValue(int x, int y, int value) throws IsOutOfRangeException, CoordinateOutOfBoundsException {
@@ -118,8 +105,7 @@ public class GridModel extends Observable {
 
 	public void setField(GridCell[][] field) {
 		this.grid = field;
-		setChanged();
-		notifyObservers();
+		startNotify();
 	}
 
 	public GridCell getActiveCell() {
@@ -183,7 +169,6 @@ public class GridModel extends Observable {
 	public void setCellValid(int x, int y, boolean valid) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		grid[x][y].setValid(valid);
-		notifyObservers(new Point(x, y));
 	}
 	
 	public boolean isCellValid(int x, int y) throws CoordinateOutOfBoundsException {
@@ -207,4 +192,13 @@ public class GridModel extends Observable {
 		return grid[x][y].isLocked();
 	}
 
+	public void startNotify(){
+		setChanged();
+		notifyObservers();
+	}
+
+	public void startNotify(Point p){
+		setChanged();
+		notifyObservers(p);
+	}
 }

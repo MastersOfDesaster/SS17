@@ -83,7 +83,9 @@ public class SudokuView extends JFrame{
 		});
 		this.sliderEast.addChangeListener(cl -> {
 			control.setWaittime(sliderEast.getValue());
-			waitTime.setText(sliderEast.getValue() + "");
+			StringBuilder sb = new StringBuilder(4);
+			sb.append(sliderEast.getValue());
+			waitTime.setText(sb.toString());
 		});
 	}
 
@@ -107,9 +109,9 @@ public class SudokuView extends JFrame{
 		this.btnPause = new JButton("Pause");
 		this.btnStop = new JButton("Stop");
 		this.btnSingle = new JButton("Single Step");
-		this.sliderEast = new JSlider(JSlider.VERTICAL, 0, 5000, 10);
+		this.sliderEast = new JSlider(JSlider.VERTICAL, 0, 1000, 10);
 		this.borderEast = new JPanel(new BorderLayout());
-		this.waitTime = new JTextField(10 + "");
+		this.waitTime = new JTextField(10 + "    ");
 		this.cbAlgorithm = new JComboBox<>(Algorithm.values());
 	}
 

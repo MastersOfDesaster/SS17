@@ -1,5 +1,7 @@
 package de.hs_bochum.ss.control;
 
+import java.awt.Point;
+
 import de.hs_bochum.ss.algorithms.AbstractAlgorithm;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
@@ -70,6 +72,7 @@ public class SudokuSolverControl {
 		try {
 			model.setCellValue(x, y, value);
 			model.setCellValid(x, y, validator.isValid(x, y));
+			model.startNotify(new Point(x, y));
 			System.out.println(model.getCell(x, y).isValid());
 			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
@@ -81,6 +84,7 @@ public class SudokuSolverControl {
 		try {
 			model.setCellValue(x, y, value);
 			model.setCellValid(x, y, validator.isValid(x, y));
+			if (notify) model.startNotify(new Point(x, y));
 			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);
