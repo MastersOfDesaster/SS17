@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.interfaces.Algorithm;
@@ -26,6 +27,7 @@ public class SudokuView extends JFrame{
 	private JButton btnStart;
 	private JButton btnPause;
 	private JButton btnStop;
+	private JSlider sliderEast;
 	private SudokuGridView guiField;
 	private JPanel southGrid;
 	private boolean manuel;
@@ -76,6 +78,9 @@ public class SudokuView extends JFrame{
 		this.cbAlgorithm.addActionListener(al -> {
 			control.setAlgo((Algorithm)cbAlgorithm.getSelectedItem());
 		});
+		this.sliderEast.addChangeListener(cl -> {
+			
+		});
 	}
 
 	private void addGUIObjects() {
@@ -86,6 +91,7 @@ public class SudokuView extends JFrame{
 		this.southGrid.add(cbAlgorithm);
 		this.add(new JScrollPane(guiField), BorderLayout.CENTER);
 		this.add(southGrid, BorderLayout.SOUTH);
+		this.add(sliderEast, BorderLayout.EAST);
 	}
 
 	private void initGUIObjects() {
@@ -95,6 +101,7 @@ public class SudokuView extends JFrame{
 		this.btnPause = new JButton("Pause");
 		this.btnStop = new JButton("Stop");
 		this.btnSingle = new JButton("Single Step");
+		this.sliderEast = new JSlider(JSlider.VERTICAL, 0, 5000, 100);
 		this.cbAlgorithm = new JComboBox<>(Algorithm.values());
 	}
 
