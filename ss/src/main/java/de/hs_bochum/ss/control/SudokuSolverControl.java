@@ -199,4 +199,12 @@ public class SudokuSolverControl {
 		return algo.getWaitMillis();
 	}
 	
+	public void resetSudoku(){
+		model.reset();
+		model.startNotify();
+	}
+
+	public void lockCells() {
+		model.lockCells();
+	}
 }

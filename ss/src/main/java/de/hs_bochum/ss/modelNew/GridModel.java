@@ -201,4 +201,12 @@ public class GridModel extends Observable {
 		setChanged();
 		notifyObservers(p);
 	}
+
+	public void lockCells() {
+		for(GridCell[] gridRow : grid){
+			for(GridCell cell : gridRow){
+				cell.lockByValue();
+			}
+		}
+	}
 }

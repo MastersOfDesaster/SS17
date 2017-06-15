@@ -64,4 +64,9 @@ public class GridCell {
 		this.valid = valid;
 	}
 
+	public void lockByValue() {
+		if(value>0)
+			locked = true;
+	}
+
 }
