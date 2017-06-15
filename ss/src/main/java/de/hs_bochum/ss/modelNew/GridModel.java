@@ -2,9 +2,6 @@ package de.hs_bochum.ss.modelNew;
 
 import java.awt.Point;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Observable;
 import java.util.Set;
 
