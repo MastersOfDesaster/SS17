@@ -100,12 +100,12 @@ public class GridModel extends Observable {
 		startNotify(new Point(x, y));
 	}
 
-	public GridCell[][] getField() {
+	public GridCell[][] getGrid() {
 		return grid;
 	}
 
-	public void setField(GridCell[][] field) {
-		this.grid = field;
+	public void setGrid(GridCell[][] grid) {
+		this.grid = grid;
 		startNotify();
 	}
 
