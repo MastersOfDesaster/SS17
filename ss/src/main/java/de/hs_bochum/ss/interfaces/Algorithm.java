@@ -2,6 +2,7 @@ package de.hs_bochum.ss.interfaces;
 
 import com.sun.javafx.image.impl.ByteIndexed.Getter;
 
+import de.hs_bochum.ss.algorithms.AbstractAlgorithm;
 import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
 import de.hs_bochum.ss.algorithms.CrookAlgorithm;
 import de.hs_bochum.ss.control.SudokuSolverControl;
