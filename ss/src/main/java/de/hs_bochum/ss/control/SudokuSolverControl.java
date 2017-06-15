@@ -70,6 +70,7 @@ public class SudokuSolverControl {
 		try {
 			model.setCellValue(x, y, value);
 			model.setCellValid(x, y, validator.isValid(x, y));
+			System.out.println(model.getCell(x, y).isValid());
 			report.increaseWriteCount();
 		} catch (IsLockedException | IsOutOfRangeException | CoordinateOutOfBoundsException e) {
 			handleError(e);
