@@ -133,4 +133,12 @@ public class SudokuSolverControl {
 	public boolean isCellLocked(int x, int y) {
 		return model.isCellLocked(x, y);
 	}
+
+	public void addPossibleValue(int x, int y, byte value) {
+		try {
+			model.addPossibleValue(x, y, value);
+		} catch (Exception e) {
+			handleError(e);
+		}
+	}
 }

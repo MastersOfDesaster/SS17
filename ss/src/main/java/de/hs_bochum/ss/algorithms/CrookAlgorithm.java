@@ -2,7 +2,6 @@ package de.hs_bochum.ss.algorithms;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.model.GridModel;
 
 public class CrookAlgorithm extends AbstractAlgorithm{
 
@@ -11,22 +10,27 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 		// TODO Auto-generated constructor stub
 	}
 
-	public void solve(GridModel sudoku) throws Exception {
+	public void solve() throws Exception {
 		// TODO Auto-generated method stub
 		findForced();
-		mark(sudoku);
+		mark();
 		findPreemptives();
 		
 	}
 	
-	private void mark(GridModel sudoku) throws CoordinateOutOfBoundsException{
+	private void mark() throws CoordinateOutOfBoundsException, InterruptedException{
 		for(int y = 0; y <= 8; y++){
 			for(int x = 0; x <= 8; x++){
-				byte value = sudoku.getFieldByte(x, y);
+				int value = control.getCell(x, y).getValue();
 				if(value == 0){
 					for(byte v = 1 ; v <= 9 ; v++){
-						if(sudoku.isValueValid(x, y, v)){
-							sudoku.addUsedValue(x, y, v);
+						if(control.isValueValid(x, y, v)){
+							control.addPossibleValue(x, y, v);
+							if(paused){
+								wait();
+							}else{
+								wait(waitMillis);
+							}
 						}
 					}
 				}
@@ -51,7 +55,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 		
 	}
 	
-	private void checkRows(GridModel sudoku){
+	private void checkRows(){
 		for(int row =0; row <=8; row ++){
 			for(int i = 8; i > 1 ;i--){
 				
@@ -62,7 +66,11 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		try {
+			solve();
+		} catch (Exception e) {
+			control.handleError(e);
+		}
 		
 	}
 
