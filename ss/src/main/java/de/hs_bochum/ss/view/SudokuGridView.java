@@ -90,7 +90,7 @@ public class SudokuGridView extends JPanel implements Observer {
 				if (lastChange != null) {
 					this.gridViews[(int) lastChange.getX()][(int) lastChange.getY()].setBackground(Color.WHITE);
 				}
-				if (!mainView.getManuel())
+				if (!mainView.getManual())
 					this.gridViews[x][y].setBackground(Color.GREEN);
 				lastChange = new Point(x, y);
 			}
@@ -107,7 +107,7 @@ public class SudokuGridView extends JPanel implements Observer {
 				}
 			}
 		}
-		mainView.setManuel(false);
+		mainView.setManual(false);
 	}
 
 	private void updateCell(GridCell value, int x, int y) {

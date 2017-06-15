@@ -56,4 +56,7 @@ public abstract class AbstractAlgorithm implements Runnable{
 		waitMillis = millis;		
 	}
 
+	public long getWaitMillis() {
+		return waitMillis;
+	}
 }

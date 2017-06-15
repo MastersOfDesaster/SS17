@@ -191,4 +191,8 @@ public class SudokuSolverControl {
 		return getSquare(square % 3, (int)(square / 3));
 	}
 	
+	public long getWaitMillis(){
+		return algo.getWaitMillis();
+	}
+	
 }

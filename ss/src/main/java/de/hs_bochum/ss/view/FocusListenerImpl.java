@@ -29,7 +29,7 @@ public class FocusListenerImpl implements FocusListener {
 				return;
 			}
 			int value = Integer.parseInt(txt.getText());
-			mainView.setManuel(true);
+			mainView.setManual(true);
 			mainView.setValueInModel(x, y, value);
 //			if(control.isValueValid(x, y, Integer.parseInt(sgcv.getText())))
 //				sgcv.setBackground(Color.WHITE);

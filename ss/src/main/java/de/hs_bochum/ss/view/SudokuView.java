@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.interfaces.Algorithm;
@@ -27,10 +28,12 @@ public class SudokuView extends JFrame{
 	private JButton btnStart;
 	private JButton btnPause;
 	private JButton btnStop;
+	private JPanel borderEast;
 	private JSlider sliderEast;
+	private JTextField waitTime;
 	private SudokuGridView guiField;
 	private JPanel southGrid;
-	private boolean manuel;
+	private boolean manual;
 
 	public SudokuView(GridModel model) {
 		this.model = model;
@@ -79,7 +82,8 @@ public class SudokuView extends JFrame{
 			control.setAlgo((Algorithm)cbAlgorithm.getSelectedItem());
 		});
 		this.sliderEast.addChangeListener(cl -> {
-			
+			control.setWaittime(sliderEast.getValue());
+			waitTime.setText(sliderEast.getValue() + "");
 		});
 	}
 
@@ -89,19 +93,24 @@ public class SudokuView extends JFrame{
 		this.southGrid.add(btnStop);
 		this.southGrid.add(btnSingle);
 		this.southGrid.add(cbAlgorithm);
+		this.borderEast.add(sliderEast, BorderLayout.CENTER);
+		this.borderEast.add(waitTime, BorderLayout.EAST);
 		this.add(new JScrollPane(guiField), BorderLayout.CENTER);
 		this.add(southGrid, BorderLayout.SOUTH);
-		this.add(sliderEast, BorderLayout.EAST);
+		this.add(borderEast, BorderLayout.EAST);
 	}
 
 	private void initGUIObjects() {
+		int waitMillis = (int) control.getWaitMillis(); 
 		this.southGrid = new JPanel(new GridLayout(1, 5, 25, 25));
 		this.guiField = new SudokuGridView(model, this);
 		this.btnStart = new JButton("Start");
 		this.btnPause = new JButton("Pause");
 		this.btnStop = new JButton("Stop");
 		this.btnSingle = new JButton("Single Step");
-		this.sliderEast = new JSlider(JSlider.VERTICAL, 0, 5000, 100);
+		this.sliderEast = new JSlider(JSlider.VERTICAL, 0, 5000, waitMillis);
+		this.borderEast = new JPanel(new BorderLayout());
+		this.waitTime = new JTextField(waitMillis + "");
 		this.cbAlgorithm = new JComboBox<>(Algorithm.values());
 	}
 
@@ -122,12 +131,12 @@ public class SudokuView extends JFrame{
 		control.setCellValue(x, y, value);
 	}
 	
-	public void setManuel(boolean b){
-		this.manuel = b;
+	public void setManual(boolean b){
+		this.manual = b;
 	}
 	
-	public boolean getManuel(){
-		return this.manuel;
+	public boolean getManual(){
+		return this.manual;
 	}
 	
 	public boolean isCellValid(int x, int y){
