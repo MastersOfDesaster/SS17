@@ -28,7 +28,9 @@ public class ThousandMonkeyAlgorithm extends AbstractAlgorithm{
 		if(paused){
 			wait();
 		}else{
-			wait(waitMillis);
+			if(waitMillis != 0){
+				wait(waitMillis);		
+			}
 		}
 		}while(!control.isValid() && running);
 	}

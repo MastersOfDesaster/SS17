@@ -9,7 +9,7 @@ public abstract class AbstractAlgorithm implements Runnable{
 	protected SudokuSolverControl control;
 	protected volatile boolean paused;
 	protected volatile boolean running;
-	protected volatile long waitMillis = 10;
+	protected volatile long waitMillis = 0;
 
 	
 	public AbstractAlgorithm(SudokuSolverControl control){

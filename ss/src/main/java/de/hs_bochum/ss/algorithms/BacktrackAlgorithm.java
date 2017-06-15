@@ -1,6 +1,7 @@
 package de.hs_bochum.ss.algorithms;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
+import de.hs_bochum.ss.exception.AlgorithmStoppedException;
 
 public class BacktrackAlgorithm extends AbstractAlgorithm {
 
@@ -10,7 +11,8 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 
 	public synchronized boolean solve(int x, int y) throws Exception {
 		if(!running){
-			return false;
+			//stop recursion without return value
+			throw new AlgorithmStoppedException();
 		}
 		if (x == 9) {
 			x = 0;
@@ -29,7 +31,9 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 				if(paused){
 					wait();
 				}else{
-					wait(waitMillis);	
+					if(waitMillis != 0){
+						wait(waitMillis);		
+					}
 				}
 				if (!control.isValueValid(x, y, i)) {
 					continue;
@@ -42,7 +46,9 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 			if(paused){
 				wait();
 			}else{
-				wait(waitMillis);	
+				if(waitMillis != 0){
+					wait(waitMillis);		
+				}	
 			}
 			return false;
 		}
@@ -54,7 +60,9 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 	public void run(){
 		try {
 			solve(0, 0);
-		} catch (Exception e) {
+		}catch(AlgorithmStoppedException e){
+			//do nothing
+		}catch (Exception e) {
 			e.printStackTrace();
 			control.handleError(e);
 		}
