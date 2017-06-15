@@ -1,10 +1,7 @@
 package de.hs_bochum.ss.control;
 
-<<<<<<< HEAD
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-=======
 import de.hs_bochum.ss.algorithms.AbstractAlgorithm;
->>>>>>> branch 'master' of https://github.com/MastersOfDesaster/SS17.git
 import de.hs_bochum.ss.exception.UnknownAlgorithmException;
 import de.hs_bochum.ss.interfaces.Algorithm;
 import de.hs_bochum.ss.modelNew.GridModel;
