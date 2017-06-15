@@ -70,8 +70,8 @@ public class GridValidator {
 		Set<Integer> valueSet = new HashSet<Integer>();
 
 		GridCell square[][] = model.getSquare(x, y);
-		for (int ix = 0; ix < 2; ix++) {
-			for (int iy = 0; iy < 2; iy++) {
+		for (int ix = 0; ix < 3; ix++) {
+			for (int iy = 0; iy < 3; iy++) {
 				if (square[ix][iy].getValue() != 0) {
 					if (valueSet.contains(square[ix][iy].getValue())) {
 						return false;

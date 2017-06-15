@@ -157,7 +157,7 @@ public class GridModel extends Observable {
 		GridCell[][] gridSquare = new GridCell[3][3];
 		for (int ix = 0; ix < 3; ix++) {
 			for (int iy = 0; iy < 3; iy++) {
-				gridSquare[ix][iy] = grid[ix + x * 3][iy + y * 3];
+				gridSquare[ix][iy] = grid[x * 3 + ix][y * 3 + iy];
 			}
 		}
 		return gridSquare;
