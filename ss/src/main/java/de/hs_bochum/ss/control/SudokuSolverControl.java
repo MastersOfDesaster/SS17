@@ -1,11 +1,11 @@
 package de.hs_bochum.ss.control;
 
 import de.hs_bochum.ss.exception.UnknownAlgorithmException;
-import de.hs_bochum.ss.gui.SudokuView;
 import de.hs_bochum.ss.interfaces.AbstractAlgorithm;
 import de.hs_bochum.ss.interfaces.Algorithm;
 import de.hs_bochum.ss.modelNew.GridModel;
 import de.hs_bochum.ss.modelNew.ReportModel;
+import de.hs_bochum.ss.view.SudokuView;
 
 public class SudokuSolverControl {
 	private GridValidator validator;
@@ -21,11 +21,31 @@ public class SudokuSolverControl {
 		this.validator = validator;
 	}
 	
+	public void setCellValueLocked(int x, int y, int value) {
+		
+	}
+	
+	public void setCellValue(int x, int y, int value) {
+		
+	}
+	
+	public void setCellValue(int x, int y, int value, boolean notify) {
+		
+	}
+	
+	public void incrementCellValue(int x, int y) {
+		
+	}
+	
+	public void resetFieldValue(int x, int y) {
+		
+	}
+	
 	public void setAlgo(Algorithm algo) {
 		try {
 			this.algo = algo.toStrategy(this);
 		} catch (UnknownAlgorithmException e) {
-			e.printStackTrace();
+			view.showError(e);
 		}
 	}
 	
