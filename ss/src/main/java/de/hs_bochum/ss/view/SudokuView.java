@@ -115,7 +115,7 @@ public class SudokuView extends JFrame{
 	}
 
 	private void initGUIObjects() {
-		this.southGrid = new JPanel(new GridLayout(2, 4, 25, 5));
+		this.southGrid = new JPanel(new GridLayout(2, 4, 5, 5));
 		this.guiField = new SudokuGridView(model, this);
 		this.btnStart = new JButton("Start");
 		this.btnPause = new JButton("Pause");
