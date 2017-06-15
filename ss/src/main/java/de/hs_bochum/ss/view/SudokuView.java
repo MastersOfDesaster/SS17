@@ -59,7 +59,7 @@ public class SudokuView extends JFrame{
 				btnPause.setText("Continue");
 				btnStart.setEnabled(true);
 			}
-			if (btnPause.getText().equals("Continue")){ 
+			else if (btnPause.getText().equals("Continue")){ 
 				control.continueAlgo(); 
 				btnPause.setText("Pause");
 				btnStart.setEnabled(false);
