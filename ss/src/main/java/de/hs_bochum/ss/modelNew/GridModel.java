@@ -137,8 +137,8 @@ public class GridModel extends Observable {
 		return solved;
 	}
 
-	public void solved() {
-		this.solved = true;
+	public void setSolved(boolean solved) {
+		this.solved = solved;
 	}
 
 	public GridCell[] getColumn(int row) {

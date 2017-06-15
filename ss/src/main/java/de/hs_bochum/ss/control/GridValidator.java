@@ -14,6 +14,18 @@ public class GridValidator {
 	public GridValidator(GridModel model) {
 		this.model = model;
 	}
+	
+	public boolean isSolved() throws CoordinateOutOfBoundsException {
+		for (int x = 0; x < 9; x++) {
+			for (int y = 0; y < 9; y++) {
+				if (model.getCellValue(x, y) == 0) {
+					return false;
+				}
+			}
+		}
+		
+		return isValid();
+	}
 
 	public boolean isValid() {
 		return checkColumns() && checkRows() && checkSquares();

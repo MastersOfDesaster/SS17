@@ -137,6 +137,8 @@ public class SudokuSolverControl {
 	public void startAlgo() {
 		if (algo != null) {
 			algo.start();
+			
+			model.setSolved(false);
 			report.clear();
 		} else {
 			view.showError(new NullPointerException("Algo is null!"));
@@ -241,7 +243,13 @@ public class SudokuSolverControl {
 	}
 
 	public void onAlgoFinished() {
-		System.out.println(report);
+		try {
+			model.setSolved(validator.isSolved());
+			report.setSolved(model.isSolved());
+			System.out.println(report);
+		} catch (CoordinateOutOfBoundsException e) {
+			view.showError(e);
+		}
 	}
 
 	public void setSelectedFile(File selectedFile) {
