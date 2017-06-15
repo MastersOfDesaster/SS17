@@ -66,7 +66,7 @@ public class SudokuView extends JFrame{
 			}
 		});
 		this.btnSingle.addActionListener(al -> {
-			control.stopAlgo();
+		control.nextStepAlgo();
 			btnStart.setEnabled(true);
 		});
 		this.btnStop.addActionListener(al -> {

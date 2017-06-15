@@ -22,6 +22,9 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	private synchronized void mark() throws CoordinateOutOfBoundsException, InterruptedException{
 		for(int y = 0; y <= 8; y++){
 			for(int x = 0; x <= 8; x++){
+				if(!running){
+					return;
+				}
 				int value = control.getCell(x, y).getValue();
 				if(value == 0){
 					for(byte v = 1 ; v <= 9 ; v++){
