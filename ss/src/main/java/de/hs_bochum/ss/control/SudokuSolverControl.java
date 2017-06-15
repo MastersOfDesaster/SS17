@@ -105,7 +105,7 @@ public class SudokuSolverControl {
 		if (algo != null) {
 			algo.start();
 		} else {
-			handleError(new NullPointerException("Algo is null!"));
+			view.showError(new NullPointerException("Algo is null!"));
 		}
 	}
 	
@@ -113,7 +113,7 @@ public class SudokuSolverControl {
 		if (algo != null) {
 			algo.pause();
 		} else {
-			handleError(new NullPointerException("Algo is null!"));
+			view.showError(new NullPointerException("Algo is null!"));
 		}
 	}
 	
@@ -121,7 +121,7 @@ public class SudokuSolverControl {
 		if (algo != null) {
 			algo.singleStep();
 		} else {
-			handleError(new NullPointerException("Algo is null!"));
+			view.showError(new NullPointerException("Algo is null!"));
 		}
 	}
 	
