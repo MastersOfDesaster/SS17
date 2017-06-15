@@ -1,4 +1,4 @@
-package de.hs_bochum.ss.gui;
+package de.hs_bochum.ss.view;
 
 import java.awt.Color;
 import java.awt.event.FocusEvent;
@@ -10,7 +10,7 @@ import javax.swing.JTextPane;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
-import de.hs_bochum.ss.model.GridModel;
+import de.hs_bochum.ss.modelNew.GridModel;
 
 public class FocusListenerImpl implements FocusListener {
 	

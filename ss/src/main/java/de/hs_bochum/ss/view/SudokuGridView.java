@@ -1,4 +1,4 @@
-package de.hs_bochum.ss.gui;
+package de.hs_bochum.ss.view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -13,8 +13,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.model.GridModel;
-import de.hs_bochum.ss.model.GridCell;
+import de.hs_bochum.ss.modelNew.GridModel;
+import de.hs_bochum.ss.modelNew.GridCell;
 
 public class SudokuGridView extends JPanel implements Observer{
 	

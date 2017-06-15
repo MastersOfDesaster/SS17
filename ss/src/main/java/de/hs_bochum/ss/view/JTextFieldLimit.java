@@ -1,4 +1,4 @@
-package de.hs_bochum.ss.gui;
+package de.hs_bochum.ss.view;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
