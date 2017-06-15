@@ -19,6 +19,13 @@ public class GridCell {
 		this.possibleValues = new HashSet<>();
 		this.value = 0;
 	}
+	
+	public GridCell(int value){
+		this.locked = false;
+		this.valid = true;
+		this.possibleValues = new HashSet<>();
+		this.value = value;
+	}
 
 	public int getValue() {
 		return value;

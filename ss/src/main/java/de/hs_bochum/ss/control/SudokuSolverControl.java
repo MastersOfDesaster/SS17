@@ -12,6 +12,7 @@ import de.hs_bochum.ss.interfaces.Algorithm;
 import de.hs_bochum.ss.modelNew.GridCell;
 import de.hs_bochum.ss.modelNew.GridModel;
 import de.hs_bochum.ss.modelNew.ReportModel;
+import de.hs_bochum.ss.reader.SudokuFileReader;
 import de.hs_bochum.ss.view.SudokuView;
 
 public class SudokuSolverControl {
@@ -253,6 +254,12 @@ public class SudokuSolverControl {
 	}
 
 	public void setSelectedFile(File selectedFile) {
-		this.selectedFile = selectedFile;
+		SudokuFileReader sudokuFileReader = new SudokuFileReader();
+		try{
+			model.setGrid(sudokuFileReader.readSudoku(selectedFile));
+			
+		}catch(Exception e){
+			handleError(e);
+		}
 	}
 }
