@@ -37,7 +37,6 @@ public class SudokuView extends JFrame{
 		this.setVisible(true);
 	}
 	
-	
 	public void showError(Exception e){
 		JOptionPane.showMessageDialog(this, e.getMessage());
 		e.printStackTrace();
