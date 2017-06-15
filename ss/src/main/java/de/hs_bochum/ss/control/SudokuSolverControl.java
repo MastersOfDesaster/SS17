@@ -43,14 +43,8 @@ public class SudokuSolverControl {
 		return false;
 	}
 	
-	public GridCell getCell(int x, int y) {
-		try {
-			model.getCell(x, y);
-		} catch (CoordinateOutOfBoundsException e) {
-			handleError(e);
-		}
-		
-		return null;
+	public GridCell getCell(int x, int y) throws CoordinateOutOfBoundsException {
+			return model.getCell(x, y);
 	}
 	
 	public void resetCell(int x, int y) {
@@ -119,6 +113,7 @@ public class SudokuSolverControl {
 	
 	public void nextStepAlgo() {
 		if (algo != null) {
+			algo.pause();
 			algo.singleStep();
 		} else {
 			view.showError(new NullPointerException("Algo is null!"));
