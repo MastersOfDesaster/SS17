@@ -153,4 +153,21 @@ public class SudokuSolverControl {
 			return false;
 		}
 	}
+	
+	public GridCell[] getRow(int row) {
+		return model.getRow(row);
+	}
+
+	public GridCell[] getColumn(int column) {
+		return model.getColumn(column);
+	}
+
+	public GridCell[][] getSquare(int x, int y) {
+		return getSquare(x, y);
+	}
+	
+	public GridCell[][] getSquare(int square) {
+		return getSquare(square % 3, (int)(square / 3));
+	}
+	
 }
