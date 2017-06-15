@@ -1,6 +1,7 @@
 package de.hs_bochum.ss.control;
 
 import java.awt.Point;
+import java.io.File;
 
 import de.hs_bochum.ss.algorithms.AbstractAlgorithm;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
@@ -20,6 +21,8 @@ public class SudokuSolverControl {
 	private SudokuView view;
 	private GridModel model;
 	private ReportModel report;
+	
+	private File selectedFile;
 
 	public SudokuSolverControl(GridModel model, SudokuView view, GridValidator validator) {
 		this.model = model;
@@ -212,5 +215,9 @@ public class SudokuSolverControl {
 
 	public void lockCells() {
 		model.lockCells();
+	}
+
+	public void setSelectedFile(File selectedFile) {
+		this.selectedFile = selectedFile;
 	}
 }
