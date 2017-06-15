@@ -60,6 +60,7 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 	public void run(){
 		try {
 			solve(0, 0);
+			stop();
 		}catch(AlgorithmStoppedException e){
 			//do nothing
 		}catch (Exception e) {
