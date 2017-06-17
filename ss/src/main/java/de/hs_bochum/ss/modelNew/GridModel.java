@@ -209,5 +209,6 @@ public class GridModel extends Observable {
 				cell.lockByValue();
 			}
 		}
+		startNotify();
 	}
 }

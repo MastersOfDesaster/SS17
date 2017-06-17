@@ -162,4 +162,8 @@ public class SudokuView extends JFrame{
 	public void setSelectedFile(File selectedFile) {
 		control.setSelectedFile(selectedFile);
 	}
+	
+	public boolean isCellLocked(int x, int y){
+		return control.isCellLocked(x, y);
+	}
 }
