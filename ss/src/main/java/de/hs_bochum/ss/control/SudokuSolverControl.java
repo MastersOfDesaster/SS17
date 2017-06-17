@@ -9,10 +9,11 @@ import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
 import de.hs_bochum.ss.exception.UnknownAlgorithmException;
 import de.hs_bochum.ss.interfaces.Algorithm;
-import de.hs_bochum.ss.modelNew.GridCell;
-import de.hs_bochum.ss.modelNew.GridModel;
-import de.hs_bochum.ss.modelNew.ReportModel;
-import de.hs_bochum.ss.reader.SudokuFileReader;
+import de.hs_bochum.ss.io.SudokuFileReader;
+import de.hs_bochum.ss.io.SudokuFileWriter;
+import de.hs_bochum.ss.model.GridCell;
+import de.hs_bochum.ss.model.GridModel;
+import de.hs_bochum.ss.model.ReportModel;
 import de.hs_bochum.ss.view.SudokuView;
 
 public class SudokuSolverControl {
@@ -23,8 +24,6 @@ public class SudokuSolverControl {
 	private GridModel model;
 	private ReportModel report;
 	
-	private File selectedFile;
-
 	public SudokuSolverControl(GridModel model, SudokuView view, GridValidator validator) {
 		this.model = model;
 		this.view = view;
@@ -57,9 +56,9 @@ public class SudokuSolverControl {
 		return model.getCell(x, y);
 	}
 
-	public void resetCell(int x, int y) {
+	public void resetCellValue(int x, int y) {
 		try {
-			model.resetCell(x, y);
+			model.resetCellValue(x, y);
 			model.setCellValid(x, y, validator.isValid(x, y));
 			model.startNotify(new Point(x, y));
 			
@@ -254,11 +253,17 @@ public class SudokuSolverControl {
 	}
 
 	public void setSelectedFile(File selectedFile) {
-		SudokuFileReader sudokuFileReader = new SudokuFileReader();
 		try{
-			model.setGrid(sudokuFileReader.readSudoku(selectedFile));
-			
-		}catch(Exception e){
+			model.setGrid(SudokuFileReader.readSudoku(selectedFile));
+		} catch(Exception e){
+			handleError(e);
+		}
+	}
+
+	public void saveFile(File f) {
+		try{
+			SudokuFileWriter.saveSudoku(f, model.getGrid());
+		} catch(Exception e){
 			handleError(e);
 		}
 	}

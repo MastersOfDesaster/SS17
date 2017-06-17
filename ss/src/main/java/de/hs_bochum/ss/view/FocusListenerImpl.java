@@ -26,6 +26,8 @@ public class FocusListenerImpl implements FocusListener {
 		int y = Integer.parseInt((txt.getName().split("\\."))[1]);
 		try {
 			if (txt.getText().isEmpty()) {
+				mainView.setManual(true);
+				mainView.resetCellValue(x, y);
 				return;
 			}
 			int value = Integer.parseInt(txt.getText());

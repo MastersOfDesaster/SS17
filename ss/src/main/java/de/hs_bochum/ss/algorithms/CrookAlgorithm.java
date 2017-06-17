@@ -5,7 +5,7 @@ import java.util.Iterator;
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
-import de.hs_bochum.ss.modelNew.GridCell;
+import de.hs_bochum.ss.model.GridCell;
 
 public class CrookAlgorithm extends AbstractAlgorithm{
 

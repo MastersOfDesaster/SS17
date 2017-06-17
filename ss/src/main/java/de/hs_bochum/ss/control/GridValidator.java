@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.modelNew.GridCell;
-import de.hs_bochum.ss.modelNew.GridModel;
+import de.hs_bochum.ss.model.GridCell;
+import de.hs_bochum.ss.model.GridModel;
 
 public class GridValidator {
 

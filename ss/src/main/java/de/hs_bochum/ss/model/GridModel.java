@@ -1,4 +1,4 @@
-package de.hs_bochum.ss.modelNew;
+package de.hs_bochum.ss.model;
 
 import java.awt.Point;
 
@@ -8,7 +8,7 @@ import java.util.Set;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
-import de.hs_bochum.ss.modelNew.GridCell;
+import de.hs_bochum.ss.model.GridCell;
 
 public class GridModel extends Observable {
 
@@ -65,7 +65,7 @@ public class GridModel extends Observable {
 		grid[x][y].setValue(1 + grid[x][y].getValue());
 	}
 
-	public void resetCell(int x, int y) throws CoordinateOutOfBoundsException {
+	public void resetCellValue(int x, int y) throws CoordinateOutOfBoundsException {
 		checkCoordinate(x, y);
 		grid[x][y].setValue(0);
 		startNotify();

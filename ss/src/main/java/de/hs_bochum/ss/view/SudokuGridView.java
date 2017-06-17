@@ -9,9 +9,9 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import de.hs_bochum.ss.modelNew.GridModel;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.modelNew.GridCell;
+import de.hs_bochum.ss.model.GridCell;
+import de.hs_bochum.ss.model.GridModel;
 
 public class SudokuGridView extends JPanel implements Observer {
 

@@ -1,4 +1,4 @@
-package de.hs_bochum.ss.modelNew;
+package de.hs_bochum.ss.model;
 
 public class ReportModel {
 	private int diffCount;

@@ -2,8 +2,8 @@ package de.hs_bochum.ss;
 
 import de.hs_bochum.ss.control.GridValidator;
 import de.hs_bochum.ss.control.SudokuSolverControl;
+import de.hs_bochum.ss.model.GridModel;
 import de.hs_bochum.ss.view.SudokuView;
-import de.hs_bochum.ss.modelNew.GridModel;
 
 
 public class App {
