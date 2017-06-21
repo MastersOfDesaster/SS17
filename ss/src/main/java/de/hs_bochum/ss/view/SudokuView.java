@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.interfaces.Algorithm;
-import de.hs_bochum.ss.modelNew.GridModel;
+import de.hs_bochum.ss.model.GridModel;
 
 public class SudokuView extends JFrame{
 	
@@ -161,5 +161,17 @@ public class SudokuView extends JFrame{
 
 	public void setSelectedFile(File selectedFile) {
 		control.setSelectedFile(selectedFile);
+	}
+	
+	public boolean isCellLocked(int x, int y){
+		return control.isCellLocked(x, y);
+	}
+	
+	public void saveFile(File f){
+		control.saveFile(f);
+	}
+
+	public void resetCellValue(int x, int y) {
+		control.resetCellValue(x, y);		
 	}
 }

@@ -1,4 +1,4 @@
-package de.hs_bochum.ss.modelNew;
+package de.hs_bochum.ss.model;
 
 import java.util.HashSet;
 import java.util.Set;

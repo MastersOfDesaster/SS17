@@ -9,9 +9,9 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import de.hs_bochum.ss.modelNew.GridModel;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
-import de.hs_bochum.ss.modelNew.GridCell;
+import de.hs_bochum.ss.model.GridCell;
+import de.hs_bochum.ss.model.GridModel;
 
 public class SudokuGridView extends JPanel implements Observer {
 
@@ -113,7 +113,9 @@ public class SudokuGridView extends JPanel implements Observer {
 	private void updateCell(GridCell value, int x, int y) {
 		this.gridViews[x][y].setValueText(value.getValue());
 		this.gridViews[x][y].setPossibleValueText(value.getPossibleValues());
-		this.gridViews[x][y].setColor((mainView.isCellValid(x, y) ? Color.WHITE : Color.PINK));
+		if (mainView.isCellLocked(x, y)) this.gridViews[x][y].setColor(Color.LIGHT_GRAY);
+		else if (mainView.isCellValid(x, y)) this.gridViews[x][y].setColor(Color.WHITE);
+		else this.gridViews[x][y].setColor(Color.PINK);
 	}
 	
 	public void resetLastChanged(){

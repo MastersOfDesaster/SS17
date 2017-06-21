@@ -1,4 +1,4 @@
-package de.hs_bochum.ss.reader;
+package de.hs_bochum.ss.io;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,14 +9,12 @@ import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.InvalidFormatException;
 import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
-import de.hs_bochum.ss.modelNew.GridCell;
-import de.hs_bochum.ss.modelNew.GridModel;
+import de.hs_bochum.ss.model.GridCell;
 
 public class SudokuFileReader {
 
-	private File file;
 
-	public GridCell[][] readSudoku(File file) throws IOException, InvalidFormatException, NumberFormatException,
+	public static GridCell[][] readSudoku(File file) throws IOException, InvalidFormatException, NumberFormatException,
 			IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
 		GridCell[][] grid = new GridCell[9][9];
 
@@ -28,7 +26,9 @@ public class SudokuFileReader {
 		for (int y = 0; y < 9; y++) {
 			line = b.readLine();
 			if (line == null || line.length() != 9) {
-				throw new InvalidFormatException("Das Sudoku konnte nicht gelesen werden");
+				b.close();
+				reader.close();
+				throw new InvalidFormatException("Fehler beim Lesen der Datei");
 			}
 
 			for (int x = 0; x < 9; x++) {
@@ -36,6 +36,8 @@ public class SudokuFileReader {
 				grid[x][y] = new GridCell(value);
 			}
 		}
+		b.close();
+		reader.close();
 		return grid;
 	}
 }

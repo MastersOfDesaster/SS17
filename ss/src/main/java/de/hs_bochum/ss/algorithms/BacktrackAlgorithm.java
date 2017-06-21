@@ -42,7 +42,7 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
 					return true;
 				};
 			}
-			control.resetCell(x, y);
+			control.resetCellValue(x, y);
 			if(paused){
 				wait();
 			}else{
