@@ -28,7 +28,7 @@ public class SudokuFileReader {
 		for (int y = 0; y < 9; y++) {
 			line = b.readLine();
 			if (line == null || line.length() != 9) {
-				throw new InvalidFormatException();
+				throw new InvalidFormatException("Das Sudoku konnte nicht gelesen werden");
 			}
 
 			for (int x = 0; x < 9; x++) {

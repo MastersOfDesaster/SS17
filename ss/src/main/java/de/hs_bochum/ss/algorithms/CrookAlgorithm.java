@@ -114,6 +114,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	public void run() {
 		try {
 			solve();
+			stop();
 		} catch (Exception e) {
 			control.handleError(e);
 		}
