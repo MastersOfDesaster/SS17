@@ -101,6 +101,10 @@ public class GridModel extends Observable {
 		grid[x][y].removePossibleValue(value);
 		startNotify(new Point(x, y));
 	}
+	
+	public void removeAllPossibleValues(int x, int y) {
+	    grid[x][y].getPossibleValues().clear();
+	}
 
 	public GridCell[][] getGrid() {
 		return grid;

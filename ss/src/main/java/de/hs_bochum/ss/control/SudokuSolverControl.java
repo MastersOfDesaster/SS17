@@ -234,6 +234,10 @@ public class SudokuSolverControl {
 		
 	}
 	
+	public void removeAllPossibleValues(int x, int y) {
+	    model.removeAllPossibleValues(x, y);
+	}
+	
 	public void resetSudoku(){
 		model.reset();
 		model.startNotify();
