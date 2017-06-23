@@ -18,9 +18,13 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	public void solve() throws Exception {
 		// TODO Auto-generated method stub
 		mark();
-		findSingle();
-		findForced();
-		//findPreemptives();
+		
+		for(int i = 0; i < 10; i++){
+			findSingle();
+			findForced();
+			findPreemptives();
+		}
+
 		
 	}
 	
@@ -72,6 +76,20 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 						control.setCellValue(x, y, value);
 						control.removePossibleValue(x, y, value);
 						cell.removePossibleValue(value);
+						
+						for(GridCell cCell : control.getRow(cell.getY())){
+							control.removePossibleValue(cCell.getX(), cCell.getY(), value);
+						}
+						
+						for(GridCell cCell : control.getColumn(cell.getX())){
+							control.removePossibleValue(cCell.getX(), cCell.getY(), value);
+						}
+						
+						for(GridCell cCell : control.getSquare(cell.getX() / 3, cell.getY() / 3)){
+							control.removePossibleValue(cCell.getX(), cCell.getY(), value);
+						}
+						
+						
 					}
 				}
 			}
@@ -81,8 +99,8 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	
 	private void findForced() throws IsOutOfRangeException, CoordinateOutOfBoundsException{
 		checkColumns();
-		checkRows();
-		checkSquares();
+	//	checkRows();
+	//	checkSquares();
 	}
 	
 	private void findPreemptives(){
@@ -116,9 +134,21 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 				}	
 				if(cellId != -1){
 					System.out.println(String.format("Found forced in column %s, id: %s, value: %s", column, cellId, v));
-					//control.removePossibleValue(column, cellId, v);
-					//control.setCellValue(column, cellId, v);
+					control.removeAllPossibleValues(column, cellId);
+
+					for(GridCell cCell : control.getRow(cellId)){
+						control.removePossibleValue(cCell.getX(), cCell.getY(), v);
+					}
+					
+					for(GridCell cCell : control.getSquare(column / 3, cellId / 3)){
+						control.removePossibleValue(cCell.getX(), cCell.getY(), v);
+					}
+					
+					
+					control.setCellValue(column, cellId, v);
 				}
+				
+
 			}
 		}
 		
@@ -147,15 +177,15 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 				}	
 				if(cellId != -1){
 					System.out.println(String.format("Found forced in row %s, id: %s, value: %s", row, cellId, v));
-					control.removePossibleValue(cellId, row, v);
+					control.removeAllPossibleValues(cellId, row);
 					
 					
 					for(GridCell cCell : control.getColumn(cellId)){
 						control.removePossibleValue(cCell.getX(), cCell.getY(), v);
 					}
 					
-					for(GridCell cCell : control.getSquare(cell.getX() / 3, cell.getY() / 3)){
-						control.removePossibleValue(cell.getX(), cell.getY(), v);
+					for(GridCell cCell : control.getSquare(cellId / 3, row / 3)){
+						control.removePossibleValue(cCell.getX(), cCell.getY(), v);
 					}
 					
 					

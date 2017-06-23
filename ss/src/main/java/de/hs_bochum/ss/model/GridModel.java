@@ -214,4 +214,10 @@ public class GridModel extends Observable {
 		}
 		startNotify();
 	}
+
+	public void removeAllPossibleValues(int x, int y) throws CoordinateOutOfBoundsException {
+		checkCoordinate(x, y);
+		grid[x][y].removeAllPossibleValues();
+		startNotify(new Point(x, y));
+	}
 }

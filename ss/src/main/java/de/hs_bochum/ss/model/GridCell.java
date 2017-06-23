@@ -92,4 +92,8 @@ public class GridCell {
 			locked = true;
 	}
 
+	public void removeAllPossibleValues() {
+		possibleValues.clear();
+	}
+
 }

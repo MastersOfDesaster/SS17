@@ -268,4 +268,13 @@ public class SudokuSolverControl {
 			handleError(e);
 		}
 	}
+
+	public void removeAllPossibleValues(int x, int y) {
+		try {
+			model.removeAllPossibleValues(x, y);
+		} catch (CoordinateOutOfBoundsException e) {
+			handleError(e);
+		}
+		
+	}
 }
