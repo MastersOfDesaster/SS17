@@ -209,15 +209,15 @@ public class SudokuSolverControl {
 	}
 	
 	public GridCell[] getRow(int row) {
-		return model.getColumn(row);
+		return model.getRow(row);
 	}
 
 	public GridCell[] getColumn(int column) {
-		return model.getRow(column);
+		return model.getColumn(column);
 	}
 
 	public GridCell[][] getSquare(int x, int y) {
-		return getSquare(x, y);
+		return model.getSquare(x, y);
 	}
 	
 	public GridCell[][] getSquare(int square) {

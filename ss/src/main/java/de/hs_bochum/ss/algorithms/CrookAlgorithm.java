@@ -18,7 +18,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 		// TODO Auto-generated method stub
 		mark();
 		findSingle();
-		//findForced();
+		findForced();
 		//findPreemptives();
 		
 	}
@@ -28,6 +28,9 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 			for(int x = 0; x <= 8; x++){
 				if(!running){
 					return;
+				}
+				if(control.getCell(x, y).isLocked()){
+					continue;
 				}
 				int value = control.getCell(x, y).getValue();
 				if(value == 0){
@@ -75,36 +78,90 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	}
 	
 	
-	private void findForced(){
-		for(int i = 0; i < 9; i++){
-			for(GridCell cell : control.getColumn(i)){
-				
-				for(int v = 1; v < 10; v++){
-					
-				}
-			}			
-		}
-		
-		
-		//look for naked single usw.
+	private void findForced() throws IsOutOfRangeException, CoordinateOutOfBoundsException{
+		checkColumns();
+		checkRows();
+		checkSquares();
 	}
 	
 	private void findPreemptives(){
 		
 	}
 	
-	private void checkBoxes(){
+	private void checkSquares(){
 		
 	}
 	
-	private void checkColumns(){
-		
-	}
-	
-	private void checkRows(){
-		for(int row =0; row <=8; row ++){
-			for(int i = 8; i > 1 ;i--){
+	private void checkColumns() throws IsOutOfRangeException, CoordinateOutOfBoundsException{
+		//iterate through rows
+		for(int column = 0; column < 9; column++){
+			GridCell[] cells = control.getColumn(column);
+			GridCell cell = null;
+			//iterate through possible values
+			for(int v = 1; v < 10; v++){
+				int cellId = -1;
 				
+				//iterate through cells in the row
+				for(int id = 0; id < 9; id++){
+					cell = cells[id];
+					if(cell.getPossibleValues().contains(v)){
+						if(cellId == -1){
+							cellId = id;
+						}else{
+							cellId = -1;
+							break;
+						}
+					}
+				}	
+				if(cellId != -1){
+					System.out.println(String.format("Found forced in column %s, id: %s, value: %s", column, cellId, v));
+					//control.removePossibleValue(column, cellId, v);
+					//control.setCellValue(column, cellId, v);
+				}
+			}
+		}
+		
+	}
+	
+	private void checkRows() throws IsOutOfRangeException, CoordinateOutOfBoundsException{
+		//iterate through rows
+		for(int row = 0; row < 9; row++){
+			GridCell[] cells = control.getRow(row);
+			GridCell cell = null;
+			//iterate through possible values
+			for(int v = 1; v < 10; v++){
+				int cellId = -1;
+				
+				//iterate through cells in the row
+				for(int id = 0; id < 9; id++){
+					cell = cells[id];
+					if(cell.getPossibleValues().contains(v)){
+						if(cellId == -1){
+							cellId = id;
+						}else{
+							cellId = -1;
+							break;
+						}
+					}
+				}	
+				if(cellId != -1){
+					System.out.println(String.format("Found forced in row %s, id: %s, value: %s", row, cellId, v));
+					control.removePossibleValue(cellId, row, v);
+					
+					
+					GridCell[] column = control.getColumn(cellId);
+					for(GridCell cCell : control.getColumn(cellId)){
+						control.removePossibleValue(cCell.getX(), cCell.getY(), v);
+					}
+					
+					GridCell[][] square = control.getSquare(cell.getX() / 3, cell.getY() / 3);
+					for(int x = 0; x <9 ; x++){
+						
+					}
+					
+					
+					control.setCellValue(cellId, row, v);
+				}
 			}
 		}
 

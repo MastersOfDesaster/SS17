@@ -24,7 +24,7 @@ public class GridModel extends Observable {
 		this.grid = new GridCell[9][9];
 		for (int j = 0; j < grid.length; j++) {
 			for (int i = 0; i < grid[j].length; i++) {
-				grid[j][i] = new GridCell();
+				grid[j][i] = new GridCell(i, j);
 			}
 		}
 	}
@@ -33,7 +33,7 @@ public class GridModel extends Observable {
 		this.grid = new GridCell[9][9];
 		for (int j = 0; j < grid.length; j++) {
 			for (int i = 0; i < grid[j].length; i++) {
-				grid[j][i] = new GridCell();
+				grid[j][i] = new GridCell(i, j);
 			}
 		}
 		this.solved = false;
@@ -141,19 +141,19 @@ public class GridModel extends Observable {
 		this.solved = solved;
 	}
 
-	public GridCell[] getColumn(int row) {
-		return grid[row];
+	public GridCell[] getColumn(int column) {
+		return grid[column];
 	}
 
-	public GridCell[] getRow(int column) {
-		GridCell[] gridColumn = new GridCell[9];
+	public GridCell[] getRow(int row) {
+		GridCell[] gridRow = new GridCell[9];
 		for(int i=0; i<grid.length; i++){
-			gridColumn[i] = grid[i][column]; 
+			gridRow[i] = grid[i][row]; 
 		}
-		return gridColumn;
+		return gridRow;
 	}
 
-	public GridCell[][] getSquare(int x, int y) {
+	public GridCell[][] getSquare(int x, int y) {	
 		GridCell[][] gridSquare = new GridCell[3][3];
 		for (int ix = 0; ix < 3; ix++) {
 			for (int iy = 0; iy < 3; iy++) {
@@ -162,6 +162,7 @@ public class GridModel extends Observable {
 		}
 		return gridSquare;
 	}
+
 	
 	public boolean isValid() {
 		return (invalidCellCount == 0);
