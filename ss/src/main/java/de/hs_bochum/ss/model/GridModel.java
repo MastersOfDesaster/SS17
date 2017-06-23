@@ -1,7 +1,9 @@
 package de.hs_bochum.ss.model;
 
 import java.awt.Point;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 
@@ -141,28 +143,28 @@ public class GridModel extends Observable {
 		this.solved = solved;
 	}
 
-	public GridCell[] getColumn(int column) {
-		return grid[column];
+	public List<GridCell> getColumn(int column) {
+		return Arrays.asList(grid[column]);
 	}
 
-	public GridCell[] getRow(int row) {
-		GridCell[] gridRow = new GridCell[9];
+	public List<GridCell> getRow(int row) {
+		List<GridCell> gridRow = new ArrayList<>();
 		for(int i=0; i<grid.length; i++){
-			gridRow[i] = grid[i][row]; 
+			gridRow.add(grid[i][row]); 
 		}
 		return gridRow;
 	}
 
-	public GridCell[][] getSquare(int x, int y) {	
-		GridCell[][] gridSquare = new GridCell[3][3];
+	
+	public List<GridCell> getSquare(int x, int y) {	
+		List<GridCell> gridSquare = new ArrayList<>();
 		for (int ix = 0; ix < 3; ix++) {
 			for (int iy = 0; iy < 3; iy++) {
-				gridSquare[ix][iy] = grid[x * 3 + ix][y * 3 + iy];
+				gridSquare.add(grid[x * 3 + ix][y * 3 + iy]);
 			}
 		}
 		return gridSquare;
 	}
-
 	
 	public boolean isValid() {
 		return (invalidCellCount == 0);

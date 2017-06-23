@@ -1,6 +1,7 @@
 package de.hs_bochum.ss.control;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
@@ -14,7 +15,7 @@ public class GridValidator {
 	public GridValidator(GridModel model) {
 		this.model = model;
 	}
-	
+
 	public boolean isSolved() throws CoordinateOutOfBoundsException {
 		for (int x = 0; x < 9; x++) {
 			for (int y = 0; y < 9; y++) {
@@ -23,7 +24,7 @@ public class GridValidator {
 				}
 			}
 		}
-		
+
 		return isValid();
 	}
 
@@ -79,15 +80,13 @@ public class GridValidator {
 	public boolean checkSquare(int x, int y) {
 		Set<Integer> valueSet = new HashSet<Integer>();
 
-		GridCell square[][] = model.getSquare(x, y);
-		for (int ix = 0; ix < 3; ix++) {
-			for (int iy = 0; iy < 3; iy++) {
-				if (square[ix][iy].getValue() != 0) {
-					if (valueSet.contains(square[ix][iy].getValue())) {
-						return false;
-					} else {
-						valueSet.add(square[ix][iy].getValue());
-					}
+		List<GridCell> square = model.getSquare(x, y);
+		for (int ix = 0; ix < 9; ix++) {
+			if (square.get(ix).getValue() != 0) {
+				if (valueSet.contains(square.get(ix).getValue())) {
+					return false;
+				} else {
+					valueSet.add(square.get(ix).getValue());
 				}
 			}
 		}
@@ -108,13 +107,13 @@ public class GridValidator {
 	public boolean checkRow(int y) {
 		Set<Integer> valueSet = new HashSet<Integer>();
 
-		GridCell row[] = model.getRow(y);
+		List<GridCell> row = model.getRow(y);
 		for (int x = 0; x < 9; x++) {
-			if (row[x].getValue() != 0) {
-				if (valueSet.contains(row[x].getValue())) {
+			if (row.get(x).getValue() != 0) {
+				if (valueSet.contains(row.get(x).getValue())) {
 					return false;
 				} else {
-					valueSet.add(row[x].getValue());
+					valueSet.add(row.get(x).getValue());
 				}
 			}
 		}
@@ -135,13 +134,13 @@ public class GridValidator {
 	public boolean checkColumn(int x) {
 		Set<Integer> valueSet = new HashSet<Integer>();
 
-		GridCell col[] = model.getColumn(x);
+		List<GridCell> column = model.getColumn(x);
 		for (int y = 0; y < 9; y++) {
-			if (col[y].getValue() != 0) {
-				if (valueSet.contains(col[y].getValue())) {
+			if (column.get(y).getValue() != 0) {
+				if (valueSet.contains(column.get(y).getValue())) {
 					return false;
 				} else {
-					valueSet.add(col[y].getValue());
+					valueSet.add(column.get(y).getValue());
 				}
 			}
 		}

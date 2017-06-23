@@ -2,6 +2,7 @@ package de.hs_bochum.ss.control;
 
 import java.awt.Point;
 import java.io.File;
+import java.util.List;
 
 import de.hs_bochum.ss.algorithms.AbstractAlgorithm;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
@@ -208,19 +209,19 @@ public class SudokuSolverControl {
 		}
 	}
 	
-	public GridCell[] getRow(int row) {
+	public List<GridCell> getRow(int row) {
 		return model.getRow(row);
 	}
 
-	public GridCell[] getColumn(int column) {
+	public List<GridCell> getColumn(int column) {
 		return model.getColumn(column);
 	}
 
-	public GridCell[][] getSquare(int x, int y) {
+	public List<GridCell> getSquare(int x, int y) {
 		return model.getSquare(x, y);
 	}
 	
-	public GridCell[][] getSquare(int square) {
+	public List<GridCell> getSquare(int square) {
 		return getSquare(square % 3, (int)(square / 3));
 	}
 	

@@ -1,6 +1,7 @@
 package de.hs_bochum.ss.algorithms;
 
 import java.util.Iterator;
+import java.util.List;
 
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
@@ -95,7 +96,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	private void checkColumns() throws IsOutOfRangeException, CoordinateOutOfBoundsException{
 		//iterate through rows
 		for(int column = 0; column < 9; column++){
-			GridCell[] cells = control.getColumn(column);
+			List<GridCell> cells = control.getColumn(column);
 			GridCell cell = null;
 			//iterate through possible values
 			for(int v = 1; v < 10; v++){
@@ -103,7 +104,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 				
 				//iterate through cells in the row
 				for(int id = 0; id < 9; id++){
-					cell = cells[id];
+					cell = cells.get(id);
 					if(cell.getPossibleValues().contains(v)){
 						if(cellId == -1){
 							cellId = id;
@@ -126,7 +127,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	private void checkRows() throws IsOutOfRangeException, CoordinateOutOfBoundsException{
 		//iterate through rows
 		for(int row = 0; row < 9; row++){
-			GridCell[] cells = control.getRow(row);
+			List<GridCell> cells = control.getRow(row);
 			GridCell cell = null;
 			//iterate through possible values
 			for(int v = 1; v < 10; v++){
@@ -134,7 +135,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 				
 				//iterate through cells in the row
 				for(int id = 0; id < 9; id++){
-					cell = cells[id];
+					cell = cells.get(id);
 					if(cell.getPossibleValues().contains(v)){
 						if(cellId == -1){
 							cellId = id;
@@ -149,14 +150,12 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 					control.removePossibleValue(cellId, row, v);
 					
 					
-					GridCell[] column = control.getColumn(cellId);
 					for(GridCell cCell : control.getColumn(cellId)){
 						control.removePossibleValue(cCell.getX(), cCell.getY(), v);
 					}
 					
-					GridCell[][] square = control.getSquare(cell.getX() / 3, cell.getY() / 3);
-					for(int x = 0; x <9 ; x++){
-						
+					for(GridCell cCell : control.getSquare(cell.getX() / 3, cell.getY() / 3)){
+						control.removePossibleValue(cell.getX(), cell.getY(), v);
 					}
 					
 					
