@@ -3,14 +3,14 @@ package de.hs_bochum.ss.interfaces;
 import de.hs_bochum.ss.algorithms.AbstractAlgorithm;
 import de.hs_bochum.ss.algorithms.BacktrackAlgorithm;
 import de.hs_bochum.ss.algorithms.CrookAlgorithm;
-import de.hs_bochum.ss.algorithms.ThousandMonkeyAlgorithm;
+import de.hs_bochum.ss.algorithms.InfiniteMonkeyAlgorithm;
 import de.hs_bochum.ss.control.SudokuSolverControl;
 import de.hs_bochum.ss.exception.UnknownAlgorithmException;
 
 public enum Algorithm {
 	BACKTRACK("Backtrack Algorithmus"), 
 	CROOK("Crook Algorithmus"), 
-	THOUSAND_MONKEYS("Thousand Monkey Algorithmus");
+	THOUSAND_MONKEYS("Infinite Monkey Algorithmus");
 
 	private final String name;
 
@@ -29,7 +29,7 @@ public enum Algorithm {
 		case CROOK:
 			return new CrookAlgorithm(control);
 		case THOUSAND_MONKEYS:
-			return new ThousandMonkeyAlgorithm(control);
+			return new InfiniteMonkeyAlgorithm(control);
 		default:
 			throw new UnknownAlgorithmException(String.format("%s is unknown", toString()));
 		}

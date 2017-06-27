@@ -38,6 +38,11 @@ public class SudokuSolverControl {
 		return validator.isValid();
 	}
 
+	public void updateAll(){
+		model.startNotify();
+	}
+	
+	
 	public boolean isValid(int x, int y) {
 		report.increaseDiffCount();
 		return validator.isValid(x, y);

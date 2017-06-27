@@ -7,10 +7,10 @@ import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsLockedException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
 
-public class ThousandMonkeyAlgorithm extends AbstractAlgorithm{
+public class InfiniteMonkeyAlgorithm extends AbstractAlgorithm{
 
 
-	public ThousandMonkeyAlgorithm(SudokuSolverControl control) {
+	public InfiniteMonkeyAlgorithm(SudokuSolverControl control) {
 		super(control);
 	}
 
@@ -33,6 +33,7 @@ public class ThousandMonkeyAlgorithm extends AbstractAlgorithm{
 			}
 		}
 		}while(!control.isValid() && running);
+		control.updateAll();
 	}
 
 
