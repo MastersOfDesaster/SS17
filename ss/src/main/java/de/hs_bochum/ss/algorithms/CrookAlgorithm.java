@@ -16,12 +16,24 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 		super(control);
 	}
 
-	public void solve() throws Exception {
+	public synchronized void solve() throws Exception {
 
 		
 		mark();
+		foundNew = true;
 		while(foundNew){
 			foundNew = false;
+            if (!running) {
+                return;
+            }
+            if (paused) {
+                wait();
+            } else {
+                if (waitMillis != 0) {
+                    wait(waitMillis);
+                }
+            }
+			
 			findSingle();
 			findForced();
 			findPreemptives();		
@@ -57,7 +69,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
         System.out.println("Finished marking");
     }
 
-    private void findSingle() throws CoordinateOutOfBoundsException, IsOutOfRangeException {
+    private synchronized void findSingle() throws CoordinateOutOfBoundsException, IsOutOfRangeException, InterruptedException {
         for (int y = 0; y <= 8; y++) {
             for (int x = 0; x <= 8; x++) {
                 if (!running) {
@@ -75,6 +87,13 @@ public class CrookAlgorithm extends AbstractAlgorithm{
                     if (!iterator.hasNext()) {
                         control.setCellValue(x, y, value);
                         foundNew = true;
+                        if (paused) {
+                            wait();
+                        } else {
+                            if (waitMillis != 0) {
+                                wait(waitMillis);
+                            }
+                        }
                         control.removePossibleValue(x, y, value);
                         cell.removePossibleValue(value);
 
@@ -96,7 +115,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
         }
     }
 
-    private void findForced() throws IsOutOfRangeException, CoordinateOutOfBoundsException {
+    private void findForced() throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
         checkColumns();
         checkRows();
         // checkSquares();
@@ -110,7 +129,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 
     }
 
-    private void checkColumns() throws IsOutOfRangeException, CoordinateOutOfBoundsException {
+    private synchronized void checkColumns() throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
         // iterate through rows
         for (int column = 0; column < 9; column++) {
             List<GridCell> cells = control.getColumn(column);
@@ -145,6 +164,13 @@ public class CrookAlgorithm extends AbstractAlgorithm{
                     }
 
                     control.setCellValue(column, cellId, v);
+                    if (paused) {
+                        wait();
+                    } else {
+                        if (waitMillis != 0) {
+                            wait(waitMillis);
+                        }
+                    }
                     foundNew = true;
                 }
 
@@ -153,7 +179,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 
     }
 
-    private void checkRows() throws IsOutOfRangeException, CoordinateOutOfBoundsException {
+    private synchronized void checkRows() throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
         // iterate through rows
         for (int row = 0; row < 9; row++) {
             List<GridCell> cells = control.getRow(row);
@@ -187,6 +213,13 @@ public class CrookAlgorithm extends AbstractAlgorithm{
                     }
 
                     control.setCellValue(cellId, row, v);
+                    if (paused) {
+                        wait();
+                    } else {
+                        if (waitMillis != 0) {
+                            wait(waitMillis);
+                        }
+                    }
                     foundNew = true;
                 }
             }
