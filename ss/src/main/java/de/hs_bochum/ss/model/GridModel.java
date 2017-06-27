@@ -1,7 +1,9 @@
 package de.hs_bochum.ss.model;
 
 import java.awt.Point;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 
@@ -24,7 +26,7 @@ public class GridModel extends Observable {
 		this.grid = new GridCell[9][9];
 		for (int j = 0; j < grid.length; j++) {
 			for (int i = 0; i < grid[j].length; i++) {
-				grid[j][i] = new GridCell();
+				grid[j][i] = new GridCell(i, j);
 			}
 		}
 	}
@@ -33,7 +35,7 @@ public class GridModel extends Observable {
 		this.grid = new GridCell[9][9];
 		for (int j = 0; j < grid.length; j++) {
 			for (int i = 0; i < grid[j].length; i++) {
-				grid[j][i] = new GridCell();
+				grid[j][i] = new GridCell(i, j);
 			}
 		}
 		this.solved = false;
@@ -99,6 +101,10 @@ public class GridModel extends Observable {
 		grid[x][y].removePossibleValue(value);
 		startNotify(new Point(x, y));
 	}
+	
+	public void removeAllPossibleValues(int x, int y) {
+	    grid[x][y].getPossibleValues().clear();
+	}
 
 	public GridCell[][] getGrid() {
 		return grid;
@@ -141,23 +147,24 @@ public class GridModel extends Observable {
 		this.solved = solved;
 	}
 
-	public GridCell[] getColumn(int row) {
-		return grid[row];
+	public List<GridCell> getColumn(int column) {
+		return Arrays.asList(grid[column]);
 	}
 
-	public GridCell[] getRow(int column) {
-		GridCell[] gridColumn = new GridCell[9];
+	public List<GridCell> getRow(int row) {
+		List<GridCell> gridRow = new ArrayList<>();
 		for(int i=0; i<grid.length; i++){
-			gridColumn[i] = grid[i][column]; 
+			gridRow.add(grid[i][row]); 
 		}
-		return gridColumn;
+		return gridRow;
 	}
 
-	public GridCell[][] getSquare(int x, int y) {
-		GridCell[][] gridSquare = new GridCell[3][3];
+	
+	public List<GridCell> getSquare(int x, int y) {	
+		List<GridCell> gridSquare = new ArrayList<>();
 		for (int ix = 0; ix < 3; ix++) {
 			for (int iy = 0; iy < 3; iy++) {
-				gridSquare[ix][iy] = grid[x * 3 + ix][y * 3 + iy];
+				gridSquare.add(grid[x * 3 + ix][y * 3 + iy]);
 			}
 		}
 		return gridSquare;

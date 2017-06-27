@@ -6,6 +6,8 @@ import java.util.Set;
 public class GridCell {
 
 	private int value;
+	private int x, y;
+	
 	
 	private Set<Integer> possibleValues;
 	
@@ -13,18 +15,32 @@ public class GridCell {
 	
 	private boolean valid;
 	
-	public GridCell(){
+	public GridCell(int x, int y){
+		this.x = x;
+		this.y = y;
 		this.locked = false;
 		this.valid = true;
 		this.possibleValues = new HashSet<>();
 		this.value = 0;
 	}
 	
-	public GridCell(int value){
+	public GridCell(int x, int y, int value){
+		this.x = x;
+		this.y = y;
 		this.locked = false;
 		this.valid = true;
 		this.possibleValues = new HashSet<>();
 		this.value = value;
+	}
+	
+	
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 
 	public int getValue() {
