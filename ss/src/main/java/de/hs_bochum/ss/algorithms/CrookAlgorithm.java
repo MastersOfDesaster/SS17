@@ -10,19 +10,22 @@ import de.hs_bochum.ss.exception.IsOutOfRangeException;
 import de.hs_bochum.ss.model.GridCell;
 
 public class CrookAlgorithm extends AbstractAlgorithm{
-
+	volatile boolean foundNew = true;
 
 	public CrookAlgorithm(SudokuSolverControl control) {
 		super(control);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void solve() throws Exception {
-		// TODO Auto-generated method stub
+
+		
 		mark();
-		findSingle();
-		findForced();
-		findPreemptives();
+		while(foundNew){
+			foundNew = false;
+			findSingle();
+			findForced();
+			findPreemptives();		
+		}
     }
 
     private synchronized void mark() throws CoordinateOutOfBoundsException, InterruptedException {
@@ -71,6 +74,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
                     }
                     if (!iterator.hasNext()) {
                         control.setCellValue(x, y, value);
+                        foundNew = true;
                         control.removePossibleValue(x, y, value);
                         cell.removePossibleValue(value);
 
@@ -141,6 +145,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
                     }
 
                     control.setCellValue(column, cellId, v);
+                    foundNew = true;
                 }
 
             }
@@ -182,6 +187,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
                     }
 
                     control.setCellValue(cellId, row, v);
+                    foundNew = true;
                 }
             }
         }
