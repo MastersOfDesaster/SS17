@@ -93,6 +93,7 @@ public class SudokuGridView extends JPanel implements Observer {
 				if (!mainView.getManual())
 					this.gridViews[x][y].setBackground(Color.GREEN);
 				lastChange = new Point(x, y);
+				mainView.setManual(false);
 			}
 			// update whole field
 			else {
@@ -107,7 +108,6 @@ public class SudokuGridView extends JPanel implements Observer {
 				}
 			}
 		}
-		mainView.setManual(false);
 	}
 
 	private void updateCell(GridCell value, int x, int y) {

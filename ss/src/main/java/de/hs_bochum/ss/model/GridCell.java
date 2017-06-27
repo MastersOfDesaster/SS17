@@ -33,7 +33,14 @@ public class GridCell {
 		this.value = value;
 	}
 	
-	
+	public GridCell(int x, int y, int value, boolean locked){
+		this.x = x;
+		this.y = y;
+		this.locked = locked;
+		this.valid = true;
+		this.possibleValues = new HashSet<>();
+		this.value = value;
+	}	
 
 	public int getX() {
 		return x;
