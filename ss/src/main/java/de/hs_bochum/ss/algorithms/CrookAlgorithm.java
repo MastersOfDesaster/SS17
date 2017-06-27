@@ -67,7 +67,6 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 					if(!iterator.hasNext()){
 						control.setCellValue(x, y, value);
 						control.removePossibleValue(x, y, value);
-						cell.removePossibleValue(value);
 					}
 				}
 			}
@@ -77,16 +76,18 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 	
 	private void findForced(){
 		for(int i = 0; i < 9; i++){
-			for(GridCell cell : control.getColumn(i)){
-				
-				for(int v = 1; v < 10; v++){
-					
+			for(int v = 1; v < 10; v++){
+				int cellPos = 0;
+				for(GridCell cell : control.getColumn(i)){
+					if(cell.getPossibleValues().contains(v)){
+						//save cellPosition
+						//wenn zahl schon gefunden -> return
+					}
 				}
+				//Zahl in Zelle schreiben
 			}			
 		}
 		
-		
-		//look for naked single usw.
 	}
 	
 	private void findPreemptives(){
