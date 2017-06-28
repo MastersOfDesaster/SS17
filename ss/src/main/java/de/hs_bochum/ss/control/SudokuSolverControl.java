@@ -265,7 +265,7 @@ public class SudokuSolverControl {
         try {
             model.setSolved(validator.isSolved());
             report.setSolved(model.isSolved());
-            view.showMessage(report.toString());
+            view.showMessage("<PLEASE INSERT TITLE>", report.toString());
             System.out.println(report);
         } catch (CoordinateOutOfBoundsException e) {
             view.showError(e);

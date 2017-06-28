@@ -55,8 +55,8 @@ public class SudokuView extends JFrame {
         this.setVisible(true);
     }
     
-    public void showMessage(String msg){
-    	JOptionPane.showMessageDialog(this, msg, "Message", JOptionPane.INFORMATION_MESSAGE);
+    public void showMessage(String titel, String msg){
+    	JOptionPane.showMessageDialog(this, msg, titel, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void showError(Exception e) {
