@@ -34,7 +34,8 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 			
 			findSingle();
 			findForced();
-			findPreemptives();		
+			findPreemptives();
+			findAllNaked();
 		}
     }
 
