@@ -16,9 +16,7 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 		super(control);
 	}
 
-	public synchronized void solve() throws Exception {
-
-		
+	public synchronized void solve() throws Exception {		
 		mark();
 		foundNew = true;
 		while(foundNew){
