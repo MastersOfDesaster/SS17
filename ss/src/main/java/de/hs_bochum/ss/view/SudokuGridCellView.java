@@ -3,6 +3,7 @@ package de.hs_bochum.ss.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseListener;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -16,11 +17,13 @@ public class SudokuGridCellView extends JPanel {
     private JTextField value;
     private JTextField possibleValues;
 
-    public SudokuGridCellView(FocusListener listener, int x, int y) {
+    public SudokuGridCellView(FocusListener fListener, MouseListener mListener, int x, int y) {
         this.value = new JTextField("");
         this.value.setDocument(new JTextFieldLimit(1));
-        this.value.addFocusListener(listener);
+        this.value.addFocusListener(fListener);
+        this.value.addMouseListener(mListener);
         this.value.setName(x + "." + y);
+        this.value.setHorizontalAlignment(JTextField.CENTER);
         this.possibleValues = new JTextField("123456789");
         this.possibleValues.setDocument(new JTextFieldLimit(9));
         this.setLayout(new BorderLayout(0, 0));

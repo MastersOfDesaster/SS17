@@ -12,11 +12,13 @@ public class FocusListenerImpl implements FocusListener {
     public FocusListenerImpl(SudokuView mainView) {
         this.mainView = mainView;
     }
-
+    
+    @Override
     public void focusGained(FocusEvent e) {
         // #DoNothing
     }
 
+    @Override
     public void focusLost(FocusEvent e) {
         JTextField txt = (JTextField) e.getComponent();
         int x = Integer.parseInt((txt.getName().split("\\."))[0]);

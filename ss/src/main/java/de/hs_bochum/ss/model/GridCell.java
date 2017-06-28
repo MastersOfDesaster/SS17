@@ -98,4 +98,8 @@ public class GridCell {
             locked = lock;
     }
 
+	public void switchLock() {
+		this.locked = !this.locked;
+	}
+
 }

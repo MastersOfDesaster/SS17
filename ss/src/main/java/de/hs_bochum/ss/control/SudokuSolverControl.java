@@ -267,7 +267,7 @@ public class SudokuSolverControl {
     public void onAlgoFinished() {
         model.setSolved(validator.isSolved());
         report.setSolved(model.isSolved());
-        view.showMessage(report.toString());
+        view.showMessage("Report",  report.toString());
         System.out.println(report);
     }
 
@@ -286,4 +286,8 @@ public class SudokuSolverControl {
             handleError(e);
         }
     }
+
+	public void switchLockByCell(int x, int y) {
+		model.switchLockByCell(x, y);
+	}
 }
