@@ -287,4 +287,8 @@ public class SudokuSolverControl {
             handleError(e);
         }
     }
+
+	public void switchLockByCell(int x, int y) {
+		model.switchLockByCell(x, y);
+	}
 }
