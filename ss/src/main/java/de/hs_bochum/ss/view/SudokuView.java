@@ -50,9 +50,13 @@ public class SudokuView extends JFrame {
         this.setJMenuBar(menuBar);
         this.setVisible(true);
     }
+    
+    public void showMessage(String msg){
+    	JOptionPane.showMessageDialog(this, msg, "Message", JOptionPane.INFORMATION_MESSAGE);
+    }
 
     public void showError(Exception e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
+    	JOptionPane.showMessageDialog(this, e.getMessage(), e.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }
 

@@ -57,6 +57,7 @@ public class GridModel extends Observable {
             throw new IsOutOfRangeException("Value is out of range!");
         }
         if (grid[x][y].isLocked()) {
+        	startNotify(new Point(x, y));
             throw new IsLockedException("This field is locked!");
         }
         grid[x][y].setValue(value);
