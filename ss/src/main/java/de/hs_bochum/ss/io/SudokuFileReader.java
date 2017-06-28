@@ -33,7 +33,7 @@ public class SudokuFileReader {
 
 			for (int x = 0; x < 9; x++) {
 				int value = Integer.parseInt(line.substring(x, x + 1));
-				grid[x][y] = new GridCell(x, y, value);
+				grid[x][y] = new GridCell(x, y, value, value != 0);
 			}
 		}
 		b.close();
