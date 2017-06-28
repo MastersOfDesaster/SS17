@@ -20,6 +20,7 @@ public class SudokuGridView extends JPanel implements Observer {
     private GridModel grid;
 
     private FocusListenerImpl focusListener;
+    private MouseListenerImpl mouseListener;
 
     private Point lastChange;
 
@@ -34,6 +35,7 @@ public class SudokuGridView extends JPanel implements Observer {
         this.setLayout(new GridLayout(3, 3));
         this.grid = grid;
         this.focusListener = new FocusListenerImpl(this.mainView);
+        this.mouseListener = new MouseListenerImpl(this.mainView);
         initTextFields();
         this.setVisible(true);
         this.repaint();
@@ -69,7 +71,7 @@ public class SudokuGridView extends JPanel implements Observer {
                 //// txt.setText("1 2 3\n4 5 6\n7 8 9");
                 // txt.setText("");
 
-                this.gridViews[x][y] = new SudokuGridCellView(focusListener, x, y);
+                this.gridViews[x][y] = new SudokuGridCellView(focusListener, mouseListener, x, y);
                 this.subFields[x / 3][y / 3].add(this.gridViews[x][y]);
             }
         }

@@ -23,7 +23,7 @@ public class MouseListenerImpl implements MouseListener {
 			JTextField txt = (JTextField) e.getComponent();
 	        int x = Integer.parseInt((txt.getName().split("\\."))[0]);
 	        int y = Integer.parseInt((txt.getName().split("\\."))[1]);
-			mainView.openContextMenu(x, y);
+			mainView.openContextMenu(txt, x, y);
 		}
 	}
 	@Override

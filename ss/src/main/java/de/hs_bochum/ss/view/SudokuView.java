@@ -195,7 +195,7 @@ public class SudokuView extends JFrame {
         control.resetCellValue(x, y);
     }
 
-	public void openContextMenu(int x, int y) {
+	public void openContextMenu(JTextField field, int x, int y) {
 		JPopupMenu menu = new JPopupMenu();
 		JMenuItem resetCell = new JMenuItem("Reset Cell");
 		resetCell.addActionListener(al -> {
@@ -207,6 +207,6 @@ public class SudokuView extends JFrame {
 			control.switchLockByCell(x, y);
 		});
 		menu.add(lockCell);
-		menu.show(this, x, y);
+		menu.show(field, x, y);
 	}
 }
