@@ -125,7 +125,8 @@ public class CrookAlgorithm extends AbstractAlgorithm {
 
     }
 
-    private void checkSquares() {
+    @SuppressWarnings("unused")
+	private void checkSquares() {
 
     }
 
