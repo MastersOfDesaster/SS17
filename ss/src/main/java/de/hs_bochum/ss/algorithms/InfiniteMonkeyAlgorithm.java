@@ -31,7 +31,7 @@ public class InfiniteMonkeyAlgorithm extends AbstractAlgorithm {
                     wait(waitMillis);
                 }
             }
-        } while (!control.isValid() && running);
+        } while (!control.isSolved() && running);
         control.updateAll();
     }
 

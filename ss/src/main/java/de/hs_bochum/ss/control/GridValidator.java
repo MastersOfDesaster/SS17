@@ -16,11 +16,15 @@ public class GridValidator {
         this.model = model;
     }
 
-    public boolean isSolved() throws CoordinateOutOfBoundsException {
+    public boolean isSolved() {
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
-                if (model.getCellValue(x, y) == 0) {
-                    return false;
+                try {
+                    if (model.getCellValue(x, y) == 0) {
+                        return false;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -36,7 +40,7 @@ public class GridValidator {
         return checkColumn(x) && checkRow(y) && checkSquare(x / 3, y / 3);
     }
 
-    public boolean isValueValid(int x, int y, int value) throws CoordinateOutOfBoundsException {
+    public boolean isValid(int x, int y, int value) throws CoordinateOutOfBoundsException {
         // check columns
         for (int xx = 0; xx < 9; xx++) {
             if ((xx != x) && (model.getCellValue(xx, y) == value)) {

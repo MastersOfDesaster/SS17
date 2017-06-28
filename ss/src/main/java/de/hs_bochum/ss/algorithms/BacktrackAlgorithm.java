@@ -35,13 +35,12 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
                         wait(waitMillis);
                     }
                 }
-                if (!control.isValueValid(x, y, i)) {
+                if (!control.isValid(x, y)) {
                     continue;
                 }
                 if (solve(x + 1, y)) {
                     return true;
                 }
-                ;
             }
             control.resetCellValue(x, y);
             if (paused) {

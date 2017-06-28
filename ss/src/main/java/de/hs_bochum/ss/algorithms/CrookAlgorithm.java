@@ -51,7 +51,7 @@ public class CrookAlgorithm extends AbstractAlgorithm {
                 int value = control.getCell(x, y).getValue();
                 if (value == 0) {
                     for (byte v = 1; v <= 9; v++) {
-                        if (control.isValueValid(x, y, v)) {
+                        if (control.isValid(x, y, v)) {
                             control.addPossibleValue(x, y, v);
                             if (paused) {
                                 wait();
