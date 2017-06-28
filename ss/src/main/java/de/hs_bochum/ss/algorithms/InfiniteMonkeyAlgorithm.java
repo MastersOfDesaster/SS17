@@ -17,6 +17,7 @@ public class InfiniteMonkeyAlgorithm extends AbstractAlgorithm {
             throws CoordinateOutOfBoundsException, IsLockedException, IsOutOfRangeException, InterruptedException {
         Random rand = new Random();
         do {
+            control.resetNonLockedSudoku();
             for (int y = 0; y < 9; y++) {
                 for (int x = 0; x < 9; x++) {
                     if (!control.isCellLocked(x, y)) {

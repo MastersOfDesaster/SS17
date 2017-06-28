@@ -105,7 +105,12 @@ public class SudokuSolverControl {
                 model.setCellValid(x, y, validator.isValid(x, y));
                 model.startNotify(new Point(x, y));
 
-                report.increaseSetValueCount(model.isCellValid(x, y));
+                if (model.isCellValid(x, y)) {
+                    report.increaseSetValueCount(true);
+                } else {
+                    report.increaseSetValueCount(false);
+                }
+//                report.increaseSetValueCount(model.isCellValid(x, y));
             }
         } catch (Exception e) {
             handleError(e);
