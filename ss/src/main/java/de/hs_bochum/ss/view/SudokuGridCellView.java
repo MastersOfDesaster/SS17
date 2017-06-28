@@ -21,6 +21,7 @@ public class SudokuGridCellView extends JPanel {
         this.value.setDocument(new JTextFieldLimit(1));
         this.value.addFocusListener(listener);
         this.value.setName(x + "." + y);
+        this.value.setHorizontalAlignment(JTextField.CENTER);
         this.possibleValues = new JTextField("123456789");
         this.possibleValues.setDocument(new JTextFieldLimit(9));
         this.setLayout(new BorderLayout(0, 0));

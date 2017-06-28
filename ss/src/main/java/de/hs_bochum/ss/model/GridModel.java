@@ -231,4 +231,8 @@ public class GridModel extends Observable {
         }
         startNotify();
     }
+
+	public void switchLockByCell(int x, int y) {
+		grid[x][y].switchLock();		
+	}
 }

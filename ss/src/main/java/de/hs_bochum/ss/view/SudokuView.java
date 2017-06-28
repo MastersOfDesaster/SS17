@@ -7,8 +7,10 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -53,8 +55,8 @@ public class SudokuView extends JFrame {
         this.setVisible(true);
     }
     
-    public void showMessage(String msg){
-    	JOptionPane.showMessageDialog(this, msg, "Message", JOptionPane.INFORMATION_MESSAGE);
+    public void showMessage(String titel, String msg){
+    	JOptionPane.showMessageDialog(this, msg, titel, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void showError(Exception e) {
@@ -192,4 +194,19 @@ public class SudokuView extends JFrame {
     public void resetCellValue(int x, int y) {
         control.resetCellValue(x, y);
     }
+
+	public void openContextMenu(int x, int y) {
+		JPopupMenu menu = new JPopupMenu();
+		JMenuItem resetCell = new JMenuItem("Reset Cell");
+		resetCell.addActionListener(al -> {
+			control.resetCellValue(x, y);
+		});
+		menu.add(resetCell);
+		JMenuItem lockCell = new JMenuItem((control.isCellLocked(x, y))?"Unlock Cell":"Lock Cell");
+		lockCell.addActionListener(al -> {
+			control.switchLockByCell(x, y);
+		});
+		menu.add(lockCell);
+		menu.show(this, x, y);
+	}
 }
