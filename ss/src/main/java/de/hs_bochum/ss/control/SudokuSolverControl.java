@@ -252,8 +252,13 @@ public class SudokuSolverControl {
         model.startNotify();
     }
 
-    public void lockCells() {
-        model.lockCells();
+    public void resetNonLockedSudoku() {
+        model.resetNonLocked();
+        model.startNotify();
+    }
+
+    public void lockCells(boolean lock) {
+        model.lockCells(lock);
     }
 
     public void onAlgoFinished() {

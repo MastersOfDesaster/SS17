@@ -30,7 +30,9 @@ public class SudokuView extends JFrame {
     private JButton btnPause;
     private JButton btnStop;
     private JButton btnLock;
+    private JButton btnUnlock;
     private JButton btnReset;
+    private JButton btnResetAll;
     private JButton btnContinue;
     private JPanel borderEast;
     private JSlider sliderEast;
@@ -93,12 +95,20 @@ public class SudokuView extends JFrame {
             waitTime.setText(sb.toString());
         });
         this.btnReset.addActionListener(al -> {
+            control.resetNonLockedSudoku();
+            guiField.resetLastChanged();
+            btnStart.setEnabled(true);
+        });
+        this.btnResetAll.addActionListener(al -> {
             control.resetSudoku();
             guiField.resetLastChanged();
             btnStart.setEnabled(true);
         });
         this.btnLock.addActionListener(al -> {
-            control.lockCells();
+            control.lockCells(true);
+        });
+        this.btnUnlock.addActionListener(al -> {
+            control.lockCells(false);
         });
     }
 
@@ -107,9 +117,11 @@ public class SudokuView extends JFrame {
         this.southGrid.add(btnPause);
         this.southGrid.add(btnSingle);
         this.southGrid.add(btnReset);
+        this.southGrid.add(btnResetAll);
         this.southGrid.add(btnStop);
         this.southGrid.add(btnContinue);
         this.southGrid.add(btnLock);
+        this.southGrid.add(btnUnlock);
         this.southGrid.add(cbAlgorithm);
         this.borderEast.add(sliderEast, BorderLayout.CENTER);
         this.borderEast.add(waitTime, BorderLayout.SOUTH);
@@ -119,15 +131,17 @@ public class SudokuView extends JFrame {
     }
 
     private void initGUIObjects() {
-        this.southGrid = new JPanel(new GridLayout(2, 4, 5, 5));
+        this.southGrid = new JPanel(new GridLayout(2, 5, 5, 5));
         this.guiField = new SudokuGridView(model, this);
         this.btnStart = new JButton("Start");
         this.btnPause = new JButton("Pause");
         this.btnSingle = new JButton("Single Step");
         this.btnReset = new JButton("Reset");
+        this.btnResetAll = new JButton("ResetAll");
         this.btnStop = new JButton("Stop");
         this.btnContinue = new JButton("Continue");
         this.btnLock = new JButton("Lock");
+        this.btnUnlock = new JButton("Unlock");
         this.sliderEast = new JSlider(JSlider.VERTICAL, 0, 1000, 10);
         this.borderEast = new JPanel(new BorderLayout());
         this.waitTime = new JTextField(10 + "    ");

@@ -42,6 +42,18 @@ public class GridModel extends Observable {
         this.invalidCellCount = 0;
     }
 
+    public void resetNonLocked() {
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[j].length; i++) {
+                if (!grid[j][i].isLocked()){
+                	grid[j][i] = new GridCell(i, j);
+                }
+            }
+        }
+        this.solved = false;
+        this.invalidCellCount = 0;
+    }
+
     public void setCellValueLocked(int x, int y, int value)
             throws IsOutOfRangeException, CoordinateOutOfBoundsException {
         checkCoordinate(x, y);
@@ -211,10 +223,10 @@ public class GridModel extends Observable {
         notifyObservers(p);
     }
 
-    public void lockCells() {
+    public void lockCells(boolean lock) {
         for (GridCell[] gridRow : grid) {
             for (GridCell cell : gridRow) {
-                cell.lockByValue();
+                cell.lockByValue(lock);
             }
         }
         startNotify();
