@@ -62,16 +62,18 @@ public class SudokuSolverControl {
     }
 
     public void resetCellValue(int x, int y) {
-        try {
-            model.resetCellValue(x, y);
-            model.setCellValid(x, y, validator.isValid(x, y));
-            model.startNotify(new Point(x, y));
-
-            if (model.isCellValid(x, y) == false) {
-                report.increaseInvalidCount();
-            }
-            report.increaseWriteCount();
-        } catch (CoordinateOutOfBoundsException e) {
+    	try {
+	        if (model.getCellValue(x, y) != 0){
+	            model.resetCellValue(x, y);
+	            model.setCellValid(x, y, validator.isValid(x, y));
+	            model.startNotify(new Point(x, y));
+	
+	            if (model.isCellValid(x, y) == false) {
+	                report.increaseInvalidCount();
+	            }
+	            report.increaseWriteCount();
+	        }
+	    } catch (CoordinateOutOfBoundsException e) {
             handleError(e);
         }
     }
@@ -87,16 +89,16 @@ public class SudokuSolverControl {
 
     public void setCellValue(int x, int y, int value) {
         try {
-            model.setCellValue(x, y, value);
-            model.setCellValid(x, y, validator.isValid(x, y));
-            model.startNotify(new Point(x, y));
-
-            if (model.isCellValid(x, y) == false) {
-                report.increaseInvalidCount();
-            }
-            report.increaseWriteCount();
-        } catch (IsLockedException e) {
-            // nothing to do!
+        	if (model.getCellValue(x, y) != value){
+	            model.setCellValue(x, y, value);
+	            model.setCellValid(x, y, validator.isValid(x, y));
+	            model.startNotify(new Point(x, y));
+	
+	            if (model.isCellValid(x, y) == false) {
+	                report.increaseInvalidCount();
+	            }
+	            report.increaseWriteCount();
+        	}
         } catch (Exception e) {
             handleError(e);
         }
@@ -187,7 +189,7 @@ public class SudokuSolverControl {
 
     public void handleError(Exception e) {
         view.showError(e);
-        stopAlgo();
+        if (!view.getManual()) stopAlgo();
     }
 
     public void setWaittime(int millis) {
@@ -250,14 +252,20 @@ public class SudokuSolverControl {
         model.startNotify();
     }
 
-    public void lockCells() {
-        model.lockCells();
+    public void resetNonLockedSudoku() {
+        model.resetNonLocked();
+        model.startNotify();
+    }
+
+    public void lockCells(boolean lock) {
+        model.lockCells(lock);
     }
 
     public void onAlgoFinished() {
         try {
             model.setSolved(validator.isSolved());
             report.setSolved(model.isSolved());
+            view.showMessage(report.toString());
             System.out.println(report);
         } catch (CoordinateOutOfBoundsException e) {
             view.showError(e);

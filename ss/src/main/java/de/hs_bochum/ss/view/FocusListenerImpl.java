@@ -8,7 +8,6 @@ import javax.swing.JTextField;
 public class FocusListenerImpl implements FocusListener {
 
     private SudokuView mainView;
-    private int failure;
 
     public FocusListenerImpl(SudokuView mainView) {
         this.mainView = mainView;
@@ -31,12 +30,6 @@ public class FocusListenerImpl implements FocusListener {
             int value = Integer.parseInt(txt.getText());
             mainView.setManual(true);
             mainView.setValueInModel(x, y, value);
-            // if(control.isValueValid(x, y, Integer.parseInt(sgcv.getText())))
-            // sgcv.setBackground(Color.WHITE);
-            // else{
-            // sgcv.setBackground(Color.PINK);
-            // failure++;
-            // }
         } catch (NumberFormatException e1) {
             e1.printStackTrace();
         }

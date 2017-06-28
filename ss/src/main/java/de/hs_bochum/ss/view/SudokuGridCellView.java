@@ -52,5 +52,9 @@ public class SudokuGridCellView extends JPanel {
     public void setColor(Color c) {
         this.value.setBackground(c);
     }
+    
+    public void lockValueFied(boolean b){
+    	this.value.setEditable(b);
+    }
 
 }
