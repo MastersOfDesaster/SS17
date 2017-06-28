@@ -283,6 +283,7 @@ public class CrookAlgorithm extends AbstractAlgorithm {
 
     }
 
+    @SuppressWarnings("unused")
     private void findAllNaked() {
         for (int count = 2; count < 5; count++) {
             for (int y = 0; y < 9; y++) {

@@ -13,13 +13,20 @@ public class ReportModel {
     // valide ist?
 
     private int isSolvedCount[] = new int[2]; // Wurde das Sudoku gelöst?
+    
+    private int addPossibleValueCount;
+    private int removePossibleValueCount;
+    private int removeAllPossibleValueCount;
 
     private boolean solved; // Wurde das Sudoku gelöst?
 
     @Override
     public String toString() {
         return "\nsetValue(x, y) valid: " + setValueCount[0] + " invalid: " + setValueCount[1]
-                + "\nresetValue(x,y): " + resetValueCount
+                + "\nresetValue(x,y) " + resetValueCount
+                + "\n\naddPossibleValue(x,y) " + addPossibleValueCount
+                + "\nremovePossibleValue(x,y) " + removePossibleValueCount
+                + "\nremoveAllPossibleValue(x, y) " + removeAllPossibleValueCount
                 + "\n\nisValid() true: " + allValuesValidCount[0] + ", false: " + allValuesValidCount[1]
                 + "\nisValid(x, y) true: " + singleValueValidCount[0] + ", false: " + singleValueValidCount[1]
                 + "\nisSolved() true: " + isSolvedCount[0] + ", false: " + isSolvedCount[1] 
@@ -29,6 +36,9 @@ public class ReportModel {
     public void clear() {
         resetValueCount = 0;
         solved = false;
+        addPossibleValueCount = 0;
+        removePossibleValueCount = 0;
+        removeAllPossibleValueCount = 0;
 
         for (int i = 0; i < 2; i++) {
             setValueCount[i] = 0;
@@ -76,5 +86,17 @@ public class ReportModel {
 
     public void increaseResetValueCount() {
         resetValueCount++;
+    }
+    
+    public void increaseAddPossibleValueCount() {
+        addPossibleValueCount++;
+    }
+    
+    public void increaseRemovePossibleValueCount() {
+        removePossibleValueCount++;
+    }
+    
+    public void increaseRemoveAllPossibleValueCount() {
+        removeAllPossibleValueCount++;
     }
 }

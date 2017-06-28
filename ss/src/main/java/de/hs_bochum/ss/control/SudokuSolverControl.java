@@ -210,6 +210,7 @@ public class SudokuSolverControl {
 
     public void addPossibleValue(int x, int y, byte value) {
         try {
+            report.increaseAddPossibleValueCount();
             model.addPossibleValue(x, y, value);
         } catch (Exception e) {
             handleError(e);
@@ -247,11 +248,14 @@ public class SudokuSolverControl {
 
     public void removePossibleValue(int x, int y, int value)
             throws IsOutOfRangeException, CoordinateOutOfBoundsException {
+        
+        report.increaseRemovePossibleValueCount();
         model.removePossibleValue(x, y, value);
 
     }
 
     public void removeAllPossibleValues(int x, int y) {
+        report.increaseRemoveAllPossibleValueCount();
         model.removeAllPossibleValues(x, y);
     }
 
