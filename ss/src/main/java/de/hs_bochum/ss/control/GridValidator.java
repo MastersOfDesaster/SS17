@@ -10,142 +10,142 @@ import de.hs_bochum.ss.model.GridModel;
 
 public class GridValidator {
 
-	private GridModel model;
+    private GridModel model;
 
-	public GridValidator(GridModel model) {
-		this.model = model;
-	}
+    public GridValidator(GridModel model) {
+        this.model = model;
+    }
 
-	public boolean isSolved() throws CoordinateOutOfBoundsException {
-		for (int x = 0; x < 9; x++) {
-			for (int y = 0; y < 9; y++) {
-				if (model.getCellValue(x, y) == 0) {
-					return false;
-				}
-			}
-		}
+    public boolean isSolved() throws CoordinateOutOfBoundsException {
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                if (model.getCellValue(x, y) == 0) {
+                    return false;
+                }
+            }
+        }
 
-		return isValid();
-	}
+        return isValid();
+    }
 
-	public boolean isValid() {
-		return checkColumns() && checkRows() && checkSquares();
-	}
+    public boolean isValid() {
+        return checkColumns() && checkRows() && checkSquares();
+    }
 
-	public boolean isValid(int x, int y) {
-		return checkColumn(x) && checkRow(y) && checkSquare(x / 3, y / 3);
-	}
+    public boolean isValid(int x, int y) {
+        return checkColumn(x) && checkRow(y) && checkSquare(x / 3, y / 3);
+    }
 
-	public boolean isValueValid(int x, int y, int value) throws CoordinateOutOfBoundsException {
-		// check columns
-		for (int xx = 0; xx < 9; xx++) {
-			if ((xx != x) && (model.getCellValue(xx, y) == value)) {
-				return false;
-			}
-		}
+    public boolean isValueValid(int x, int y, int value) throws CoordinateOutOfBoundsException {
+        // check columns
+        for (int xx = 0; xx < 9; xx++) {
+            if ((xx != x) && (model.getCellValue(xx, y) == value)) {
+                return false;
+            }
+        }
 
-		// check rows
-		for (int yy = 0; yy < 9; yy++) {
-			if ((yy != y) && (model.getCellValue(x, yy) == value)) {
-				return false;
-			}
-		}
+        // check rows
+        for (int yy = 0; yy < 9; yy++) {
+            if ((yy != y) && (model.getCellValue(x, yy) == value)) {
+                return false;
+            }
+        }
 
-		// check square
-		int x1 = (x / 3) * 3;
-		int y1 = (y / 3) * 3;
-		for (int xx = x1; xx < x1 + 3; xx++) {
-			for (int yy = y1; yy < y1 + 3; yy++) {
-				if ((xx != x || yy != y) && (model.getCellValue(xx, yy) == value)) {
-					return false;
-				}
-			}
-		}
+        // check square
+        int x1 = (x / 3) * 3;
+        int y1 = (y / 3) * 3;
+        for (int xx = x1; xx < x1 + 3; xx++) {
+            for (int yy = y1; yy < y1 + 3; yy++) {
+                if ((xx != x || yy != y) && (model.getCellValue(xx, yy) == value)) {
+                    return false;
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private boolean checkSquares() {
-		for (int x = 0; x < 2; x++) {
-			for (int y = 0; y < 2; y++) {
-				if (checkSquare(x, y) == false) {
-					return false;
-				}
-			}
-		}
+    private boolean checkSquares() {
+        for (int x = 0; x < 2; x++) {
+            for (int y = 0; y < 2; y++) {
+                if (checkSquare(x, y) == false) {
+                    return false;
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public boolean checkSquare(int x, int y) {
-		Set<Integer> valueSet = new HashSet<Integer>();
+    public boolean checkSquare(int x, int y) {
+        Set<Integer> valueSet = new HashSet<Integer>();
 
-		List<GridCell> square = model.getSquare(x, y);
-		for (int ix = 0; ix < 9; ix++) {
-			if (square.get(ix).getValue() != 0) {
-				if (valueSet.contains(square.get(ix).getValue())) {
-					return false;
-				} else {
-					valueSet.add(square.get(ix).getValue());
-				}
-			}
-		}
+        List<GridCell> square = model.getSquare(x, y);
+        for (int ix = 0; ix < 9; ix++) {
+            if (square.get(ix).getValue() != 0) {
+                if (valueSet.contains(square.get(ix).getValue())) {
+                    return false;
+                } else {
+                    valueSet.add(square.get(ix).getValue());
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private boolean checkRows() {
-		for (int y = 0; y < 9; y++) {
-			if (checkRow(y) == false) {
-				return false;
-			}
-		}
+    private boolean checkRows() {
+        for (int y = 0; y < 9; y++) {
+            if (checkRow(y) == false) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public boolean checkRow(int y) {
-		Set<Integer> valueSet = new HashSet<Integer>();
+    public boolean checkRow(int y) {
+        Set<Integer> valueSet = new HashSet<Integer>();
 
-		List<GridCell> row = model.getRow(y);
-		for (int x = 0; x < 9; x++) {
-			if (row.get(x).getValue() != 0) {
-				if (valueSet.contains(row.get(x).getValue())) {
-					return false;
-				} else {
-					valueSet.add(row.get(x).getValue());
-				}
-			}
-		}
+        List<GridCell> row = model.getRow(y);
+        for (int x = 0; x < 9; x++) {
+            if (row.get(x).getValue() != 0) {
+                if (valueSet.contains(row.get(x).getValue())) {
+                    return false;
+                } else {
+                    valueSet.add(row.get(x).getValue());
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private boolean checkColumns() {
-		for (int x = 0; x < 9; x++) {
-			if (checkColumn(x) == false) {
-				return false;
-			}
-		}
+    private boolean checkColumns() {
+        for (int x = 0; x < 9; x++) {
+            if (checkColumn(x) == false) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public boolean checkColumn(int x) {
-		Set<Integer> valueSet = new HashSet<Integer>();
+    public boolean checkColumn(int x) {
+        Set<Integer> valueSet = new HashSet<Integer>();
 
-		List<GridCell> column = model.getColumn(x);
-		for (int y = 0; y < 9; y++) {
-			if (column.get(y).getValue() != 0) {
-				if (valueSet.contains(column.get(y).getValue())) {
-					return false;
-				} else {
-					valueSet.add(column.get(y).getValue());
-				}
-			}
-		}
+        List<GridCell> column = model.getColumn(x);
+        for (int y = 0; y < 9; y++) {
+            if (column.get(y).getValue() != 0) {
+                if (valueSet.contains(column.get(y).getValue())) {
+                    return false;
+                } else {
+                    valueSet.add(column.get(y).getValue());
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
 }

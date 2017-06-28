@@ -9,18 +9,18 @@ import de.hs_bochum.ss.exception.CoordinateOutOfBoundsException;
 import de.hs_bochum.ss.exception.IsOutOfRangeException;
 import de.hs_bochum.ss.model.GridCell;
 
-public class CrookAlgorithm extends AbstractAlgorithm{
-	volatile boolean foundNew = true;
+public class CrookAlgorithm extends AbstractAlgorithm {
+    volatile boolean foundNew = true;
 
-	public CrookAlgorithm(SudokuSolverControl control) {
-		super(control);
-	}
+    public CrookAlgorithm(SudokuSolverControl control) {
+        super(control);
+    }
 
-	public synchronized void solve() throws Exception {		
-		mark();
-		foundNew = true;
-		while(foundNew){
-			foundNew = false;
+    public synchronized void solve() throws Exception {
+        mark();
+        foundNew = true;
+        while (foundNew) {
+            foundNew = false;
             if (!running) {
                 return;
             }
@@ -31,11 +31,11 @@ public class CrookAlgorithm extends AbstractAlgorithm{
                     wait(waitMillis);
                 }
             }
-			
-			findSingle();
-			findForced();
-			findPreemptives();		
-		}
+
+            findSingle();
+            findForced();
+            findPreemptives();
+        }
     }
 
     private synchronized void mark() throws CoordinateOutOfBoundsException, InterruptedException {
@@ -67,7 +67,8 @@ public class CrookAlgorithm extends AbstractAlgorithm{
         System.out.println("Finished marking");
     }
 
-    private synchronized void findSingle() throws CoordinateOutOfBoundsException, IsOutOfRangeException, InterruptedException {
+    private synchronized void findSingle()
+            throws CoordinateOutOfBoundsException, IsOutOfRangeException, InterruptedException {
         for (int y = 0; y <= 8; y++) {
             for (int x = 0; x <= 8; x++) {
                 if (!running) {
@@ -123,11 +124,55 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 
     }
 
-    private void checkSquares() {
+    private synchronized void checkSquares()
+            throws CoordinateOutOfBoundsException, InterruptedException, IsOutOfRangeException {
+        for (int y = 0; y <= 8; y++) {
+            for (int x = 0; x <= 8; x++) {
+                if (!running) {
+                    return;
+                }
+                GridCell cell = control.getCell(x, y);
+                if (!cell.isLocked()) {
+                    Iterator<Integer> iterator = cell.getPossibleValues().iterator();
+                    int value;
+                    if (iterator.hasNext()) {
+                        value = iterator.next();
+                    } else {
+                        continue;
+                    }
+                    if (!iterator.hasNext()) {
+                        control.setCellValue(x, y, value);
+                        foundNew = true;
+                        if (paused) {
+                            wait();
+                        } else {
+                            if (waitMillis != 0) {
+                                wait(waitMillis);
+                            }
+                        }
+                        control.removePossibleValue(x, y, value);
+                        cell.removePossibleValue(value);
 
+                        for (GridCell cCell : control.getRow(cell.getY())) {
+                            control.removePossibleValue(cCell.getX(), cCell.getY(), value);
+                        }
+
+                        for (GridCell cCell : control.getColumn(cell.getX())) {
+                            control.removePossibleValue(cCell.getX(), cCell.getY(), value);
+                        }
+
+                        for (GridCell cCell : control.getSquare(cell.getX() / 3, cell.getY() / 3)) {
+                            control.removePossibleValue(cCell.getX(), cCell.getY(), value);
+                        }
+
+                    }
+                }
+            }
+        }
     }
 
-    private synchronized void checkColumns() throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
+    private synchronized void checkColumns()
+            throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
         // iterate through rows
         for (int column = 0; column < 9; column++) {
             List<GridCell> cells = control.getColumn(column);
@@ -177,7 +222,8 @@ public class CrookAlgorithm extends AbstractAlgorithm{
 
     }
 
-    private synchronized void checkRows() throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
+    private synchronized void checkRows()
+            throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
         // iterate through rows
         for (int row = 0; row < 9; row++) {
             List<GridCell> cells = control.getRow(row);

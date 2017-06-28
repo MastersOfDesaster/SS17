@@ -13,31 +13,30 @@ import de.hs_bochum.ss.model.GridCell;
 
 public class SudokuFileReader {
 
+    public static GridCell[][] readSudoku(File file) throws IOException, InvalidFormatException, NumberFormatException,
+            IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
+        GridCell[][] grid = new GridCell[9][9];
 
-	public static GridCell[][] readSudoku(File file) throws IOException, InvalidFormatException, NumberFormatException,
-			IsLockedException, IsOutOfRangeException, CoordinateOutOfBoundsException {
-		GridCell[][] grid = new GridCell[9][9];
+        FileReader reader = new FileReader(file);
+        BufferedReader b = new BufferedReader(reader);
 
-		FileReader reader = new FileReader(file);
-		BufferedReader b = new BufferedReader(reader);
+        String line;
 
-		String line;
+        for (int y = 0; y < 9; y++) {
+            line = b.readLine();
+            if (line == null || line.length() != 9) {
+                b.close();
+                reader.close();
+                throw new InvalidFormatException("Fehler beim Lesen der Datei");
+            }
 
-		for (int y = 0; y < 9; y++) {
-			line = b.readLine();
-			if (line == null || line.length() != 9) {
-				b.close();
-				reader.close();
-				throw new InvalidFormatException("Fehler beim Lesen der Datei");
-			}
-
-			for (int x = 0; x < 9; x++) {
-				int value = Integer.parseInt(line.substring(x, x + 1));
-				grid[x][y] = new GridCell(x, y, value, value != 0);
-			}
-		}
-		b.close();
-		reader.close();
-		return grid;
-	}
+            for (int x = 0; x < 9; x++) {
+                int value = Integer.parseInt(line.substring(x, x + 1));
+                grid[x][y] = new GridCell(x, y, value, value != 0);
+            }
+        }
+        b.close();
+        reader.close();
+        return grid;
+    }
 }
