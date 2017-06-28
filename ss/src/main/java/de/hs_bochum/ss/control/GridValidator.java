@@ -40,6 +40,7 @@ public class GridValidator {
         return checkColumn(x) && checkRow(y) && checkSquare(x / 3, y / 3);
     }
 
+    // O(3n)
     public boolean isValid(int x, int y, int value) throws CoordinateOutOfBoundsException {
         // check columns
         for (int xx = 0; xx < 9; xx++) {

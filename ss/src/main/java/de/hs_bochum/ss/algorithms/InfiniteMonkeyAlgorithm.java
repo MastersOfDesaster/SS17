@@ -13,6 +13,7 @@ public class InfiniteMonkeyAlgorithm extends AbstractAlgorithm {
         super(control);
     }
 
+    // O(Unendlich)
     public synchronized void solve()
             throws CoordinateOutOfBoundsException, IsLockedException, IsOutOfRangeException, InterruptedException {
         Random rand = new Random();

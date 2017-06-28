@@ -9,6 +9,7 @@ public class BacktrackAlgorithm extends AbstractAlgorithm {
         super(control);
     }
 
+    // O(n^(n^2))
     public synchronized boolean solve(int x, int y) throws Exception {
         if (!running) {
             // stop recursion without return value

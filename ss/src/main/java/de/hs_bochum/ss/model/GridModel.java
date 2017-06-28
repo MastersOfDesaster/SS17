@@ -101,6 +101,7 @@ public class GridModel extends Observable {
         return grid[x][y];
     }
 
+    // O(1)
     public void addPossibleValue(int x, int y, int value) throws CoordinateOutOfBoundsException, IsOutOfRangeException {
         checkCoordinate(x, y);
         checkValue(value);

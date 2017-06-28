@@ -16,11 +16,13 @@ public class CrookAlgorithm extends AbstractAlgorithm {
         super(control);
     }
 
+    // O(n^5 + n^4)
     public synchronized void solve() throws Exception {
-        mark();
+        mark(); // O(n^4)
         foundNew = true;
         
-        while (foundNew) {
+        // O(n^5)
+        while (foundNew) { // O(n^2) kann maximal n*n Felder füllen 
             foundNew = false;
             if (!running) {
                 return;
@@ -33,16 +35,18 @@ public class CrookAlgorithm extends AbstractAlgorithm {
                 }
             }
 
-            findSingle();
-            findForced();
+            //Vielleicht durch If schachteln, wenn einer was findet, brauchen die anderen nicht arbeiten
+            findSingle(); // O(n^3)
+            findForced(); // O(2n^3)
             findPreemptives();
           //  findAllNaked();
         }
     }
 
+    // O(n^4)
     private synchronized void mark() throws CoordinateOutOfBoundsException, InterruptedException {
-        for (int y = 0; y <= 8; y++) {
-            for (int x = 0; x <= 8; x++) {
+        for (int y = 0; y <= 8; y++) { // O(n)
+            for (int x = 0; x <= 8; x++) { // O(n)
                 if (!running) {
                     return;
                 }
@@ -51,9 +55,9 @@ public class CrookAlgorithm extends AbstractAlgorithm {
                 }
                 int value = control.getCell(x, y).getValue();
                 if (value == 0) {
-                    for (byte v = 1; v <= 9; v++) {
-                        if (control.isValid(x, y, v)) {
-                            control.addPossibleValue(x, y, v);
+                    for (byte v = 1; v <= 9; v++) { // O(n)
+                        if (control.isValid(x, y, v)) { // O(n)
+                            control.addPossibleValue(x, y, v); //O(1)
                             if (paused) {
                                 wait();
                             } else {
@@ -69,10 +73,11 @@ public class CrookAlgorithm extends AbstractAlgorithm {
         System.out.println("Finished marking");
     }
 
+    // O (n^3)
     private synchronized void findSingle()
             throws CoordinateOutOfBoundsException, IsOutOfRangeException, InterruptedException {
-        for (int y = 0; y <= 8; y++) {
-            for (int x = 0; x <= 8; x++) {
+        for (int y = 0; y <= 8; y++) { // O(n)
+            for (int x = 0; x <= 8; x++) { // O(n)
                 if (!running) {
                     return;
                 }
@@ -80,12 +85,12 @@ public class CrookAlgorithm extends AbstractAlgorithm {
                 if (!cell.isLocked()) {
                     Iterator<Integer> iterator = cell.getPossibleValues().iterator();
                     int value;
-                    if (iterator.hasNext()) {
+                    if (iterator.hasNext()) { // O(n)
                         value = iterator.next();
                     } else {
                         continue;
                     }
-                    if (!iterator.hasNext()) {
+                    if (!iterator.hasNext()) { // O(3n)
                         control.setCellValue(x, y, value);
                         foundNew = true;
                         if (paused) {
@@ -98,15 +103,15 @@ public class CrookAlgorithm extends AbstractAlgorithm {
                         control.removePossibleValue(x, y, value);
                         cell.removePossibleValue(value);
 
-                        for (GridCell cCell : control.getRow(cell.getY())) {
+                        for (GridCell cCell : control.getRow(cell.getY())) { // O(n)
                             control.removePossibleValue(cCell.getX(), cCell.getY(), value);
                         }
 
-                        for (GridCell cCell : control.getColumn(cell.getX())) {
+                        for (GridCell cCell : control.getColumn(cell.getX())) { // O(n)
                             control.removePossibleValue(cCell.getX(), cCell.getY(), value);
                         }
 
-                        for (GridCell cCell : control.getSquare(cell.getX() / 3, cell.getY() / 3)) {
+                        for (GridCell cCell : control.getSquare(cell.getX() / 3, cell.getY() / 3)) { // O(n)
                             control.removePossibleValue(cCell.getX(), cCell.getY(), value);
                         }
 
@@ -117,25 +122,26 @@ public class CrookAlgorithm extends AbstractAlgorithm {
     }
 
     private void findForced() throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
-       checkColumns();
-       checkRows();
-       checkSquares();
+       checkColumns(); // O(2n^3)
+       checkRows(); // O(2n^3)
+       checkSquares(); // O(2n^3)
     }
 
     private void findPreemptives() {
 
     }
 
+    // O(2n^3) die drei For-schleifen ergeben ein n^3 und die ersten beiden For-schleifen & das IF ergeben n^3
     private synchronized void checkSquares() throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
         // iterate through squares
-        for (int square = 0; square < 9; square++) {
+        for (int square = 0; square < 9; square++) { // O(n)
             List<GridCell> cells = control.getSquare(square);
             GridCell cell = null;
             // iterate through possible values
-            for (int v = 1; v < 10; v++) {
+            for (int v = 1; v < 10; v++) { // O(n)
                 GridCell found = null;
                 // iterate through cells in the square
-                for (int id = 0; id < 9; id++) {
+                for (int id = 0; id < 9; id++) { // O(n)
                     cell = cells.get(id);
                     if (cell.getPossibleValues().contains(v)) {
                         if (found == null) {
@@ -146,16 +152,16 @@ public class CrookAlgorithm extends AbstractAlgorithm {
                         }
                     }
                 }
-                if (found != null) {
+                if (found != null) {  // O(2n)
                     System.out
                             .println(String.format("Found forced in column %s, id: %s, value: %s", found.getX(), found.getY(), v));
                     control.removeAllPossibleValues(found.getX(), found.getY());
 
-                    for (GridCell cCell : control.getRow(found.getY())) {
+                    for (GridCell cCell : control.getRow(found.getY())) { // O(n)
                         control.removePossibleValue(cCell.getX(), cCell.getY(), v);
                     }
 
-                    for (GridCell cCell : control.getColumn(found.getX())){
+                    for (GridCell cCell : control.getColumn(found.getX())){ // O(n)
                         control.removePossibleValue(cCell.getX(), cCell.getY(), v);
                     }
 
@@ -175,18 +181,19 @@ public class CrookAlgorithm extends AbstractAlgorithm {
         }
     }
 
+    // O(2n^3)
     private synchronized void checkColumns()
             throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
         // iterate through rows
-        for (int column = 0; column < 9; column++) {
+        for (int column = 0; column < 9; column++) { // O(n)
             List<GridCell> cells = control.getColumn(column);
             GridCell cell = null;
             // iterate through possible values
-            for (int v = 1; v < 10; v++) {
+            for (int v = 1; v < 10; v++) { // O(n)
                 int cellId = -1;
 
                 // iterate through cells in the row
-                for (int id = 0; id < 9; id++) {
+                for (int id = 0; id < 9; id++) { // O(n)
                     cell = cells.get(id);
                     if (cell.getPossibleValues().contains(v)) {
                         if (cellId == -1) {
@@ -197,16 +204,16 @@ public class CrookAlgorithm extends AbstractAlgorithm {
                         }
                     }
                 }
-                if (cellId != -1) {
+                if (cellId != -1) { // O(2n)
                     System.out
                             .println(String.format("Found forced in column %s, id: %s, value: %s", column, cellId, v));
                     control.removeAllPossibleValues(column, cellId);
 
-                    for (GridCell cCell : control.getRow(cellId)) {
+                    for (GridCell cCell : control.getRow(cellId)) { // O(n)
                         control.removePossibleValue(cCell.getX(), cCell.getY(), v);
                     }
 
-                    for (GridCell cCell : control.getSquare(column / 3, cellId / 3)) {
+                    for (GridCell cCell : control.getSquare(column / 3, cellId / 3)) { // O(n)
                         control.removePossibleValue(cCell.getX(), cCell.getY(), v);
                     }
 
@@ -226,18 +233,19 @@ public class CrookAlgorithm extends AbstractAlgorithm {
 
     }
 
+    // O(2n^3)
     private synchronized void checkRows()
             throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
         // iterate through rows
-        for (int row = 0; row < 9; row++) {
+        for (int row = 0; row < 9; row++) { // O(n)
             List<GridCell> cells = control.getRow(row);
             GridCell cell = null;
             // iterate through possible values
-            for (int v = 1; v < 10; v++) {
+            for (int v = 1; v < 10; v++) { // O(n)
                 int cellId = -1;
 
                 // iterate through cells in the row
-                for (int id = 0; id < 9; id++) {
+                for (int id = 0; id < 9; id++) { // O(n)
                     cell = cells.get(id);
                     if (cell.getPossibleValues().contains(v)) {
                         if (cellId == -1) {
@@ -248,15 +256,15 @@ public class CrookAlgorithm extends AbstractAlgorithm {
                         }
                     }
                 }
-                if (cellId != -1) {
+                if (cellId != -1) { // O(2n)
                     System.out.println(String.format("Found forced in row %s, id: %s, value: %s", row, cellId, v));
                     control.removeAllPossibleValues(cellId, row);
 
-                    for (GridCell cCell : control.getColumn(cellId)) {
+                    for (GridCell cCell : control.getColumn(cellId)) { // O(n)
                         control.removePossibleValue(cCell.getX(), cCell.getY(), v);
                     }
 
-                    for (GridCell cCell : control.getSquare(cellId / 3, row / 3)) {
+                    for (GridCell cCell : control.getSquare(cellId / 3, row / 3)) { // O(n)
                         control.removePossibleValue(cCell.getX(), cCell.getY(), v);
                     }
 
