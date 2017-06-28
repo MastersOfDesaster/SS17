@@ -19,6 +19,7 @@ public class CrookAlgorithm extends AbstractAlgorithm {
     public synchronized void solve() throws Exception {
         mark();
         foundNew = true;
+        
         while (foundNew) {
             foundNew = false;
             if (!running) {
@@ -35,7 +36,7 @@ public class CrookAlgorithm extends AbstractAlgorithm {
             findSingle();
             findForced();
             findPreemptives();
-            findAllNaked();
+          //  findAllNaked();
         }
     }
 
@@ -116,17 +117,62 @@ public class CrookAlgorithm extends AbstractAlgorithm {
     }
 
     private void findForced() throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
-        checkColumns();
-        checkRows();
-        // checkSquares();
+       checkColumns();
+       checkRows();
+       checkSquares();
     }
 
     private void findPreemptives() {
 
     }
 
-    private void checkSquares() {
+    private synchronized void checkSquares() throws IsOutOfRangeException, CoordinateOutOfBoundsException, InterruptedException {
+        // iterate through squares
+        for (int square = 0; square < 9; square++) {
+            List<GridCell> cells = control.getSquare(square);
+            GridCell cell = null;
+            // iterate through possible values
+            for (int v = 1; v < 10; v++) {
+                GridCell found = null;
+                // iterate through cells in the square
+                for (int id = 0; id < 9; id++) {
+                    cell = cells.get(id);
+                    if (cell.getPossibleValues().contains(v)) {
+                        if (found == null) {
+                            found = cell;
+                        } else {
+                            found = null;
+                            break;
+                        }
+                    }
+                }
+                if (found != null) {
+                    System.out
+                            .println(String.format("Found forced in column %s, id: %s, value: %s", found.getX(), found.getY(), v));
+                    control.removeAllPossibleValues(found.getX(), found.getY());
 
+                    for (GridCell cCell : control.getRow(found.getY())) {
+                        control.removePossibleValue(cCell.getX(), cCell.getY(), v);
+                    }
+
+                    for (GridCell cCell : control.getColumn(found.getX())){
+                        control.removePossibleValue(cCell.getX(), cCell.getY(), v);
+                    }
+
+                    control.setCellValue(found.getX(), found.getY(), v);
+                   System.out.println("Writing value: " + v);
+                    if (paused) {
+                        wait();
+                    } else {
+                        if (waitMillis != 0) {
+                            wait(waitMillis);
+                        }
+                    }
+                    foundNew = true;
+                }
+
+            }
+        }
     }
 
     private synchronized void checkColumns()
