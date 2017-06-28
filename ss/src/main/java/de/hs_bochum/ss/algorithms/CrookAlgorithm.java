@@ -35,6 +35,7 @@ public class CrookAlgorithm extends AbstractAlgorithm {
             findSingle();
             findForced();
             findPreemptives();
+            findAllNaked();
         }
     }
 
@@ -124,51 +125,8 @@ public class CrookAlgorithm extends AbstractAlgorithm {
 
     }
 
-    private synchronized void checkSquares()
-            throws CoordinateOutOfBoundsException, InterruptedException, IsOutOfRangeException {
-        for (int y = 0; y <= 8; y++) {
-            for (int x = 0; x <= 8; x++) {
-                if (!running) {
-                    return;
-                }
-                GridCell cell = control.getCell(x, y);
-                if (!cell.isLocked()) {
-                    Iterator<Integer> iterator = cell.getPossibleValues().iterator();
-                    int value;
-                    if (iterator.hasNext()) {
-                        value = iterator.next();
-                    } else {
-                        continue;
-                    }
-                    if (!iterator.hasNext()) {
-                        control.setCellValue(x, y, value);
-                        foundNew = true;
-                        if (paused) {
-                            wait();
-                        } else {
-                            if (waitMillis != 0) {
-                                wait(waitMillis);
-                            }
-                        }
-                        control.removePossibleValue(x, y, value);
-                        cell.removePossibleValue(value);
+    private void checkSquares() {
 
-                        for (GridCell cCell : control.getRow(cell.getY())) {
-                            control.removePossibleValue(cCell.getX(), cCell.getY(), value);
-                        }
-
-                        for (GridCell cCell : control.getColumn(cell.getX())) {
-                            control.removePossibleValue(cCell.getX(), cCell.getY(), value);
-                        }
-
-                        for (GridCell cCell : control.getSquare(cell.getX() / 3, cell.getY() / 3)) {
-                            control.removePossibleValue(cCell.getX(), cCell.getY(), value);
-                        }
-
-                    }
-                }
-            }
-        }
     }
 
     private synchronized void checkColumns()
