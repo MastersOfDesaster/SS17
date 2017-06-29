@@ -276,6 +276,8 @@ public class SudokuSolverControl {
     public void onAlgoFinished() {
         model.setSolved(validator.isSolved());
         report.setSolved(model.isSolved());
+        view.disableStopButton();
+        view.enableStartButton();
         view.showMessage("Report",  report.toString());
         System.out.println(report);
     }

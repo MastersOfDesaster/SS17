@@ -72,12 +72,17 @@ public class SudokuView extends JFrame {
         this.btnStart.addActionListener(al -> {
             control.startAlgo();
             btnStart.setEnabled(false);
+            btnStop.setEnabled(true);
         });
         this.btnPause.addActionListener(al -> {
             control.pauseAlgo();
+            btnPause.setEnabled(false);
+            btnContinue.setEnabled(true);
         });
         this.btnContinue.addActionListener(al -> {
             control.continueAlgo();
+            btnPause.setEnabled(true);
+            btnContinue.setEnabled(false);
         });
         this.btnSingle.addActionListener(al -> {
             control.nextStepAlgo();
@@ -148,6 +153,9 @@ public class SudokuView extends JFrame {
         this.borderEast = new JPanel(new BorderLayout());
         this.waitTime = new JTextField(10 + "    ");
         this.cbAlgorithm = new JComboBox<>(Algorithm.values());
+        
+        btnStop.setEnabled(false);
+        btnContinue.setEnabled(false);
     }
 
     private void setGUIParams() {
@@ -209,4 +217,13 @@ public class SudokuView extends JFrame {
 		menu.add(lockCell);
 		menu.show(field, x, y);
 	}
+
+    public void disableStopButton() {
+        btnStop.setEnabled(false);
+        
+    }
+
+    public void enableStartButton() {
+        btnStart.setEnabled(true);
+    }
 }
